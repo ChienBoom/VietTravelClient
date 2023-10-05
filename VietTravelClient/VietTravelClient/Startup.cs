@@ -28,6 +28,7 @@ namespace VietTravelClient
             services.AddSession();
             services.AddHttpClient();
             services.AddTransient<CallApi>();
+            services.AddTransient<UploadFile>();
             services.AddControllersWithViews();
         }
 

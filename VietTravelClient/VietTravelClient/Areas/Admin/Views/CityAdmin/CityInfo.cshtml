@@ -2,7 +2,8 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "AddCity";
+    ViewData["Title"] = "City Infomation";
+    City city = (City) ViewData["City"];
 }
 <body>
     <div class="row" style="margin-top: 20px;">
@@ -12,47 +13,47 @@
             <div class="media-body col-8 col-sm-8 col-md-8 " style="margin-top: 40px;">
                 <div class="row">
                     <div class="mt-0 text-info font-italic col-6 col-sm-6 col-md-6 border-bottom" style="font-size: 40px;">
-                        THÊM THÀNH PHỐ
+                        THÔNG TIN THÀNH PHỐ
                         DU LỊCH
                     </div>
                     <div class="mt-0 text-info font-italic col-6 col-sm-6 col-md-6 d-flex align-items-center border-bottom"
                          style="font-size: 20px; margin-bottom: 100px;">
                         VIET TRAVEL
                     </div>
-                    <form asp-area="Admin" asp-controller="CityAdmin" asp-action="CreateCity" class="col-12 col-sm-12 col-md-12" enctype="multipart/form-data">
+                    <form asp-area="Admin" asp-controller="CityAdmin" asp-action="UpdateCity" class="col-12 col-sm-12 col-md-12">
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tên thành phố du lịch</label>
-                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12" name="Name" id="Name" style="height:60px;">
+                                <input type="text" id="Name" name="Name" class="rounded border-info text-info col-12 col-sm-12 col-md-12" style="height:60px;" value="@city.Name">
+                                <input type="text" id="Id" name="Id" class="rounded border-info text-info col-12 col-sm-12 col-md-12" style="height:60px;" value="@city.Id" hidden>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tải ảnh</label>
-                                <input type="file" class="btn btn-info col-12 col-sm-12 col-md-12 border-dark rounded" id="Pictures" name="file" style="height:60px;">
+                                <input type="file" name="" id="Picture" class="btn btn-info col-12 col-sm-12 col-md-12 border-dark rounded" style="height:60px;">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tiêu đề giới thiệu</label>
-                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12" id="TitleIntroduct" name="TitleIntroduct" style="height:60px;">
+                                <input type="text" id="TitleIntroduct" name="TitleIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12" style="height:60px;" value="@city.TitleIntroduct">
                             </div>
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Nội dung giới thiệu</label>
-                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12" id="ContentIntroduct" name="ContentIntroduct" style="height:60px;">
+                                <input type="text" id="ContentIntroduct" name="ContentIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12" style="height:60px;" value="@city.ContentIntroduct">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Ghi chú chi tiết</label>
                                 <textarea name="Description" id="Description" style="width: 100%;" rows="6"
-                                          class="border-info rounded"></textarea>
+                                          class="border-info rounded">@city.Description</textarea>
                             </div>
                         </div>
                         <div class="row" style="margin-top: 40px;">
                             <div class="col-3 col-sm-3 col-md-3"></div>
                             <button type="submit" style="height:60px;"
                                     class="btn-outline-info rounded col-6 col-sm-6 col-md-6 justify-content-center align-items-center">
-                                Thêm
-                                thành phố du lịch
+                                Cập nhật thông tin thành phố
                             </button>
                         </div>
                     </form>
@@ -61,28 +62,3 @@
         </div>
     </div>
 </body>
-<script>
-    debugger
-    //function SaveCity(){
-    //    var cityName = $("#cityName").val();
-    //    var cityDescription = $("#cityDescription").val();
-    //    var data = {
-    //        name: cityName,
-    //        description: cityDescription,
-    //        pictures: "",
-    //        tours:[]
-    //    }
-    //    $.ajax({
-    //        url: "/City/CreateCity",
-    //        method: "POST",
-    //        data: JSON.stringify(data),
-    //        contentType: "application/json",
-    //        success: function (response) {
-    //            console.log("Đăng nhập thành công", response);
-    //        },
-    //        error: function (error) {
-    //            console.error("Lỗi đăng nhập", error);
-    //        }
-    //    });
-    //}
-</script>

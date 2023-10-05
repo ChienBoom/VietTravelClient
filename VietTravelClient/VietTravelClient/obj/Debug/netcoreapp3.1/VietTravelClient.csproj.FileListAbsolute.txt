@@ -153,3 +153,5 @@ E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\_ViewStart.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HomeAdmin\Home.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\CityAdmin\Cities.cshtml.g.cs
+E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\CityAdmin\SearchCity.cshtml.g.cs
+E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\CityAdmin\CityInfo.cshtml.g.cs

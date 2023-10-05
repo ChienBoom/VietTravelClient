@@ -91,8 +91,8 @@ namespace VietTravelClient.Common
             try
             {
                 responseData.Success = true;
-                var content = new StringContent(data, Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync(url, content);
+                var content = new StringContent(data, null, "application/json");
+                var response = await httpClient.PutAsync(url, content);
                 switch (response.StatusCode)
                 {
                     case System.Net.HttpStatusCode.OK:

@@ -17,8 +17,8 @@ namespace VietTravelClient.Models
         public string ContentIntroduct { get; set; }
 		public long CityId { get; set; }
 		public City City { get; set; }
-		public long EvaluateId { get; set; }
-		public Evaluate Evaluate { get; set; }
-		public List<TourPackage> TourPackages { get; set; }
+        public int NumberOfEvaluate { get; set; }
+        public float MediumStar { get; set; }
+        public List<TourPackage> TourPackages { get; set; }
     }
 }

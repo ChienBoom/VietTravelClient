@@ -21,29 +21,29 @@
             <div class="col-6 col-sm-6 col-md-6">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="HomeAdmin" asp-action="Home" asp-route-stringAccount="@ViewData["stringAccount"]">Trang chủ</a>
+                        <a class="nav-link text-light" asp-controller="HomeAdmin" asp-action="Home" asp-route-stringAccount="@ViewData["UsernameAccount"]">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="CityAdmin" asp-action="CityManager" asp-route-stringAccount="@ViewData["stringAccount"]">Thành phố</a>
+                        <a class="nav-link text-light" asp-controller="CityAdmin" asp-action="CityManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Thành phố</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="TourAdmin" asp-action="TourManager" asp-route-stringAccount="@ViewData["stringAccount"]">Tour</a>
+                        <a class="nav-link text-light" asp-controller="TourAdmin" asp-action="TourManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Tour</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="HotelAdmin" asp-action="HotelManager" asp-route-stringAccount="@ViewData["stringAccount"]">Khách sạn</a>
+                        <a class="nav-link text-light" asp-controller="HotelAdmin" asp-action="HotelManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Khách sạn</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="HomeAdmin" asp-action="RevenueStatisticsDetail" asp-route-stringAccount="@ViewData["stringAccount"]">Thống kê</a>
+                        <a class="nav-link text-light" asp-controller="HomeAdmin" asp-action="RevenueStatisticsDetail" asp-route-stringAccount="@ViewData["UsernameAccount"]">Thống kê</a>
                     </li>
                 </ul>
             </div>
             <div class="col-2 col-sm-2 col-md-2">
                 <div class="btn-group">
-                    <div class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">@ViewData["NameAccount"]</div>
+                    <div class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">@ViewData["UsernameAccount"]</div>
                     <div class="dropdown-menu rounded">
                         <a class="dropdown-item text-info" asp-controller="Logout" asp-action="Logout">Đăng xuất</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-info" asp-controller="HomeAdmin" asp-action="AccountManager" asp-route-stringAccount="@ViewData["stringAccount"]">Quản lý tài khoản</a>
+                        <a class="dropdown-item text-info" asp-controller="HomeAdmin" asp-action="AccountManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Quản lý tài khoản</a>
                     </div>
                 </div>
             </div>
