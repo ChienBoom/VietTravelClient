@@ -14,6 +14,8 @@ namespace VietTravelClient.Models
 		public string Description { get; set; }
 		public string TitleIntroduct { get; set; }
 		public string ContentIntroduct { get; set; }
-		public List<TourPackage> TourPackages { get; set; }
+        public long CityId { get; set; }
+        public string Pictures { get; set; }
+        public List<TourPackage> TourPackages { get; set; }
 	}
 }

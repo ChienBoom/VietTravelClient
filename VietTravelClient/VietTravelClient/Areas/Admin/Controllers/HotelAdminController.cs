@@ -22,6 +22,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
         private readonly string domailServer;
+        private readonly string uploadPath;
 
         public HotelAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -29,21 +30,33 @@ namespace VietTravelClient.Areas.Admin.Controllers
             _callApi = callApi;
             _configuration = configuration;
             domailServer = _configuration["DomainServer"];
+            uploadPath = _configuration["UploadPath"];
             _uploadFile = uploadFile;
         }
 
         [HttpGet]
         [Route("addHotel")]
-        public IActionResult AddHotel()
+        public async Task<IActionResult> AddHotel()
         {
+            string urlCities = domailServer + "city";
+            try
+            {
+                ResponseData responseDataCities = await _callApi.GetApi(urlCities);
+                ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCities.Data);
+                return View();
+            }
+            catch (HttpRequestException e)
+            {
+                return View();
+            }
             return View();
         }
 
         [HttpGet]
-        [Route("HotelManager")]
+        [Route("hotelManager")]
         public async Task<IActionResult> HotelManager()
         {
-            string url = domailServer + "Hotel";
+            string url = domailServer + "hotel";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -65,58 +78,112 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("searchHotel")]
         public async Task<IActionResult> SearchHotel(string searchValue, string UsernameAccount)
         {
-            string url = domailServer + "Hotel/search/" + searchValue;
-            List<Hotel> hotels = new List<Hotel>();
+            if(searchValue != null || !searchValue.Trim().Equals(""))
+            {
+                string url = domailServer + "hotel/search/" + searchValue;
+                List<Hotel> hotels = new List<Hotel>();
+                try
+                {
+                    ResponseData responseData = await _callApi.GetApi(url);
+                    string result = responseData.Data;
+                    hotels = JsonConvert.DeserializeObject<List<Hotel>>(result);
+                    ViewData["UsernameAccount"] = UsernameAccount;
+                    ViewData["hotels"] = hotels;
+                    return View();
+                }
+                catch (Exception e)
+                {
+                    return View();
+                }
+            }
+            return RedirectToAction("HotelManager");
+        }
+
+        [HttpPost]
+        [Route("saveHotel")]
+        public async Task<IActionResult> CreateHotel(Hotel value, IFormFile file)
+        {
+            string url = domailServer + "hotel";
+            Hotel hotel = new Hotel();
+            if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
+            value.Pictures = _uploadFile.SaveFile(file).Message;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                string result = responseData.Data;
-                hotels = JsonConvert.DeserializeObject<List<Hotel>>(result);
-                ViewData["UsernameAccount"] = UsernameAccount;
-                ViewData["Hotel"] = hotels;
-                return View();
+                value.TourPackages = new List<TourPackage>();
+                value.Description = "";
+                string stringValue = JsonConvert.SerializeObject(value);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                hotel = JsonConvert.DeserializeObject<Hotel>(responseData.Data);
+                return RedirectToAction("HotelManager");
             }
-            catch (Exception e)
+            catch (HttpRequestException e)
             {
                 return View();
             }
         }
 
-        //[HttpPost]
-        //[Route("searchHotelTourDetail")]
-        //public async Task<IActionResult> SearchHotelTourDetail(string searchHotelSelect, string UsernameAccount)
-        //{
-        //    string url = domailServer + "search/" + searchHotelSelect;
-        //    Hotel Hotel = new Hotel();
-        //    try
-        //    {
-        //        ResponseData responseData = await _callApi.GetApi(url);
-        //        string result = responseData.Data;
-        //        Hotel = JsonConvert.DeserializeObject<Hotel>(result);
-        //        ViewData["UsernameAccount"] = UsernameAccount;
-        //        ViewData["HotelTourDetail"] = Hotel;
-        //        return View();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return View();
-        //    }
-        //}
+        [HttpPost]
+        [Route("updateHotel")]
+        public async Task<IActionResult> UpdateHotel(Hotel value, IFormFile file)
+        {
+            string url = domailServer + "hotel/" + value.Id.ToString();
+            Hotel Hotel = new Hotel();
+            if (!_uploadFile.SaveFile(file).Success)
+            {
+                value.Pictures = "File null";
+            }
+            else value.Pictures = _uploadFile.SaveFile(file).Message;
+            try
+            {
+                value.Description = "";
+                value.TourPackages = new List<TourPackage>();
+                string stringValue = JsonConvert.SerializeObject(value);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                Hotel = JsonConvert.DeserializeObject<Hotel>(responseData.Data);
+                return RedirectToAction("HotelManager");
+            }
+            catch (HttpRequestException e)
+            {
+                return View();
+            }
+        }
 
-        //[HttpPost]
-        //[Route("saveHotel")]
-        //public async Task<IActionResult> CreateHotel(Hotel value, IFormFile file)
+        [HttpGet]
+        [Route("hotelInfo")]
+        public async Task<IActionResult> HotelInfo(long HotelId)
+        {
+            string urlCities = domailServer + "city";
+            string urlHotel = domailServer + "hotel/" + HotelId.ToString();
+            Hotel hotel = new Hotel();
+            try
+            {
+                ResponseData responseDataCities = await _callApi.GetApi(urlCities);
+                ResponseData response = await _callApi.GetApi(urlHotel);
+                string result = response.Data;
+                hotel = JsonConvert.DeserializeObject<Hotel>(result);
+                hotel.Pictures = uploadPath + hotel.Pictures;
+                ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCities.Data);
+                ViewData["Hotel"] = hotel;
+                return View();
+            }
+            catch (HttpRequestException e)
+            {
+                return View();
+            }
+        }
+
+        //[HttpGet]
+        //[Route("HotelById")]
+        //public async Task<IActionResult> GetHotelById(long id)
         //{
-        //    string url = domailServer + "Hotel";
+        //    string url = domailServer + "Hotel/" + id.ToString();
         //    Hotel Hotel = new Hotel();
-        //    if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
-        //    value.Pictures = _uploadFile.SaveFile(file).Message;
         //    try
         //    {
-        //        string stringValue = JsonConvert.SerializeObject(value);
-        //        ResponseData responseData = await _callApi.PostApi(url, stringValue);
-        //        Hotel = JsonConvert.DeserializeObject<Hotel>(responseData.Data);
-        //        return RedirectToAction("HotelManager");
+        //        ResponseData response = await _callApi.GetApi(url);
+        //        string result = response.Data;
+        //        Hotel = JsonConvert.DeserializeObject<Hotel>(result);
+        //        return View();
         //    }
         //    catch (HttpRequestException e)
         //    {
@@ -125,18 +192,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
         //    }
         //}
 
-        [HttpGet]
-        [Route("HotelById")]
-        public async Task<IActionResult> GetHotelById(long id)
+        [HttpPost]
+        [Route("deleteHotel")]
+        public async Task<IActionResult> DeleteHotel(string HotelId)
         {
-            string url = domailServer + "Hotel/" + id.ToString();
-            Hotel Hotel = new Hotel();
+            string url = domailServer + "hotel/" + HotelId;
             try
             {
-                ResponseData response = await _callApi.GetApi(url);
-                string result = response.Data;
-                Hotel = JsonConvert.DeserializeObject<Hotel>(result);
-                return View();
+                ResponseData responseData = await _callApi.DeleteApi(url);
+                return RedirectToAction("HotelManager");
             }
             catch (HttpRequestException e)
             {
@@ -145,21 +209,5 @@ namespace VietTravelClient.Areas.Admin.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("DeleteHotel")]
-        public async Task<IActionResult> DeleteHotel(long id)
-        {
-            string url = "https://localhost:44348/api/Hotel/" + id.ToString();
-            try
-            {
-                ResponseData responseData = await _callApi.DeleteApi(url);
-                return View();
-            }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine($"HttpRequestException: {e.Message}");
-                return View();
-            }
-        }
     }
 }

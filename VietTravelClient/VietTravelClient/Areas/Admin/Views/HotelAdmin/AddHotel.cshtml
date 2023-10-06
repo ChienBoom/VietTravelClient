@@ -2,6 +2,8 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Thêm Khách sạn";
+    List<City> cities = (List<City>)ViewData["Cities"];
 }
 <body>
     <div class="row" style="margin-top: 20px;">
@@ -14,43 +16,57 @@
                     <div class="mt-0 text-info font-italic col-6 col-sm-6 col-md-6 d-flex align-items-center border-bottom" style="font-size: 20px; margin-bottom: 100px;">
                         LARS TRAVEL
                     </div>
-                    <form action="" class="col-12 col-sm-12 col-md-12">
+                    <form asp-area="Admin" asp-controller="HotelAdmin" asp-action="CreateHotel" method="post" enctype="multipart/form-data" class="col-12 col-sm-12 col-md-12">
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tên khách sạn</label>
-                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
-                                       style="height:60px;">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tên Khách sạn</label>
+                                <input type="text" id="Name" name="Name" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;" value="">
                             </div>
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Địa chỉ cụ thể</label>
-                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
-                                       style="height:60px;">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Vị trí cụ thể</label>
+                                <input type="text" id="Address" name="Address" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;" value="">
                             </div>
                         </div>
                         <div class="row" style="margin-top: 20px;">
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Lựa chọn thành phố trực thuộc</label>
-                                <select name="" id="" class="bg-info col-12 col-sm-12 col-md-12 border-dark rounded text-light text-center" style="height:60px;">
-                                    <option value="">Nha Trang</option>
-                                    <option value="">Khánh Hòa</option>
-                                    <option value="">Hà Nội</option>
-                                    <option value="">Hải Phòng</option>
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Lựa chọn Thành phố trực thuộc</label>
+                                <select name="CityId" id="CityId" class="bg-info col-12 col-sm-12 col-md-12 border-dark rounded text-light text-center" style="height:60px;">
+                                    @{
+                                        foreach (City city in cities)
+                                        {
+                                            <option value="@city.Id">@city.Name</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                             <div class="col-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Thêm ảnh</label>
-                                <input type="file" class="btn btn-info col-12 col-sm-12 col-md-12 border-dark rounded" style="height:60px;">
+                                <input type="file" class="btn btn-info col-12 col-sm-12 col-md-12 border-dark rounded" id="Pictures" name="file" style="height:60px;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tiêu đề giới thiệu</label>
+                                <input type="text" id="TitleIntroduct" name="TitleIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;" value="">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Số điện thoại</label>
+                                <input type="text" id="PhoneNumber" name="PhoneNumber" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;" value="">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Ghi chú chi tiết</label>
-                                <textarea name="" id="" style="width: 100%;" rows="6" class="border-info rounded"></textarea>
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Nội dung giới thiệu</label>
+                                <textarea name="ContentIntroduct" id="ContentIntroduct" style="width: 100%;" rows="6" class="border-info rounded"></textarea>
                             </div>
                         </div>
                         <div class="row" style="margin-top: 40px;">
                             <div class="col-3 col-sm-3 col-md-3"></div>
-                            <button type="submit" style="height:60px;" class="btn-outline-info rounded col-6 col-sm-6 col-md-6 justify-content-center align-items-center">Thêm khách sạn</button>
+                            <button type="submit" style="height:60px;" class="btn-outline-info rounded col-6 col-sm-6 col-md-6 justify-content-center align-items-center">Thêm mới Khách sạn</button>
                         </div>
                     </form>
                 </div>

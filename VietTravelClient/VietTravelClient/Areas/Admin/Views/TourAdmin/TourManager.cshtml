@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Tour Manager";
+    ViewData["Title"] = "Quản lý Tour";
     List<Tour> tours = (List<Tour>)ViewData["Tours"];
 }
 <body>
@@ -15,13 +15,13 @@
             <form asp-area="Admin" asp-controller="TourAdmin" asp-action="SearchTour" method="post">
                 <div class="col-12 col-sm-12 col-md-12 text-info" style="padding-top: 30px; padding-left: 50px;">Tìm kiếm Tour</div>
                 <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 20px;">
-                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" id="searchValue" name="searchValue" placeholder="NHẬP TÊN THÀNH PHỐ">
+                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" id="searchValue" name="searchValue" placeholder="NHẬP TÊN TOUR" value="">
                     <button class="col-12 col-sm-12 col-md-12 rounded border-info btn btn-info" style="height:60px; margin-top: 20px;">Tìm kiếm</button>
                 </div>
             </form>
 
             <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 20px;">
-                <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info btn btn-info" style="height:60px;" value="Thêm mới Tour">
+                <a asp-area="Admin" asp-controller="TourAdmin" asp-action="AddTour" class="col-12 col-sm-12 col-md-12 rounded border-info btn btn-info" style="height:60px; display: flex; align-items: center; justify-content: center;">Thêm mới Tour</a>
             </div>
         </div>
         <div class="col-8 col-sm-8 col-md-8">
@@ -74,9 +74,32 @@
                                             <h5 class="card-title col-12 col-sm-12 col-md-12">@item.Name</h5>
                                             <p class="card-text col-12 col-sm-12 col-md-12">@item.ContentIntroduct</p>
                                             <div class="col-1 col-sm-1 col-md-1"></div>
-                                            <a href="#" class="btn btn-primary col-4 col-sm-4 col-md-4">Update City</a>
+                                            <a asp-area="Admin" asp-controller="TourAdmin" asp-action="TourInfo" asp-route-TourId="@item.Id" class="btn btn-primary col-4 col-sm-4 col-md-4">Cập nhật</a>
                                             <div class="col-2 col-sm-2 col-md-2"></div>
-                                            <a href="#" class="btn btn-danger col-4 col-sm-4 col-md-4">Delete City</a>
+                                            <a class="btn btn-danger col-4 col-sm-4 col-md-4" data-toggle="modal" data-target="#@item.Id">Xóa</a>
+                                            <div id="@item.Id" class="modal fade" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Bạn chắc chắn muốn xóa bỏ Tour này</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <label>Tên Tour: </label>
+                                                            <p>@item.Name</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                                            <form asp-area="Admin" asp-controller="TourAdmin" asp-action="DeleteTour" method="post">
+                                                                <input type="text" name="TourId" id="TourId" value="@item.Id" hidden />
+                                                                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

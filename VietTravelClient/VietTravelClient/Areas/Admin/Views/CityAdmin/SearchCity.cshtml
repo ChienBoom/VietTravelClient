@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Search City";
+    ViewData["Title"] = "Tìm kiếm thành phố";
     List<City> cities = (List<City>)ViewData["Cities"];
 }
 <body>
@@ -13,9 +13,9 @@
                 LARS TRAVEL
             </div>
             <form asp-area="Admin" asp-controller="CityAdmin" asp-action="SearchCity" method="post">
-                <div class="col-12 col-sm-12 col-md-12 text-info" style="padding-top: 30px; padding-left: 50px;">Tìm kiếm thành phố</div>
+                <div class="col-12 col-sm-12 col-md-12 text-info" style="padding-top: 30px; padding-left: 50px;">Tìm kiếm Thành phố</div>
                 <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 20px;">
-                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" id="searchValue" name="searchValue" placeholder="NHẬP TÊN THÀNH PHỐ">
+                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" id="searchValue" name="searchValue" placeholder="NHẬP TÊN THÀNH PHỐ" value="">
                     <button class="col-12 col-sm-12 col-md-12 rounded border-info btn btn-info" style="height:60px; margin-top: 20px;">Tìm kiếm</button>
                 </div>
             </form>
@@ -74,9 +74,9 @@
                                             <h5 class="card-title col-12 col-sm-12 col-md-12">@item.Name</h5>
                                             <p class="card-text col-12 col-sm-12 col-md-12">@item.ContentIntroduct</p>
                                             <div class="col-1 col-sm-1 col-md-1"></div>
-                                            <a asp-area="Admin" asp-controller="CityAdmin" asp-action="CityInfo" asp-route-cityId="@item.Id" class="btn btn-primary col-4 col-sm-4 col-md-4">Update City</a>
+                                            <a asp-area="Admin" asp-controller="CityAdmin" asp-action="CityInfo" asp-route-cityId="@item.Id" class="btn btn-primary col-4 col-sm-4 col-md-4">Cập nhật</a>
                                             <div class="col-2 col-sm-2 col-md-2"></div>
-                                            <a class="btn btn-danger col-4 col-sm-4 col-md-4" data-toggle="modal" data-target="#@item.Id">Delete City</a>
+                                            <a class="btn btn-danger col-4 col-sm-4 col-md-4" data-toggle="modal" data-target="#@item.Id">Xóa</a>
                                             <div id="@item.Id" class="modal fade" tabindex="-1" role="dialog">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -87,7 +87,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <label>Tên thành phố: </label>
+                                                            <label>Tên Thành phố: </label>
                                                             <p>@item.Name</p>
                                                         </div>
                                                         <div class="modal-footer">

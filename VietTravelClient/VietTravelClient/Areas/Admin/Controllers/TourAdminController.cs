@@ -22,6 +22,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
         private readonly string domailServer;
+        private readonly string uploadPath;
 
         public TourAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -30,13 +31,29 @@ namespace VietTravelClient.Areas.Admin.Controllers
             _configuration = configuration;
             domailServer = _configuration["DomainServer"];
             _uploadFile = uploadFile;
+            uploadPath = _configuration["UploadPath"];
         }
 
         [HttpGet]
         [Route("addTour")]
-        public IActionResult AddTour()
+        public async Task<IActionResult> AddTour()
         {
-            return View();
+            string url = domailServer + "city";
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseData.Data);
+                    return View()
+;
+                }
+                return RedirectToAction("Error", "Home");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpGet]
@@ -65,28 +82,32 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("searchTour")]
         public async Task<IActionResult> SearchTour(string searchValue, string UsernameAccount)
         {
-            string url = domailServer + "tour/search/" + searchValue;
-            List<Tour> tours = new List<Tour>();
-            try
+            if(!searchValue.Trim().Equals("") || searchValue != null)
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                string result = responseData.Data;
-                tours = JsonConvert.DeserializeObject<List<Tour>>(result);
-                ViewData["UsernameAccount"] = UsernameAccount;
-                ViewData["Tours"] = tours;
-                return View();
+                string url = domailServer + "tour/search/" + searchValue;
+                List<Tour> tours = new List<Tour>();
+                try
+                {
+                    ResponseData responseData = await _callApi.GetApi(url);
+                    string result = responseData.Data;
+                    tours = JsonConvert.DeserializeObject<List<Tour>>(result);
+                    ViewData["UsernameAccount"] = UsernameAccount;
+                    ViewData["Tours"] = tours;
+                    return View();
+                }
+                catch (Exception e)
+                {
+                    return View();
+                }
             }
-            catch (Exception e)
-            {
-                return View();
-            }
+            return RedirectToAction("TourManager");
         }
 
         [HttpPost]
         [Route("saveTour")]
         public async Task<IActionResult> CreateTour(Tour value, IFormFile file)
         {
-            string url = domailServer + "Tour";
+            string url = domailServer + "tour";
             Tour Tour = new Tour();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.Pictures = _uploadFile.SaveFile(file).Message;
@@ -100,6 +121,56 @@ namespace VietTravelClient.Areas.Admin.Controllers
             catch (HttpRequestException e)
             {
                 Console.WriteLine($"HttpRequestException: {e.Message}");
+                return View();
+            }
+        }
+
+        [HttpGet]
+        [Route("tourInfo")]
+        public async Task<IActionResult> TourInfo(long tourId)
+        {
+            string urlCities = domailServer + "city";
+            string urlTour = domailServer + "tour/" + tourId.ToString();
+            Tour tour = new Tour();
+            try
+            {
+                ResponseData responseDataCities = await _callApi.GetApi(urlCities);
+                ResponseData response = await _callApi.GetApi(urlTour);
+                string result = response.Data;
+                tour.Pictures = uploadPath + tour.Pictures;
+                tour = JsonConvert.DeserializeObject<Tour>(result);
+                ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCities.Data);
+                ViewData["Tour"] = tour;
+                return View();
+            }
+            catch (HttpRequestException e)
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [Route("updateTour")]
+        public async Task<IActionResult> UpdateTour(Tour value, IFormFile file)
+        {
+            string url = domailServer + "tour/" + value.Id.ToString();
+            Tour city = new Tour();
+            if (!_uploadFile.SaveFile(file).Success)
+            {
+                value.Pictures = "File null";
+            }
+            else value.Pictures = _uploadFile.SaveFile(file).Message;
+            try
+            {
+                value.City = new City();
+                value.TourPackages = new List<TourPackage>();
+                string stringValue = JsonConvert.SerializeObject(value);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                city = JsonConvert.DeserializeObject<Tour>(responseData.Data);
+                return RedirectToAction("TourManager");
+            }
+            catch (HttpRequestException e)
+            {
                 return View();
             }
         }
@@ -124,15 +195,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("DeleteTour")]
-        public async Task<IActionResult> DeleteTour(long id)
+        [HttpPost]
+        [Route("deleteTour")]
+        public async Task<IActionResult> DeleteTour(string TourId)
         {
-            string url = "https://localhost:44348/api/Tour/" + id.ToString();
+            string url = domailServer + "tour/" + TourId;
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);
-                return View();
+                return RedirectToAction("TourManager");
             }
             catch (HttpRequestException e)
             {

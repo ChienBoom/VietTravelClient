@@ -67,7 +67,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("searchCity")]
         public async Task<IActionResult> SearchCity(string searchValue, string UsernameAccount)
         {
-            if (searchValue.Trim().Equals("")) return RedirectToAction("CityManager");
+            if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
             string url = domailServer + "city/search/" + searchValue;
             List<City> cities = new List<City>();
             try

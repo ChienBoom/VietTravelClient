@@ -2,8 +2,8 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Quản lý thành phố";
-    List<City> cities = (List < City>)ViewData["Cities"];
+    ViewData["Title"] = "Tìm kiếm Tour";
+    List<Tour> tours = (List<Tour>)ViewData["Tours"];
 }
 <body>
     <div class="row" style="padding-top: 20px;">
@@ -12,16 +12,16 @@
                 <img src="~/Icon/logo.jpg" alt="" style="width:100px; height:100px">
                 LARS TRAVEL
             </div>
-            <form asp-area="Admin" asp-controller="CityAdmin" asp-action="SearchCity" method="post">
-                <div class="col-12 col-sm-12 col-md-12 text-info" style="padding-top: 30px; padding-left: 50px;">Tìm kiếm Thành phố</div>
+            <form asp-area="Admin" asp-controller="TourAdmin" asp-action="SearchTour" method="post">
+                <div class="col-12 col-sm-12 col-md-12 text-info" style="padding-top: 30px; padding-left: 50px;">Tìm kiếm Tour</div>
                 <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 20px;">
-                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" id="searchValue" name="searchValue" placeholder="NHẬP TÊN THÀNH PHỐ" value="">
+                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" id="searchValue" name="searchValue" placeholder="NHẬP TÊN TOUR" value="">
                     <button class="col-12 col-sm-12 col-md-12 rounded border-info btn btn-info" style="height:60px; margin-top: 20px;">Tìm kiếm</button>
                 </div>
             </form>
 
             <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 20px;">
-                <a class="col-12 col-sm-12 col-md-12 rounded border-info btn btn-info" style="height:60px; display: flex; align-items: center; justify-content: center;" asp-controller="CityAdmin" asp-action="AddCity">Thêm mới thành phố</a>
+                <a class="col-12 col-sm-12 col-md-12 rounded border-info btn btn-info" style="height:60px; display: flex; align-items: center; justify-content: center;" asp-controller="TourAdmin" asp-action="AddTour">Thêm mới Tour</a>
             </div>
         </div>
         <div class="col-8 col-sm-8 col-md-8">
@@ -64,7 +64,7 @@
                 <div class="col-12 col-sm-12 col-md-12">
                     <div class="row">
                         @{
-                            foreach (City item in cities)
+                            foreach (Tour item in tours)
                             {
                                 <div class="col-3 col-sm-3 col-md-3" style="margin-bottom:20px;">
                                     <div class="card row">
@@ -74,26 +74,26 @@
                                             <h5 class="card-title col-12 col-sm-12 col-md-12">@item.Name</h5>
                                             <p class="card-text col-12 col-sm-12 col-md-12">@item.ContentIntroduct</p>
                                             <div class="col-1 col-sm-1 col-md-1"></div>
-                                            <a asp-area="Admin" asp-controller="CityAdmin" asp-action="CityInfo" asp-route-cityId="@item.Id" class="btn btn-primary col-4 col-sm-4 col-md-4">Cập nhật</a>
+                                            <a asp-area="Admin" asp-controller="TourAdmin" asp-action="TourInfo" asp-route-TourId="@item.Id" class="btn btn-primary col-4 col-sm-4 col-md-4">Cập nhật</a>
                                             <div class="col-2 col-sm-2 col-md-2"></div>
                                             <a class="btn btn-danger col-4 col-sm-4 col-md-4" data-toggle="modal" data-target="#@item.Id">Xóa</a>
                                             <div id="@item.Id" class="modal fade" tabindex="-1" role="dialog">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Bạn chắc chắn muốn xóa bỏ thành phố này</h4>
+                                                            <h4 class="modal-title">Bạn chắc chắn muốn xóa bỏ Tour này</h4>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <label>Tên Thành phố: </label>
+                                                            <label>Tên Tour: </label>
                                                             <p>@item.Name</p>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                                                            <form asp-area="Admin" asp-controller="CityAdmin" asp-action="DeleteCity" method="post">
-                                                                <input type="text" name="CityId" id="CityId" value="@item.Id" hidden/>
+                                                            <form asp-area="Admin" asp-controller="TourAdmin" asp-action="DeleteTour" method="post">
+                                                                <input type="text" name="TourId" id="TourId" value="@item.Id" hidden />
                                                                 <button type="submit" class="btn btn-primary">Xác nhận</button>
                                                             </form>
                                                         </div>
@@ -112,9 +112,9 @@
     </div>
 </body>
 <script>
-    //function DeleteCity(var id){
+    //function DeleteTour(var id){
     //    $.ajax({
-    //        url: domainClient + "DeleteCity" + id,
+    //        url: domainClient + "DeleteTour" + id,
     //        method: "DELETE",
     //        success: function (response) {
     //            alert("Xóa thành công");

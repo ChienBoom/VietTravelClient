@@ -54,5 +54,12 @@ namespace VietTravelClient.Areas.Admin.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("revenueStatisticsDetail")]
+        public IActionResult RevenueStatisticsDetail()
+        {
+            return View();
+        }
+
     }
 }
