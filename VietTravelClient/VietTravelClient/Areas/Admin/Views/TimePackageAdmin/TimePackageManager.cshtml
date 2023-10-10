@@ -1,0 +1,113 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Thêm gói thời gian";
+    List<TimePackage> timePackages = (List<TimePackage>)ViewData["TimePackages"];
+}
+<body>
+    <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+        <div class="col-10"></div>
+        <div class="col-2">
+            <button class="btn btn-info" data-toggle="modal" data-target="#createTimePackage">Thêm mới </button>
+            <div id="createTimePackage" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-info">THÊM MỚI GÓI THỜI GIAN</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form asp-area="Admin" asp-controller="TimePackageAdmin" asp-action="CreateTimePackage" method="post">
+                            <div class="modal-body">
+                                <label for="Name" class="text-info font-italic">Nhập tên<span style="color: red;">*</span></label>
+                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Name" name="Name">
+                                <label for="Description" class="text-info font-italic">Nhập ghi chú chi tiết<span style="color: red;">*</span></label>
+                                <textarea name="Description" id="Description" cols="30" rows="6" class="col-12 rounded border-info text-info"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                <button type="submit" class="btn btn-primary">Thêm mới</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <table class="col-10 col-sm-10 col-md-10 border" style="border: 1px; border-color: black;">
+            <tr class="">
+                <th style="width : 5%" class="text-center bg-info text-light border">STT</th>
+                <th style="width : 20%" class="text-center bg-info text-light border">Tên gói</th>
+                <th style="width : 50%" class="text-center bg-info text-light border">Ghi chú chi tiết</th>
+                <th style="width : 25%" class="text-center bg-info text-light border"></th>
+            </tr>
+                @{
+                    foreach(TimePackage item in timePackages)
+                    {
+                        <tr>
+                        <td class="text-center border">@item.Id</td>
+                        <td class="text-center border">@item.Name</td>
+                        <td class="text-center border">@item.Description</td>
+                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#updateTimePackage@(item.Id)">Sửa</button> <button class="btn btn-info" data-toggle="modal" data-target="#deleteTimePackage@(item.Id)">Xóa</button> </td>
+
+                        <div id="updateTimePackage@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title text-info">CẬP NHẬT GÓI THỜI GIAN</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    <form asp-area="Admin" asp-controller="TimePackageAdmin" asp-action="UpdateTimePackage" method="post">
+                                            <div class="modal-body">
+                                            <label for="Name" class="text-info font-italic">Nhập tên<span style="color: red;">*</span></label>
+                                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name">
+                                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
+                                            <label for="Description" class="text-info font-italic">Nhập ghi chú chi tiết<span style="color: red;">*</span></label>
+                                                <textarea name="Description" id="Description" cols="30" rows="6" class="col-12 rounded border-info text-info">@item.Description</textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div id="deleteTimePackage@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title text-info">BẠN CHẮC CHẮN MUỐN XÓA GÓI THỜI GIAN NÀY?</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    <form asp-area="Admin" asp-controller="TimePackageAdmin" asp-action="UpdateTimePackage" method="post">
+                                            <div class="modal-body">
+                                            <label for="Name" class="text-info font-italic">Tên gói<span style="color: red;">*</span></label>
+                                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="" name="" value="@item.Name">
+                                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="TimePackageId" name="TimePackageId" value="@item.Id">
+                                            <label for="Description" class="text-info font-italic">Ghi chú chi tiết<span style="color: red;">*</span></label>
+                                                <textarea name="" id="" cols="30" rows="6" class="col-12 rounded border-info text-info">@item.Description</textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </tr>
+                    }
+                }
+        </table>
+    </div>
+</body>

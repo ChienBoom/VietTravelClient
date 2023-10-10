@@ -109,7 +109,6 @@ namespace VietTravelClient.Areas.Admin.Controllers
             value.Pictures = _uploadFile.SaveFile(file).Message;
             try
             {
-                value.TourPackages = new List<TourPackage>();
                 value.Description = "";
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PostApi(url, stringValue);
@@ -136,7 +135,6 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 value.Description = "";
-                value.TourPackages = new List<TourPackage>();
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PutApi(url, stringValue);
                 Hotel = JsonConvert.DeserializeObject<Hotel>(responseData.Data);

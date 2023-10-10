@@ -1,0 +1,100 @@
+﻿
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LarsTravel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+</head>
+<body style="min-height: 100%;">
+    <header>
+        <div class="row bg-info">
+            <!-- <div class="col-2">Trang chủ</div> -->
+            <div class="col-4 col-sm-4 col-md-4 text-light font-italic" style="padding-left: 100px;">VIET TRAVEL</div>
+            <div class="col-6 col-sm-6 col-md-6">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="Customer" asp-controller="HomeCustomer" asp-action="Home">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="Customer" asp-controller="CityCustomer" asp-action="Cities">Thành phố</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="Customer" asp-controller="TourCustomer" asp-action="Tours">Tour</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="Customer" asp-controller="HomeCustomer" asp-action="Contact">Liên hệ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="Customer" asp-controller="HomeCustomer" asp-action="History">Lịch sử</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2">
+                <div class="btn-group">
+                    <div class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">@ViewData["UsernameAccount"]</div>
+                    <div class="dropdown-menu rounded">
+                        <a class="dropdown-item text-info" asp-controller="Logout" asp-action="Logout">Đăng xuất</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-info" asp-controller="HomeAdmin" asp-action="AccountManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Quản lý tài khoản</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="" style="">
+        <main role="main" class="">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer style="position: sticky; top: 100%;">
+        <div class="row bg-info" style="margin-top: 20px;">
+            <div class="col-1 col-sm-1 col-md-1"></div>
+            <div class="col-10" style="margin-top: 40px; margin-bottom: 40px; background-color: white;">
+                <div class="row">
+                    <div class="col-4 col-sm-4 col-md-4">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 text-info">
+                                <img src="~/Icon/logo.jpg" alt="" style="width:100px; height:100px">LARS TRAVEL
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8 col-sm-8 col-md-8" style="margin-top: 20px; margin-bottom: 20px;">
+                        <div class="row">
+                            <div class="col-4 col-sm-4 col-md-4 text-center">
+                                <a href="" class="text-info">Chăm sóc khách hàng</a></br>
+                                <a href="" class="text-info">Chăm sóc khách hàng</a></br>
+                                <a href="" class="text-info">Chăm sóc khách hàng</a></br>
+                                <a href="" class="text-info">Chăm sóc khách hàng</a></br>
+                                <a href="" class="text-info">Chăm sóc khách hàng</a></br>
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4 text-center">
+                                <a href="" class="text-info">Thanh toán</a></br>
+                                <a href="" class="text-info">Thanh toán</a></br>
+                                <a href="" class="text-info">Thanh toán</a></br>
+                                <a href="" class="text-info">Thanh toán</a></br>
+                                <a href="" class="text-info">Thanh toán</a></br>
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4 text-center">
+                                <a href="" class="text-info">Theo dõi Lars Travel</a></br>
+                                <a href="" class="text-info">Theo dõi Lars Travel</a></br>
+                                <a href="" class="text-info">Theo dõi Lars Travel</a></br>
+                                <a href="" class="text-info">Theo dõi Lars Travel</a></br>
+                                <a href="" class="text-info">Theo dõi Lars Travel</a></br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

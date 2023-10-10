@@ -24,21 +24,21 @@
                     <form asp-area="Admin" asp-controller="HotelAdmin" asp-action="UpdateHotel" class="col-12 col-sm-12 col-md-12">
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tên Khách sạn</label>
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tên Khách sạn<span style="color: red;">*</span></label>
                                 <input type="text" id="Name" name="Name" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
                                        style="height:60px;" value="@hotel.Name">
                                 <input type="text" id="Id" name="Id" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
                                        style="height:60px;" value="@hotel.Id" hidden>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Vị trí cụ thể</label>
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Vị trí cụ thể<span style="color: red;">*</span></label>
                                 <input type="text" id="Address" name="Address" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
                                        style="height:60px;" value="@hotel.Address">
                             </div>
                         </div>
                         <div class="row" style="margin-top: 20px;">
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Lựa chọn Thành phố trực thuộc</label>
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Lựa chọn Thành phố trực thuộc<span style="color: red;">*</span></label>
                                 <select name="CityId" id="CityId" class="bg-info col-12 col-sm-12 col-md-12 border-dark rounded text-light text-center" style="height:60px;">
                                     @{
                                         foreach (City city in cities)
@@ -62,19 +62,19 @@
                         </div>
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tiêu đề giới thiệu</label>
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
                                 <input type="text" id="TitleIntroduct" name="TitleIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
                                        style="height:60px;" value="@hotel.TitleIntroduct">
                             </div>
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Số điện thoại</label>
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Số điện thoại<span style="color: red;">*</span></label>
                                 <input type="text" id="PhoneNumber" name="PhoneNumber" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
                                        style="height:60px;" value="@hotel.PhoneNumber">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Nội dung giới thiệu</label>
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Nội dung giới thiệu<span style="color: red;">*</span></label>
                                 <textarea name="ContentIntroduct" id="ContentIntroduct" style="width: 100%;" rows="6" class="border-info rounded">@hotel.ContentIntroduct</textarea>
                             </div>
                         </div>

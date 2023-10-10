@@ -162,8 +162,6 @@ namespace VietTravelClient.Areas.Admin.Controllers
             else value.Pictures = _uploadFile.SaveFile(file).Message;
             try
             {
-                value.City = new City();
-                value.TourPackages = new List<TourPackage>();
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PutApi(url, stringValue);
                 city = JsonConvert.DeserializeObject<Tour>(responseData.Data);

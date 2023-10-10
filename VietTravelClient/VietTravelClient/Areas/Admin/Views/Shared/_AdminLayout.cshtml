@@ -1,6 +1,6 @@
 ﻿
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +13,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 </head>
-<body>
+<body style="min-height: 100%;">
     <header>
         <div class="row bg-info">
             <!-- <div class="col-2">Trang chủ</div> -->
@@ -49,13 +49,13 @@
             </div>
         </div>
     </header>
-    <div class="">
+    <div class="" style="">
         <main role="main" class="">
             @RenderBody()
         </main>
     </div>
 
-    <footer>
+    <footer style="position: sticky; top: 100%;">
         <div class="row bg-info" style="margin-top: 20px;">
             <div class="col-1 col-sm-1 col-md-1"></div>
             <div class="col-10" style="margin-top: 40px; margin-bottom: 40px; background-color: white;">
@@ -96,9 +96,5 @@
             </div>
         </div>
     </footer>
-    @*<script src="~/lib/jquery/dis@*@*@*t/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)*@*@*@*@
 </body>
 </html>

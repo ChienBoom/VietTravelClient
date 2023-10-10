@@ -22,6 +22,11 @@ namespace VietTravelClient.Controllers
             domailServer = _configuration["DomainServer"];
         }
 
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
         public IActionResult Login(int status, string username, string password)
         {
             ViewData["Status"] = status;
@@ -50,8 +55,8 @@ namespace VietTravelClient.Controllers
                             controller = "HomeAdmin";
                             break;
                         default:
-                            roleUser = "Users";
-                            controller = "HomeUser";
+                            roleUser = "Customer";
+                            controller = "HomeCustomer";
                             break;
                     }
                     return RedirectToAction("Home", new { area = roleUser, controller = controller, UsernameAccount = UsernameAccount });
@@ -62,7 +67,7 @@ namespace VietTravelClient.Controllers
             {
                 return RedirectToAction("Login", new { status = 2, username = value.Username, password = value.Password });
             }
-            return View();
         }
+
     }
 }

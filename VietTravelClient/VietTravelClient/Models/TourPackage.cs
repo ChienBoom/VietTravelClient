@@ -14,13 +14,11 @@ namespace VietTravelClient.Models
         public string Description { get; set; }
         public int NumberOfAdult { get; set; }
         public int NumberOfChildren { get; set; }
-        public decimal TotalPrice { get; set; }
+        public decimal BasePrice { get; set; }
+        public float Discount { get; set; }
+        public decimal LastPrice { get; set; }
         public long TourId { get; set; }
-        public Tour Tour { get; set; }
         public long HotelId { get; set; }
-        public Hotel Hotel { get; set; }
         public long TimePackageId { get; set; }
-        public TimePackage  TimePackage { get; set; }
-        public Ticket Ticket { get; set; }
     }
 }

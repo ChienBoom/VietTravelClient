@@ -1,0 +1,112 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Thêm gói Tour";
+    List<Tour> tours = (List<Tour>)ViewData["Tours"];
+    List<Hotel> hotels = (List<Hotel>)ViewData["Hotels"];
+    List<TimePackage> timePackages = (List<TimePackage>)ViewData["TimePackages"];
+    long selectedTourId = 1;
+}
+<body>
+    <div class="row" style="margin-top: 20px;">
+        <div class="media col-12 col-sm-12 col-md-12 border" style="margin-left: 10px; margin-right: 10px;">
+            <div class="col-4 col-sm-4 col-md-4">
+                <div class="row">
+                    <div class="mt-0 text-info font-italic col-6 col-sm-6 col-md-6 d-flex align-items-center border-bottom" style="font-size: 20px; margin-left: 50px;">
+                        THÊM GÓI TOUR
+                    </div>
+                </div>
+                <img class="mr-3 rounded order-0 col-12 col-sm-12 col-md-12"
+                     src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg" style="margin-top: 50px;">
+            </div>
+            <div class="media-body col-8 col-sm-8 col-md-8" style="margin-top: 40px;">
+                <div class="row">
+
+                    <form action="" class="col-12 col-sm-12 col-md-12">
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tên gói Tour</label>
+                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Lựa chọn Tour cho gói</label>
+                                <select name="TourId" id="TourId" class="bg-info col-12 col-sm-12 col-md-12 border-dark rounded text-light text-center" style="height:60px;" onchange="updateHotelDropdown()">
+                                    @{
+                                        foreach (Tour tour in tours)
+                                        {
+                                            <option value="@tour.Id">@tour.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Số lượng người lớn (lớn hơn 12 tuổi)</label>
+                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Số lượng trẻ em (nhỏ hơn 12 tuổi)</label>
+                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 col-sm-4 col-md-4">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Ngày khởi hành</label>
+                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;">
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Lựa chọn gói thời gian</label>
+                                <select name="" id="" class="bg-info col-12 col-sm-12 col-md-12 border-dark rounded text-light text-center" style="height:60px;">
+                                    @{
+                                        foreach(TimePackage item in timePackages)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Ngày kết thúc</label>
+                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 col-sm-4 col-md-4">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Gía gốc</label>
+                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;">
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Giảm giá</label>
+                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;">
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Gía cuối cùng</label>
+                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Ghi chú chi tiết</label>
+                                <textarea name="" id="" style="width: 100%;" rows="6" class="border-info rounded"></textarea>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 40px;">
+                            <div class="col-3 col-sm-3 col-md-3"></div>
+                            <button type="submit" style="height:60px;" class="btn-outline-info rounded col-6 col-sm-6 col-md-6 justify-content-center align-items-center">Thêm gói Tour</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

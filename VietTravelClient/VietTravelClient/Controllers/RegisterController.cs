@@ -51,15 +51,11 @@ namespace VietTravelClient.Controllers
             {
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PostApi(url, stringValue);
-                if (responseData.Success)
+                if (responseData.Success == true) return RedirectToAction("Register", new { status = 1, username = value.Username, password = value.Password });
+                if (responseData.Message.Equals("NotFound"))
                 {
-                    ResponseData resultData = JsonConvert.DeserializeObject<ResponseData>(responseData.Data);
-                    if (resultData.Message.Equals("Success"))
-                    {
-                        TempData["Account"] = stringValue;
-                        return RedirectToAction("RegisterInfo");
-                    }
-                    return RedirectToAction("Register", new { status = 1, username = value.Username, password = value.Password });
+                    TempData["Account"] = stringValue;
+                    return RedirectToAction("RegisterInfo");
                 }
                 return RedirectToAction("Register", new { status = 2, username = value.Username, password = value.Password });
             }
@@ -73,7 +69,7 @@ namespace VietTravelClient.Controllers
         public async Task<IActionResult> SaveRegister(User value)
         {
             string url = domailServer + "user";
-            value.Role = "User";
+            value.Role = "Customer";
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
@@ -82,15 +78,15 @@ namespace VietTravelClient.Controllers
                 {
                     if (responseData.Message.Equals("Success"))
                     {
-                        return RedirectToAction("Home", "HomeUser", new { area = "Users" });
+                        return RedirectToAction("Home", "HomeCustomer", new { area = "Customer", usernameAccount = value.Username});
                     }
-                    return RedirectToAction("Error", "HomeUser", new { area = "Users" });
+                    return RedirectToAction("Error", "HomeCustomer", new { area = "Customer" });
                 }
-                return RedirectToAction("Error", "HomeUser", new { area = "Users" });
+                return RedirectToAction("Error", "HomeCustomer", new { area = "Customer" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeUser", new { area = "Users" });
+                return RedirectToAction("Error", "HomeCustomer", new { area = "Customer" });
             }
         }
 
