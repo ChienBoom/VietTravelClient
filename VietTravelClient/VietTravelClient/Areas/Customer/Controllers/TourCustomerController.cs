@@ -10,6 +10,8 @@ using VietTravelClient.Models;
 
 namespace VietTravelClient.Areas.Customer.Controllers
 {
+    [Area("Customer")]
+    [Route("/customer")]
     public class TourCustomerController : Controller
     {
         private readonly ILogger<HomeCustomerController> _logger;

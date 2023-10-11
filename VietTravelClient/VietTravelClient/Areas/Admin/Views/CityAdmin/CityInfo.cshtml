@@ -9,7 +9,7 @@
     <div class="row" style="margin-top: 20px;">
         <div class="media col-12 col-sm-12 col-md-12 border" style="margin-left: 10px; margin-right: 10px;">
             <img class="mr-3 rounded order-0 col-4 col-sm-4 col-md-4"
-                 src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg">
+                 src="~/UploadImage/@(city.Pictures)" style="width: 100%; height: 600px;">
             <div class="media-body col-8 col-sm-8 col-md-8 " style="margin-top: 40px;">
                 <div class="row">
                     <div class="mt-0 text-info font-italic col-6 col-sm-6 col-md-6 border-bottom" style="font-size: 40px;">
@@ -20,7 +20,7 @@
                          style="font-size: 20px; margin-bottom: 100px;">
                         VIET TRAVEL
                     </div>
-                    <form asp-area="Admin" asp-controller="CityAdmin" asp-action="UpdateCity" class="col-12 col-sm-12 col-md-12">
+                    <form asp-area="Admin" asp-controller="CityAdmin" asp-action="UpdateCity" class="col-12 col-sm-12 col-md-12" method="post" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tên thành phố du lịch<span style="color: red;">*</span></label>
@@ -29,7 +29,7 @@
                             </div>
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tải ảnh</label>
-                                <input type="file" name="" id="Picture" class="btn btn-info col-12 col-sm-12 col-md-12 border-dark rounded" style="height:60px;">
+                                <input type="file" name="file" id="Picture" class="btn btn-info col-12 col-sm-12 col-md-12 border-dark rounded" style="height:60px;">
                             </div>
                         </div>
                         <div class="row">

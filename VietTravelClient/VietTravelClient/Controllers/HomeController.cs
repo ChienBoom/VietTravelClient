@@ -27,6 +27,8 @@ namespace VietTravelClient.Controllers
             domailServer = _configuration["DomainServer"];
         }
 
+        //[HttpGet]
+        //[Route("/home")]
         public async Task<IActionResult> Home()
         {
             string urlCity = domailServer + "city";

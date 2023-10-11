@@ -163,7 +163,6 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 ResponseData response = await _callApi.GetApi(url);
                 string result = response.Data;
                 city = JsonConvert.DeserializeObject<City>(result);
-                city.Pictures = uploadPath + city.Pictures;
                 ViewData["City"] = city;
                 return View();
             }

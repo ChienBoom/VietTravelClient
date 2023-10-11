@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
 using VietTravelClient.Common;
 using VietTravelClient.Models;
+using static Microsoft.EntityFrameworkCore.Internal.AsyncLock;
 
 namespace VietTravelClient.Controllers
 {
@@ -22,11 +25,39 @@ namespace VietTravelClient.Controllers
             domailServer = _configuration["DomainServer"];
         }
 
+        [HttpGet]
+        [Route("/forgotPassword")]
         public IActionResult ForgotPassword()
         {
             return View();
         }
 
+        [HttpGet]
+        [Route("recoverPassword")]
+        public async Task<IActionResult> RecoverPassword(string EmailAccount)
+        {
+            string url = domailServer + "recoverPassword";
+            try
+            {
+                Account account = new Account();
+                account.Username = EmailAccount;
+                account.Password = "ForgotPassword";
+                string stringAccount = JsonConvert.SerializeObject(account);
+                ResponseData responseData = await _callApi.PostApi(url, stringAccount);
+                if (responseData.Success)
+                {
+                    return RedirectToAction("Login");
+                }
+                return RedirectToAction("Error", "Home");
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        [HttpGet]
+        [Route("/login")]
         public IActionResult Login(int status, string username, string password)
         {
             ViewData["Status"] = status;
@@ -36,6 +67,7 @@ namespace VietTravelClient.Controllers
         }
 
         [HttpPost]
+        [Route("/checkLogin")]
         public async Task<IActionResult> CheckLogin(Account value)
         {
             string url = domailServer + "checkLogin";

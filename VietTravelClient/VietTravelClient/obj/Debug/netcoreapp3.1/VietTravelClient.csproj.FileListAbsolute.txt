@@ -130,7 +130,6 @@ E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.pdb
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.genruntimeconfig.cache
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Home\Home.cshtml.g.cs
-E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Login\ConfirmEmail.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Login\ForgotPassword.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Login\Login.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Register\ConfirmEmail.cshtml.g.cs
@@ -138,7 +137,6 @@ E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Register\RegisterInfo.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\CityAdmin\AddCity.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\CityAdmin\CityManager.cshtml.g.cs
-E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\CityAdmin\SearchCityTourDetail.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HotelAdmin\AddHotel.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HotelAdmin\HotelManager.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Shared\Error.cshtml.g.cs
@@ -181,3 +179,4 @@ E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\TourCustomer\SearchTourDetail.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\TourCustomer\TourDetail.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\TourCustomer\TourManager.cshtml.g.cs
+E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\TourGuideAdmin\TourGuideManager.cshtml.g.cs

@@ -10,14 +10,14 @@ using VietTravelClient.Models;
 
 namespace VietTravelClient.Controllers
 {
-    public class TourCustomerController : Controller
+    public class TourController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domailServer;
 
-        public TourCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
+        public TourController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
             _logger = logger;
             _callApi = callApi;
