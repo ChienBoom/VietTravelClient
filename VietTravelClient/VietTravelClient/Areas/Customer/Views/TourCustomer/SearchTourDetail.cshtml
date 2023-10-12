@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Cho tiết Tour";
+    ViewData["Title"] = "Chi tiết Tour";
     Tour tour = (Tour)ViewData["Tour"];
     List<TourPackage> tourPackages = (List<TourPackage>)ViewData["TourPackages"];
     List<Hotel> hotels = (List<Hotel>)ViewData["Hotels"];
@@ -12,7 +12,7 @@
 <body>
     <div class="row" style="margin-top: 20px;">
         <div class="media col-12 col-sm-12 col-md-12 border" style="margin-left: 10px; margin-right: 10px;">
-            <img class="mr-3 rounded order-0 col-6 col-sm-6 col-md-6" src="~/UploadImage/danangcity.jpg">
+            <img class="mr-3 rounded order-0 col-6 col-sm-6 col-md-6" src="~/UploadImage/@(tour.Pictures)" style="height:600px; width:100%">
             <div class="media-body col-6" style="margin-top: 40px;">
                 <div class="row">
                     <h1 class="mt-0 text-info font-italic col-12 col-sm-12 col-md-12">
@@ -20,14 +20,6 @@
                         <h3 class="mt-0 text-info font-italic col-12 col-sm-12 col-md-12">
                             @tour.TitleIntroduct
                         </h3>
-                        <!-- <h4 class="mt-0 text-info font-italic col-12 col-sm-12 col-md-12">Giới thiệu về du lịch Nha
-                            Trang - thành phố biển
-                            miền Trung
-                            không chỉ đi vào thơ,
-                            hoạ mà còn “được lòng” du khách với những gì đẹp nhất của một vùng duyên hải.
-                            Nha Trang, hòn ngọc quý của tỉnh Khánh Hòa luôn là một điểm sáng trên bản đồ du lịch Việt,
-                            thu
-                            hút đông đảo du khách trong nước và quốc tế.</h4> -->
                         <div class="col-10 col-sm-10 col-md-10" style="padding-top: 50px;">
                             <label for="" class="font-italic text-info">Lựa chọn Tour theo gói hoặc đơn lẻ</label>
                             <div class="col-12 col-sm-12 col-md-12">

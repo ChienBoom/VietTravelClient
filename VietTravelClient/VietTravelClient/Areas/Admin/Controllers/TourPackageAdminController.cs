@@ -8,6 +8,7 @@ using System;
 using VietTravelClient.Common;
 using VietTravelClient.Controllers;
 using VietTravelClient.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace VietTravelClient.Areas.Admin.Controllers
 {
@@ -36,6 +37,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("addTourPackage")]
         public async Task<IActionResult> AddTourPackage()
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlTours = domailServer + "tour";
             string urlHotels = domailServer + "hotel";
             string urlTimePackage = domailServer + "timepackage";
@@ -49,6 +52,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
                     ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotels.Data);
                     ViewData["TimePackages"] = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackages.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
                     return View()
 ;
                 }

@@ -25,7 +25,11 @@ namespace VietTravelClient
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options => options.EnableEndpointRouting = false);
-            services.AddSession();
+            services.AddDistributedMemoryCache();
+            services.AddSession(cfg => {
+                cfg.Cookie.Name = "viettravel";             
+                cfg.IdleTimeout = new TimeSpan(1, 30, 0);    
+            });
             services.AddHttpClient();
             services.AddTransient<CallApi>();
             services.AddTransient<UploadFile>();

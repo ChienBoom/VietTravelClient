@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -78,6 +79,7 @@ namespace VietTravelClient.Controllers
                 ResponseData responseData = await _callApi.PostApi(url, stringValue);
                 if (responseData.Success)
                 {
+                    HttpContext.Session.SetString("UsernameAccount", value.Username );
                     var roleUser = string.Empty;
                     var controller = string.Empty;
                     switch (responseData.Data)
@@ -91,7 +93,8 @@ namespace VietTravelClient.Controllers
                             controller = "HomeCustomer";
                             break;
                     }
-                    return RedirectToAction("Home", new { area = roleUser, controller = controller, UsernameAccount = UsernameAccount });
+                    //return RedirectToAction("Home", new { area = roleUser, controller = controller, UsernameAccount = UsernameAccount });
+                    return RedirectToAction("Home", new { area = roleUser, controller = controller});
                 }
                 return RedirectToAction("Login", new { status = 1, username = value.Username, password = value.Password });
             }

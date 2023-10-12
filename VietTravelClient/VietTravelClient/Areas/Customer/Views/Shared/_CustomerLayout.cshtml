@@ -24,10 +24,10 @@
                         <a class="nav-link text-light" asp-area="Customer" asp-controller="HomeCustomer" asp-action="Home">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="Customer" asp-controller="CityCustomer" asp-action="Cities">Thành phố</a>
+                        <a class="nav-link text-light" asp-area="Customer" asp-controller="CityCustomer" asp-action="CityManager">Thành phố</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="Customer" asp-controller="TourCustomer" asp-action="Tours">Tour</a>
+                        <a class="nav-link text-light" asp-area="Customer" asp-controller="TourCustomer" asp-action="TourManager">Tour</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-area="Customer" asp-controller="HomeCustomer" asp-action="Contact">Liên hệ</a>
@@ -41,9 +41,9 @@
                 <div class="btn-group">
                     <div class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">@ViewData["UsernameAccount"]</div>
                     <div class="dropdown-menu rounded">
-                        <a class="dropdown-item text-info" asp-controller="Logout" asp-action="Logout">Đăng xuất</a>
+                        <a class="dropdown-item text-info" asp-area="Customer" asp-controller="HomeCustomer" asp-action="Logout">Đăng xuất</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-info" asp-controller="HomeAdmin" asp-action="AccountManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Quản lý tài khoản</a>
+                        <a class="dropdown-item text-info" asp-area="Customer" asp-controller="HomeCustomer" asp-action="AccountManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Quản lý tài khoản</a>
                     </div>
                 </div>
             </div>

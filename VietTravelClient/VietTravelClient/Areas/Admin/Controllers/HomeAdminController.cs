@@ -8,6 +8,7 @@ using System;
 using VietTravelClient.Common;
 using VietTravelClient.Controllers;
 using VietTravelClient.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace VietTravelClient.Areas.Admin.Controllers
 {
@@ -30,8 +31,10 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("home")]
-        public async Task<IActionResult> Home(string UsernameAccount)
+        public async Task<IActionResult> Home()
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domailServer + "city";
             string urlTour = domailServer + "tour";
             try
@@ -42,7 +45,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCity.Data);
                     ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseDataTour.Data);
-                    ViewData["UsernameAccount"] = UsernameAccount;
+                    ViewData["UsernameAccount"] = usernameAccount;
                     return View()
 ;
                 }
@@ -55,9 +58,45 @@ namespace VietTravelClient.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Route("accountManager")]
+        public async Task<IActionResult> AccountManager()
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            string url = domailServer + "user/searchUserByUsername/" + usernameAccount;
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    return View()
+;
+                }
+                return RedirectToAction("Error", "Home");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        [HttpGet]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Login");
+        }
+
+        [HttpGet]
         [Route("revenueStatisticsDetail")]
         public IActionResult RevenueStatisticsDetail()
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            ViewData["UsernameAccount"] = usernameAccount;
             return View();
         }
 

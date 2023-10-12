@@ -8,6 +8,7 @@ using System;
 using VietTravelClient.Common;
 using VietTravelClient.Controllers;
 using VietTravelClient.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace VietTravelClient.Areas.Customer.Controllers
 {
@@ -32,6 +33,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("cityDetail")]
         public async Task<IActionResult> CityDetail(string cityId)
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domailServer + "city/" + cityId;
             string urlTour = domailServer + "tour/searchByCityId/" + cityId;
             City city = new City();
@@ -46,6 +49,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
+                    ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
                 return RedirectToAction("Error");
@@ -61,6 +65,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("searchCityDetail")]
         public async Task<IActionResult> SearchCityDetail(string searchCitySelect)
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domailServer + "city/" + searchCitySelect;
             string urlTour = domailServer + "tour/searchByCityId/" + searchCitySelect;
             City city = new City();
@@ -75,6 +81,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
+                    ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
                 return RedirectToAction("Error");
@@ -89,6 +96,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("cityManager")]
         public async Task<IActionResult> CityManager()
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domailServer + "city";
             try
             {
@@ -96,6 +105,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 if (responseData.Success)
                 {
                     ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseData.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
                     return View()
 ;
                 }
@@ -112,6 +122,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("searchCity")]
         public async Task<IActionResult> SearchCity(string searchValue)
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
             string url = domailServer + "city/search/" + searchValue;
             List<City> cities = new List<City>();
@@ -121,6 +133,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 string result = responseData.Data;
                 cities = JsonConvert.DeserializeObject<List<City>>(result);
                 ViewData["cities"] = cities;
+                ViewData["UsernameAccount"] = usernameAccount;
                 return View();
             }
             catch (Exception e)

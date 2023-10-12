@@ -8,6 +8,7 @@ using System;
 using VietTravelClient.Common;
 using VietTravelClient.Controllers;
 using VietTravelClient.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace VietTravelClient.Areas.Customer.Controllers
 {
@@ -30,8 +31,10 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         [HttpGet]
         [Route("home")]
-        public async Task<IActionResult> Home(string usernameAccount)
+        public async Task<IActionResult> Home()
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domailServer + "city";
             string urlTour = domailServer + "tour";
             try
@@ -52,6 +55,39 @@ namespace VietTravelClient.Areas.Customer.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
+        }
+
+        [HttpGet]
+        [Route("accountManager")]
+        public async Task<IActionResult> AccountManager()
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            string url = domailServer + "user/searchUserByUsername/" + usernameAccount;
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    return View()
+;
+                }
+                return RedirectToAction("Error", "Home");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        [HttpGet]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Login");
         }
 
         [HttpGet]

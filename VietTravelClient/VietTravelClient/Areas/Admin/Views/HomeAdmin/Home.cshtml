@@ -13,14 +13,14 @@
             </div>
             <div class="col-10" style="margin-top: 40px; margin-left: 40px;">
                 <div class="row">
-                    <a href="cityManager" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý thành phố</a>
+                    <a asp-area="Admin" asp-controller="CityAdmin" asp-action="CityManage" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý thành phố</a>
                     <div class="col-2 col-sm-2 col-md-2"></div>
-                    <a href="tourManager" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý tour</a>
+                    <a asp-area="Admin" asp-controller="TourAdmin" asp-action="TourManage" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý tour</a>
                 </div>
                 <div class="row">
-                    <a href="hotelManager" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý khách sạn</a>
+                    <a asp-area="Admin" asp-controller="HotelAdmin" asp-action="HotelManage" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý khách sạn</a>
                     <div class="col-2 col-sm-2 col-md-2"></div>
-                    <a href="tourPackageManager" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý gói tour</a>
+                    <a asp-area="Admin" asp-controller="TourPackageAdmin" asp-action="TourPackageManage" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý gói tour</a>
                 </div>
                 <div class="row">
                     <a href="tourGuideManager" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý hướng dẫn viên</a>
@@ -32,10 +32,10 @@
                     <div class="btn-group dropright col-10 col-sm-10 col-md-10">
                         <div class="btn btn-outline-info dropdown-toggle dropdown-toggle-split col-12" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;" data-toggle="dropdown">Thống kê  </div>
                         <div class="dropdown-menu rounded">
-                            <a class="dropdown-item text-info" style="height:60px;" asp-controller="Logout" asp-action="Logout">Thống kê theo tháng</a>
-                            <a class="dropdown-item text-info" style="height:60px;" asp-controller="Logout" asp-action="Logout">Thống kê theo Tour</a>
+                            <a class="dropdown-item text-info" style="height:60px;" asp-area="Admin" asp-controller="HomeAdmin" asp-action="RevenueStatisticDetail">Thống kê theo tháng</a>
+                            <a class="dropdown-item text-info" style="height:60px;" asp-area="Admin" asp-controller="HomeAdmin" asp-action="RevenueStatisticDetail">Thống kê theo Tour</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-info" style="height:60px;" asp-controller="HomeAdmin" asp-action="AccountManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Thống kê theo gói</a>
+                            <a class="dropdown-item text-info" style="height:60px;" asp-area="Admin" asp-controller="HomeAdmin" asp-action="RevenueStatisticDetail">Thống kê theo gói</a>
                         </div>
                     </div>
                 </div>

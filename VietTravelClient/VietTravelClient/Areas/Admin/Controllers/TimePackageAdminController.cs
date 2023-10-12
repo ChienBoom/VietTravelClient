@@ -39,6 +39,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("timePackageManager")]
         public async Task<IActionResult> TimePackageManager()
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domailServer + "timepackage";
             try
             {
@@ -46,6 +48,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 if (responseData.Success)
                 {
                     ViewData["TimePackages"] = JsonConvert.DeserializeObject<List<TimePackage>>(responseData.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
                     return View()
 ;
                 }

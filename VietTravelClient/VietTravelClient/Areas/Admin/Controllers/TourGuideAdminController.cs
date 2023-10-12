@@ -8,6 +8,7 @@ using System;
 using VietTravelClient.Common;
 using VietTravelClient.Controllers;
 using VietTravelClient.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace VietTravelClient.Areas.Admin.Controllers
 {
@@ -36,6 +37,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("tourGuideManager")]
         public async Task<IActionResult> TourGuideManager()
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domailServer + "tourGuide";
             string urlCity = domailServer + "city";
             try
@@ -46,6 +49,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCity.Data);
                     ViewData["TourGuides"] = JsonConvert.DeserializeObject<List<TourGuide>>(responseData.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
                     return View()
 ;
                 }

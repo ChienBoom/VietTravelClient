@@ -41,9 +41,9 @@
                 <div class="btn-group">
                     <div class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">@ViewData["UsernameAccount"]</div>
                     <div class="dropdown-menu rounded">
-                        <a class="dropdown-item text-info" asp-controller="Logout" asp-action="Logout">Đăng xuất</a>
+                        <a class="dropdown-item text-info" asp-area="Admin" asp-controller="HomeAdmin" asp-action="Logout">Đăng xuất</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-info" asp-controller="HomeAdmin" asp-action="AccountManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Quản lý tài khoản</a>
+                        <a class="dropdown-item text-info" asp-area="Admin" asp-controller="HomeAdmin" asp-action="AccountManager">Quản lý tài khoản</a>
                     </div>
                 </div>
             </div>

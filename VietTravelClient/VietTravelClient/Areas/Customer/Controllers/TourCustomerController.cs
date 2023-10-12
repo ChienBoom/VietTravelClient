@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System;
 using VietTravelClient.Common;
 using VietTravelClient.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace VietTravelClient.Areas.Customer.Controllers
 {
@@ -31,6 +32,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("tourDetail")]
         public async Task<IActionResult> TourDetail(string tourId)
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlTour = domailServer + "tour/" + tourId;
             string urlTourPackage = domailServer + "tourpackage/searchByTourId/" + tourId;
             string urlTimePackage = domailServer + "timepackage";
@@ -64,6 +67,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                             ViewData["TourPackages"] = tourPackages;
                             ViewData["Hotels"] = hotels;
                             ViewData["TimePackages"] = timePackages;
+                            ViewData["UsernameAccount"] = usernameAccount;
                             return View();
                         }
                         return RedirectToAction("Error");
@@ -86,6 +90,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("searchTourDetail")]
         public async Task<IActionResult> SearchTourDetail(string searchTourSelect)
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlTour = domailServer + "tour/" + searchTourSelect;
             string urlTourPackage = domailServer + "tourpackage/searchByTourId/" + searchTourSelect;
             string urlTimePackage = domailServer + "timepackage";
@@ -119,6 +125,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                             ViewData["TourPackages"] = tourPackages;
                             ViewData["Hotels"] = hotels;
                             ViewData["TimePackages"] = timePackages;
+                            ViewData["UsernameAccount"] = usernameAccount;
                             return View();
                         }
                         return RedirectToAction("Error");
@@ -140,6 +147,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("TourManager")]
         public async Task<IActionResult> TourManager()
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domailServer + "tour";
             try
             {
@@ -147,6 +156,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 if (responseData.Success)
                 {
                     ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseData.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
                     return View()
 ;
                 }
@@ -163,6 +173,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("searchTour")]
         public async Task<IActionResult> SearchTour(string searchValue)
         {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("TourManager");
             string url = domailServer + "tour/search/" + searchValue;
             List<Tour> tours = new List<Tour>();
@@ -172,6 +184,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 string result = responseData.Data;
                 tours = JsonConvert.DeserializeObject<List<Tour>>(result);
                 ViewData["Tours"] = tours;
+                ViewData["UsernameAccount"] = usernameAccount;
                 return View();
             }
             catch (Exception e)
