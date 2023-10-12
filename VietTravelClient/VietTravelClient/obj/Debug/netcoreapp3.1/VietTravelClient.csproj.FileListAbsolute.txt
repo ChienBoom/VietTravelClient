@@ -181,3 +181,8 @@ E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\TourCustomer\TourManager.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\TourGuideAdmin\TourGuideManager.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HomeAdmin\AccountManager.cshtml.g.cs
+E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RestaurantAdmin\AddRestaurant.cshtml.g.cs
+E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RestaurantAdmin\RestaurantInfo.cshtml.g.cs
+E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RestaurantAdmin\RestaurantManager.cshtml.g.cs
+E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RestaurantAdmin\SearchRestaurant.cshtml.g.cs
+E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\HomeCustomer\AccountManager.cshtml.g.cs

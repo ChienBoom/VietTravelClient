@@ -29,20 +29,25 @@ namespace VietTravelClient.Controllers
         [Route("cityDetail")]
         public async Task<IActionResult> CityDetail(string cityId)
         {
+            string urlEva = domailServer + "evaluate/evaCity/" + cityId; 
             string urlCity = domailServer + "city/" + cityId;
             string urlTour = domailServer + "tour/searchByCityId/" + cityId;
             City city = new City();
             List<Tour> tours = new List<Tour>();
+            List<Evaluate> evaluates = new List<Evaluate>();
             try
             {
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
                 ResponseData responseDataTours = await _callApi.GetApi(urlTour);
-                if (responseDataCity.Success && responseDataTours.Success)
+                if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
+                    evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
+                    ViewData["Evaluates"] = evaluates;
                     return View();
                 }
                 return RedirectToAction("Error");
@@ -58,20 +63,25 @@ namespace VietTravelClient.Controllers
         [Route("searchCityDetail")]
         public async Task<IActionResult> SearchCityDetail(string searchCitySelect)
         {
+            string urlEva = domailServer + "evaluate/evaCity/" + searchCitySelect;
             string urlCity = domailServer + "city/" + searchCitySelect;
             string urlTour = domailServer + "tour/searchByCityId/" + searchCitySelect;
             City city = new City();
             List<Tour> tours = new List<Tour>();
+            List<Evaluate> evaluates = new List<Evaluate>();
             try
             {
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
                 ResponseData responseDataTours = await _callApi.GetApi(urlTour);
                 if (responseDataCity.Success && responseDataTours.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
+                    evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
+                    ViewData["Evaluates"] = evaluates;
                     return View();
                 }
                 return RedirectToAction("Error");

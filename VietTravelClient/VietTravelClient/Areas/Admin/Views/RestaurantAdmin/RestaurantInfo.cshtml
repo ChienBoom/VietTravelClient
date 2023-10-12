@@ -2,15 +2,15 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Thông tin Khách sạn";
-    Hotel hotel = (Hotel)ViewData["Hotel"];
+    ViewData["Title"] = "Thông tin Nhà hàng";
+    Restaurant Restaurant = (Restaurant)ViewData["Restaurant"];
     List<City> cities = (List<City>)ViewData["Cities"];
 }
 <body>
     <div class="row" style="margin-top: 20px;">
         <div class="media col-12 col-sm-12 col-md-12 border" style="margin-left: 10px; margin-right: 10px;">
             <img class="mr-3 rounded order-0 col-4 col-sm-4 col-md-4"
-                 src="~/UploadImage/@(hotel.Pictures)" style="width: 100%; height: 600px;">
+                 src="~/UploadImage/@(Restaurant.Pictures)" style="width: 100%; height: 600px;">
             <div class="media-body col-8 col-sm-8 col-md-8 " style="margin-top: 40px;">
                 <div class="row">
                     <div class="mt-0 text-info font-italic col-6 col-sm-6 col-md-6 border-bottom" style="font-size: 40px;">
@@ -21,19 +21,19 @@
                          style="font-size: 20px; margin-bottom: 100px;">
                         VIET TRAVEL
                     </div>
-                    <form asp-area="Admin" asp-controller="HotelAdmin" asp-action="UpdateHotel" class="col-12 col-sm-12 col-md-12" method="post" enctype="multipart/form-data">
+                    <form asp-area="Admin" asp-controller="RestaurantAdmin" asp-action="UpdateRestaurant" class="col-12 col-sm-12 col-md-12" method="post" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tên Khách sạn<span style="color: red;">*</span></label>
                                 <input type="text" id="Name" name="Name" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
-                                       style="height:60px;" value="@hotel.Name">
+                                       style="height:60px;" value="@Restaurant.Name">
                                 <input type="text" id="Id" name="Id" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
-                                       style="height:60px;" value="@hotel.Id" hidden>
+                                       style="height:60px;" value="@Restaurant.Id" hidden>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Vị trí cụ thể<span style="color: red;">*</span></label>
                                 <input type="text" id="Address" name="Address" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
-                                       style="height:60px;" value="@hotel.Address">
+                                       style="height:60px;" value="@Restaurant.Address">
                             </div>
                         </div>
                         <div class="row" style="margin-top: 20px;">
@@ -43,7 +43,7 @@
                                     @{
                                         foreach (City city in cities)
                                         {
-                                            if (city.Id == hotel.CityId)
+                                            if (city.Id == Restaurant.CityId)
                                             {
                                                 <option value="@city.Id" selected>@city.Name</option>
                                             }
@@ -64,23 +64,23 @@
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
                                 <input type="text" id="TitleIntroduct" name="TitleIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
-                                       style="height:60px;" value="@hotel.TitleIntroduct">
+                                       style="height:60px;" value="@Restaurant.TitleIntroduct">
                             </div>
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Số điện thoại<span style="color: red;">*</span></label>
                                 <input type="text" id="PhoneNumber" name="PhoneNumber" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
-                                       style="height:60px;" value="@hotel.PhoneNumber">
+                                       style="height:60px;" value="@Restaurant.PhoneNumber">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Nội dung giới thiệu<span style="color: red;">*</span></label>
-                                <textarea name="ContentIntroduct" id="ContentIntroduct" style="width: 100%;" rows="6" class="border-info rounded">@hotel.ContentIntroduct</textarea>
+                                <textarea name="ContentIntroduct" id="ContentIntroduct" style="width: 100%;" rows="6" class="border-info rounded">@Restaurant.ContentIntroduct</textarea>
                             </div>
                         </div>
                         <div class="row" style="margin-top: 40px;">
                             <div class="col-3 col-sm-3 col-md-3"></div>
-                            <button type="submit" style="height:60px;" class="btn-outline-info rounded col-6 col-sm-6 col-md-6 justify-content-center align-items-center">Cập nhật Khách sạn</button>
+                            <button type="submit" style="height:60px;" class="btn-outline-info rounded col-6 col-sm-6 col-md-6 justify-content-center align-items-center">Cập nhật Nhà hàng</button>
                         </div>
                     </form>
                 </div>

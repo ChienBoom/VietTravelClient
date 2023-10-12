@@ -37,19 +37,23 @@ namespace VietTravelClient.Areas.Customer.Controllers
             string urlTour = domailServer + "tour/" + tourId;
             string urlTourPackage = domailServer + "tourpackage/searchByTourId/" + tourId;
             string urlTimePackage = domailServer + "timepackage";
+            string urlEva = domailServer + "evaluate/evaTour/" + tourId;
             Tour tour = new Tour();
             List<TourPackage> tourPackages = new List<TourPackage>();
             List<TimePackage> timePackages = new List<TimePackage>();
+            List<Evaluate> evaluates = new List<Evaluate>();
             try
             {
                 ResponseData responseDataTour = await _callApi.GetApi(urlTour);
                 ResponseData responseDataTourPackage = await _callApi.GetApi(urlTourPackage);
                 ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
-                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success)
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
+                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success)
                 {
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
                     tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseDataTourPackage.Data);
                     timePackages = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
+                    evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     string urlTourGuide = domailServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
                     string urlHotel = domailServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     List<TourGuide> tourGuides = new List<TourGuide>();
@@ -67,6 +71,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                             ViewData["TourPackages"] = tourPackages;
                             ViewData["Hotels"] = hotels;
                             ViewData["TimePackages"] = timePackages;
+                            ViewData["Evaluates"] = evaluates;
                             ViewData["UsernameAccount"] = usernameAccount;
                             return View();
                         }
@@ -95,19 +100,23 @@ namespace VietTravelClient.Areas.Customer.Controllers
             string urlTour = domailServer + "tour/" + searchTourSelect;
             string urlTourPackage = domailServer + "tourpackage/searchByTourId/" + searchTourSelect;
             string urlTimePackage = domailServer + "timepackage";
+            string urlEva = domailServer + "evaluate/evaTour/" + searchTourSelect;
             Tour tour = new Tour();
             List<TourPackage> tourPackages = new List<TourPackage>();
             List<TimePackage> timePackages = new List<TimePackage>();
+            List<Evaluate> evaluates = new List<Evaluate>();
             try
             {
                 ResponseData responseDataTour = await _callApi.GetApi(urlTour);
                 ResponseData responseDataTourPackage = await _callApi.GetApi(urlTourPackage);
                 ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
-                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success)
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
+                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success)
                 {
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
                     tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseDataTourPackage.Data);
                     timePackages = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
+                    evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     string urlTourGuide = domailServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
                     string urlHotel = domailServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     List<TourGuide> tourGuides = new List<TourGuide>();
@@ -125,6 +134,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                             ViewData["TourPackages"] = tourPackages;
                             ViewData["Hotels"] = hotels;
                             ViewData["TimePackages"] = timePackages;
+                            ViewData["Evaluates"] = evaluates;
                             ViewData["UsernameAccount"] = usernameAccount;
                             return View();
                         }

@@ -36,19 +36,24 @@ namespace VietTravelClient.Areas.Customer.Controllers
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domailServer + "city/" + cityId;
+            string urlEva = domailServer + "evaluate/evaCity/" + cityId;
             string urlTour = domailServer + "tour/searchByCityId/" + cityId;
             City city = new City();
             List<Tour> tours = new List<Tour>();
+            List<Evaluate> evaluates = new List<Evaluate>();
             try
             {
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
                 ResponseData responseDataTours = await _callApi.GetApi(urlTour);
-                if (responseDataCity.Success && responseDataTours.Success)
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
+                if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
+                    evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
+                    ViewData["Evaluates"] = evaluates;
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
@@ -69,18 +74,23 @@ namespace VietTravelClient.Areas.Customer.Controllers
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domailServer + "city/" + searchCitySelect;
             string urlTour = domailServer + "tour/searchByCityId/" + searchCitySelect;
+            string urlEva = domailServer + "evaluate/evaCity/" + searchCitySelect;
             City city = new City();
             List<Tour> tours = new List<Tour>();
+            List<Evaluate> evaluates = new List<Evaluate>();
             try
             {
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
                 ResponseData responseDataTours = await _callApi.GetApi(urlTour);
-                if (responseDataCity.Success && responseDataTours.Success)
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
+                if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
+                    evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
+                    ViewData["Evaluates"] = evaluates;
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
