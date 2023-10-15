@@ -10,6 +10,7 @@ using VietTravelClient.Controllers;
 using VietTravelClient.Models;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
+using UnidecodeSharpCore;
 
 namespace VietTravelClient.Areas.Admin.Controllers
 {
@@ -92,7 +93,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (!searchValue.Trim().Equals("") || searchValue != null)
             {
-                string url = domailServer + "tour/search/" + searchValue;
+                string url = domailServer + "tour/search/" + searchValue.Unidecode();
                 List<Tour> tours = new List<Tour>();
                 try
                 {

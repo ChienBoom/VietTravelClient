@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using VietTravelClient.Controllers;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using UnidecodeSharpCore;
 
 namespace VietTravelClient.Areas.Admin.Controllers
 {
@@ -76,7 +77,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
-            string url = domailServer + "city/search/" + searchValue;
+            string url = domailServer + "city/search/" + searchValue.Unidecode();
             List<City> cities = new List<City>();
             try
             {

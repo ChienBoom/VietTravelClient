@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using UnidecodeSharpCore;
 using VietTravelClient.Common;
 using VietTravelClient.Controllers;
 using VietTravelClient.Models;
@@ -88,7 +89,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (searchValue != null || !searchValue.Trim().Equals(""))
             {
-                string url = domailServer + "restaurant/search/" + searchValue;
+                string url = domailServer + "restaurant/search/" + searchValue.Unidecode();
                 List<Restaurant> restaurants = new List<Restaurant>();
                 try
                 {

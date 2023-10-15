@@ -38,6 +38,7 @@
           "Microsoft.Extensions.Caching.Memory": "3.1.31",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.5",
           "Newtonsoft.Json": "13.0.3",
+          "UnidecodeSharpCore": "2.0.1",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.1.0.0",
@@ -1858,6 +1859,17 @@
           "System.Text.Encoding": "4.3.0",
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0"
+        }
+      },
+      "UnidecodeSharpCore/2.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/UnidecodeSharpCore.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/UnidecodeSharpCore.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -4475,6 +4487,13 @@
       "sha512": "sha512-5zJ0XDxAIg8iy+t4aMnQAu0MqVbqyvfoUVl1yDV61xdo3Vth45oA2FoY4pPkxYAH5f8ixpmTqXeEIya95x0aCQ==",
       "path": "system.xml.xdocument/4.3.0",
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
+    },
+    "UnidecodeSharpCore/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WIuHpys52+IMczwrPGm2tbj2lztEZvi4TrK7Rn6Zc2kykdWt5hKrPCfp/RYmj7WgpAu/hfVj/K9HuoOOM3NqWA==",
+      "path": "unidecodesharpcore/2.0.1",
+      "hashPath": "unidecodesharpcore.2.0.1.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
       "type": "referenceassembly",

@@ -6,6 +6,11 @@
     List<TourGuide> tourGuides = (List<TourGuide>)ViewData["TourGuides"];
     List<City> cities = (List<City>)ViewData["Cities"];
 }
+<style>
+    .modal-dialog{
+        max-width: 800px;
+    }
+</style>
 <body>
     <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
         <div class="col-10"></div>
@@ -13,7 +18,7 @@
             <button class="btn btn-info" data-toggle="modal" data-target="#createTourGuide">Thêm mới </button>
             <div id="createTourGuide" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content" style="padding-left: 40px;">
                         <div class="modal-header">
                             <h4 class="modal-title text-info">THÊM MỚI HƯỚNG DẪN VIÊN</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -21,26 +26,44 @@
                             </button>
                         </div>
                         <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="CreateTourGuide" method="post">
-                            <div class="modal-body">
-                                <label for="Name" class="text-info font-italic">Tên HDV<span style="color: red;">*</span></label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Name" name="Name">
-                                <label for="Sex" class="text-info font-italic">Giới tính<span style="color: red;">*</span></label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Sex" name="Sex">
-                                <label for="Email" class="text-info font-italic">Email<span style="color: red;">*</span></label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Email" name="Email">
-                                <label for="PhoneNumber" class="text-info font-italic">Số điện thoại<span style="color: red;">*</span></label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber">
-                                <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
-                                <select class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="CityId" name="CityId">
-                                    @{
-                                        foreach (City city in cities)
-                                        {
-                                            <option value="@city.Id">@city.Name</option>
-                                        }
-                                    }
-                                </select>
-                                <label for="Address" class="text-info font-italic">Địa chỉ<span style="color: red;">*</span></label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Address" name="Address">
+                            <div class="modal-body row">
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                        <label for="Name" class="text-info font-italic">Tên HDV<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Name" name="Name">
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                        <label for="Sex" class="text-info font-italic">Giới tính<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Sex" name="Sex">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                        <label for="Email" class="text-info font-italic">Email<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Email" name="Email">
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                        <label for="PhoneNumber" class="text-info font-italic">Số điện thoại<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                        <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
+                                        <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityId" name="CityId">
+                                            @{
+                                                foreach (City city in cities)
+                                                {
+                                                    <option value="@city.Id">@city.Name</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                        <label for="Address" class="text-info font-italic">Địa chỉ<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Address" name="Address">
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
@@ -74,7 +97,7 @@
 
                         <div id="readTourGuide@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
-                                <div class="modal-content">
+                                <div class="modal-content" style="padding-left: 40px;">
                                     <div class="modal-header">
                                         <h4 class="modal-title text-info">CHI TIẾT THÔNG TIN HƯỚNG DẪN VIÊN</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -82,30 +105,48 @@
                                         </button>
                                     </div>
                                     <form>
-                                        <div class="modal-body">
-                                            <label for="Name" class="text-info font-italic">Tên HDV</label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name" disabled>
-                                            <label for="Sex" class="text-info font-italic">Giới tính</label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Sex" name="Sex" value="@item.Sex" disabled>
-                                            <label for="Email" class="text-info font-italic">Email</label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Email" name="Email" value="@item.Email" disabled>
-                                            <label for="PhoneNumber" class="text-info font-italic">Số điện thoại</label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber" value="@item.PhoneNumber" disabled>
-                                            <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
-                                            <select class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="CityId" name="CityId" disabled>
-                                                @{
-                                                    foreach (City city in cities)
-                                                    {
-                                                        if (city.Id == item.CityId)
-                                                        {
-                                                            <option value="@city.Id" selected>@city.Name</option>
+                                        <div class="modal-body row">
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="Name" class="text-info font-italic">Tên HDV</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name" disabled>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="Sex" class="text-info font-italic">Giới tính</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Sex" name="Sex" value="@item.Sex" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="Email" class="text-info font-italic">Email</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Email" name="Email" value="@item.Email" disabled>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="PhoneNumber" class="text-info font-italic">Số điện thoại</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber" value="@item.PhoneNumber" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
+                                                    <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityId" name="CityId" disabled>
+                                                        @{
+                                                            foreach (City city in cities)
+                                                            {
+                                                                if (city.Id == item.CityId)
+                                                                {
+                                                                    <option value="@city.Id" selected>@city.Name</option>
+                                                                }
+                                                                <option value="@city.Id">@city.Name</option>
+                                                            }
                                                         }
-                                                        <option value="@city.Id">@city.Name</option>
-                                                    }
-                                                }
-                                            </select>
-                                            <label for="Address" class="text-info font-italic">Địa chỉ</label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Address" name="Address" value="@item.Address" disabled>
+                                                    </select>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="Address" class="text-info font-italic">Địa chỉ</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Address" name="Address" value="@item.Address" disabled>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
@@ -117,7 +158,7 @@
 
                         <div id="updateTourGuide@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
+                                <div class="modal-content" style="padding-left: 40px;">
                                         <div class="modal-header">
                                             <h4 class="modal-title text-info">CẬP NHẬT THÔNG TIN HƯỚNG DẪN VIÊN</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -125,31 +166,49 @@
                                             </button>
                                         </div>
                                     <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="UpdateTourGuide" method="post">
-                                            <div class="modal-body">
-                                            <label for="Name" class="text-info font-italic">Tên HDV<span style="color: red;">*</span></label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name">
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
-                                            <label for="Sex" class="text-info font-italic">Giới tính<span style="color: red;">*</span></label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Sex" name="Sex" value="@item.Sex">
-                                            <label for="Email" class="text-info font-italic">Email<span style="color: red;">*</span></label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Email" name="Email" value="@item.Email">
-                                            <label for="PhoneNumber" class="text-info font-italic">Số điện thoại<span style="color: red;">*</span></label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber" value="@item.PhoneNumber">
-                                            <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
-                                            <select class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="CityId" name="CityId">
-                                                @{
-                                                    foreach (City city in cities)
-                                                    {
-                                                        if (city.Id == item.CityId)
-                                                        {
-                                                            <option value="@city.Id" selected>@city.Name</option>
+                                            <div class="modal-body row">
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="Name" class="text-info font-italic">Tên HDV<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name">
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="Sex" class="text-info font-italic">Giới tính<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Sex" name="Sex" value="@item.Sex">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="Email" class="text-info font-italic">Email<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Email" name="Email" value="@item.Email">
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="PhoneNumber" class="text-info font-italic">Số điện thoại<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber" value="@item.PhoneNumber">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
+                                                    <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityId" name="CityId">
+                                                        @{
+                                                            foreach (City city in cities)
+                                                            {
+                                                                if (city.Id == item.CityId)
+                                                                {
+                                                                    <option value="@city.Id" selected>@city.Name</option>
+                                                                }
+                                                                <option value="@city.Id">@city.Name</option>
+                                                            }
                                                         }
-                                                        <option value="@city.Id">@city.Name</option>
-                                                    }
-                                                }
-                                            </select>
-                                            <label for="Address" class="text-info font-italic">Địa chỉ<span style="color: red;">*</span></label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Address" name="Address" value="@item.Address">
+                                                    </select>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="Address" class="text-info font-italic">Địa chỉ<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Address" name="Address" value="@item.Address">
+                                                </div>
+                                            </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
@@ -162,39 +221,57 @@
 
                         <div id="deleteTourGuide@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
+                                <div class="modal-content" style="padding-left: 40px;">
                                         <div class="modal-header">
                                             <h4 class="modal-title text-info">BẠN CHẮC CHẮN MUỐN XÓA HƯỚNG DẪN VIÊN NÀY?</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="UpdateTourGuide" method="post">
-                                            <div class="modal-body">
-                                            <label for="Name" class="text-info font-italic">Tên HDV</label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name" disabled>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
-                                            <label for="Sex" class="text-info font-italic">Giới tính</label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Sex" name="Sex" value="@item.Sex" disabled>
-                                            <label for="Email" class="text-info font-italic">Email</label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Email" name="Email" value="@item.Email" disabled>
-                                            <label for="PhoneNumber" class="text-info font-italic">Số điện thoại</label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber" value="@item.PhoneNumber" disabled>
-                                            <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
-                                            <select class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="CityId" name="CityId" disabled>
-                                                @{
-                                                    foreach (City city in cities)
-                                                    {
-                                                        if (city.Id == item.CityId)
-                                                        {
-                                                            <option value="@city.Id" selected>@city.Name</option>
+                                    <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="DeleteTourGuide" method="post">
+                                            <div class="modal-body row">
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="Name" class="text-info font-italic">Tên HDV</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name" disabled>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="Sex" class="text-info font-italic">Giới tính</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Sex" name="Sex" value="@item.Sex" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="Email" class="text-info font-italic">Email</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Email" name="Email" value="@item.Email" disabled>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="PhoneNumber" class="text-info font-italic">Số điện thoại</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber" value="@item.PhoneNumber" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
+                                                    <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityId" name="CityId" disabled>
+                                                        @{
+                                                            foreach (City city in cities)
+                                                            {
+                                                                if (city.Id == item.CityId)
+                                                                {
+                                                                    <option value="@city.Id" selected>@city.Name</option>
+                                                                }
+                                                                <option value="@city.Id">@city.Name</option>
+                                                            }
                                                         }
-                                                        <option value="@city.Id">@city.Name</option>
-                                                    }
-                                                }
-                                            </select>
-                                            <label for="Address" class="text-info font-italic">Địa chỉ</label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Address" name="Address" value="@item.Address" disabled>
+                                                    </select>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="Address" class="text-info font-italic">Địa chỉ</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Address" name="Address" value="@item.Address" disabled>
+                                                </div>
+                                            </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>

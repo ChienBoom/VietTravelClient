@@ -1,0 +1,213 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Quản lý sự kiện Tour";
+    List<Event> events = (List<Event>)ViewData["Events"];
+    string tourId = (string)ViewData["TourId"];
+}
+<style>
+    .modal-dialog{
+        max-width: 800px;
+    }
+</style>
+<body>
+    <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+        <div class="col-10"></div>
+        <div class="col-2">
+            <button class="btn btn-info" data-toggle="modal" data-target="#createEvent">Thêm mới </button>
+            <div id="createEvent" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="padding-left: 20px;">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-info">THÊM MỚI EVENT</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form asp-area="Admin" asp-controller="EventAdmin" asp-action="CreateEvent" method="post" enctype="multipart/form-data">
+                            <div class="modal-body row">
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <label for="Title" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
+                                    <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title">
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="margin-right: 44px;">
+                                        <label for="StartTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
+                                        <input type="datetime-local" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTime" name="StartTime">
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 row">
+                                        <label for="EndTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
+                                        <input type="datetime-local" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTime" name="EndTime">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <label for="Pictures" class="text-info font-italic">Thêm ảnh<span style="color: red;">*</span></label>
+                                    <input type="file" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Pictures" name="file">
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <label for="Content" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
+                                    <textarea name="Content" id="Content" style="width: 100%;" rows="6" class="border-info rounded"></textarea>
+                                </div>
+                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                <button type="submit" class="btn btn-primary">Thêm mới</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <table class="col-10 col-sm-10 col-md-10 border" style="border: 1px; border-color: black;">
+            <tr class="">
+                <th style="width : 5%" class="text-center bg-info text-light border">STT</th>
+                <th style="width : 20%" class="text-center bg-info text-light border">Thời gian bắt đầu</th>
+                <th style="width : 20%" class="text-center bg-info text-light border">Thời gian kết thúc</th>
+                <th style="width : 35%" class="text-center bg-info text-light border">Tên Event</th>
+                <th style="width : 20%" class="text-center bg-info text-light border"></th>
+            </tr>
+            @{
+                for(int i=0; i<events.Count; i++)
+                {
+                    Event item = events[i];
+                    <tr>
+                        <td class="text-center border">@(i+1)</td>
+                        <td class="text-center border">@item.StartTime</td>
+                        <td class="text-center border">@item.EndTime </td>
+                        <td class="text-center border">@item.Title</td>
+                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#readEvent@(item.Id)">Xem</button> <button class="btn btn-info" data-toggle="modal" data-target="#updateEvent@(item.Id)">Sửa</button> <button class="btn btn-info" data-toggle="modal" data-target="#deleteEvent@(item.Id)">Xóa</button> </td>
+
+                        <div id="readEvent@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="padding-left: 20px;">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-info">CHI TIẾT THÔNG TIN </h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form>
+                                        <div class="modal-body row">
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <label for="Title" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@item.Title" disable>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="margin-right: 44px;">
+                                                    <label for="StartTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTime" name="StartTime" value="@item.StartTime" disabled>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row">
+                                                    <label for="EndTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTime" name="EndTime" value="@item.EndTime" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <label for="Content" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
+                                                <textarea name="Content" id="Content" style="width: 100%;" rows="6" class="border-info rounded" disabled>@item.Content</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="updateEvent@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="padding-left: 20px;">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-info">CẬP NHẬT THÔNG TIN EVENT</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form asp-area="Admin" asp-controller="EventAdmin" asp-action="UpdateEvent" method="post">
+                                        <div class="modal-body row">
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <label for="Title" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@item.Title">
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="margin-right: 44px;">
+                                                    <label for="StartTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTime" name="StartTime" value="@item.StartTime">
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row">
+                                                    <label for="EndTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTime" name="EndTime" value="@item.EndTime">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <label for="Pictures" class="text-info font-italic">Thêm ảnh<span style="color: red;">*</span></label>
+                                                <input type="file" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Pictures" name="file">
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <label for="Content" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
+                                                <textarea name="Content" id="Content" style="width: 100%;" rows="6" class="border-info rounded">@item.Content</textarea>
+                                            </div>
+                                            <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
+                                            <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="deleteEvent@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="padding-left: 20px;">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-info">BẠN CHẮC CHẮN MUỐN XÓA EVENT NÀY?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form asp-area="Admin" asp-controller="EventAdmin" asp-action="DeleteEvent" method="post">
+                                        <div class="modal-body row">
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <label for="Title" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@item.Title" disable>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="margin-right: 44px;">
+                                                    <label for="StartTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTime" name="StartTime" value="@item.StartTime" disabled>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row">
+                                                    <label for="EndTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTime" name="EndTime" value="@item.EndTime" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <label for="Content" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
+                                                <textarea name="Content" id="Content" style="width: 100%;" rows="6" class="border-info rounded" disabled>@item.Content</textarea>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</body>

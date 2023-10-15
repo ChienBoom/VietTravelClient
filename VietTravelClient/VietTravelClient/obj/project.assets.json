@@ -2544,6 +2544,19 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "UnidecodeSharpCore/2.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/UnidecodeSharpCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/UnidecodeSharpCore.dll": {
+            "related": ".xml"
+          }
+        }
       }
     }
   },
@@ -7631,6 +7644,21 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "UnidecodeSharpCore/2.0.1": {
+      "sha512": "WIuHpys52+IMczwrPGm2tbj2lztEZvi4TrK7Rn6Zc2kykdWt5hKrPCfp/RYmj7WgpAu/hfVj/K9HuoOOM3NqWA==",
+      "type": "package",
+      "path": "unidecodesharpcore/2.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/UnidecodeSharpCore.dll",
+        "lib/net45/UnidecodeSharpCore.xml",
+        "lib/netstandard2.0/UnidecodeSharpCore.dll",
+        "lib/netstandard2.0/UnidecodeSharpCore.xml",
+        "unidecodesharpcore.2.0.1.nupkg.sha512",
+        "unidecodesharpcore.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -7641,7 +7669,8 @@
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.31",
       "Microsoft.Extensions.Caching.Memory >= 3.1.31",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.5",
-      "Newtonsoft.Json >= 13.0.3"
+      "Newtonsoft.Json >= 13.0.3",
+      "UnidecodeSharpCore >= 2.0.1"
     ]
   },
   "packageFolders": {
@@ -7719,6 +7748,10 @@
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
+          },
+          "UnidecodeSharpCore": {
+            "target": "Package",
+            "version": "[2.0.1, )"
           }
         },
         "imports": [
