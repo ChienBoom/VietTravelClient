@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Đăng nhập";
 }
 <body>
     <div class="row" style="padding-top: 20px;">
@@ -11,8 +11,8 @@
                 <img src="~/Icon/logo.jpg" alt="" style="width:100px; height:100px">
                 VIET TRAVEL
             </div>
-            <div class="col-12 col-sm-12 col-md-12 text-info" style="padding-top: 30px; padding-left: 50px;">LOGIN</div>
-            <form asp-controller="Login" asp-action="CheckLogin" method="post" class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; ">
+            <div class="col-12 col-sm-12 col-md-12 text-info" style="padding-top: 30px; padding-left: 50px;">ĐĂNG NHẬP</div>
+            <form asp-controller="Login" asp-action="CheckLogin" method="post" onsubmit="return Validation()" class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; ">
                 @Html.AntiForgeryToken()
                 <div class="" style="padding-top: 20px;">
                     <input type="email" class="col-12 col-sm-12 col-md-12 rounded border-info" name="username" id="username" style="height:60px;" placeholder="NHẬP TÀI KHOẢN" value="@ViewData["Username"]">
@@ -75,6 +75,25 @@
             </div>
         </div>
     </div>
+    @*Modal bootstrap*@
+    <div class="modal" id="Warning">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-info">THÔNG BÁO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="WarningMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
     debugger
@@ -93,6 +112,23 @@
             $("#password").attr("type", "password");
         }
     });
+    function Validation(){
+        var username = $('#username').val();
+        var password = $('#password').val();
+        if(username == ""){
+            ShowMessage("Vui lòng nhập Tài khoản")
+            return false;
+        }
+        if (password == "") {
+            ShowMessage("Vui lòng nhập Mật khẩu")
+            return false;
+        }
+        return true;
+    }
+    function ShowMessage(value){
+        $('#WarningMessage').text(value)
+        $('#Warning').modal('show');
+    }
     //function LoginToAccount(){
     //    var username = $("#username").val();
     //    var password = $("#password").val();

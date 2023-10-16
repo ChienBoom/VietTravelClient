@@ -25,7 +25,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form asp-area="Admin" asp-controller="EventAdmin" asp-action="CreateEvent" method="post" enctype="multipart/form-data">
+                        <form asp-area="Admin" asp-controller="EventAdmin" asp-action="CreateEvent" method="post" enctype="multipart/form-data" onsubmit="return ValidationCre()">
                             <div class="modal-body row">
                                 <div class="col-12 col-sm-12 col-md-12 row">
                                     <label for="Title" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
@@ -129,7 +129,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form asp-area="Admin" asp-controller="EventAdmin" asp-action="UpdateEvent" method="post">
+                                    <form asp-area="Admin" asp-controller="EventAdmin" asp-action="UpdateEvent" method="post" onsubmit="return ValidationUpd()">
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <label for="Title" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
@@ -146,7 +146,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <label for="Pictures" class="text-info font-italic">Thêm ảnh<span style="color: red;">*</span></label>
+                                                <label for="Pictures" class="text-info font-italic">Thêm ảnh</label>
                                                 <input type="file" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Pictures" name="file">
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
@@ -210,4 +210,61 @@
             }
         </table>
     </div>
+
+    @*Modal bootstrap*@
+    <div class="modal" id="Warning">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-info">THÔNG BÁO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="WarningMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+    function ValidationCre() {
+        var title = $('#Title').val();
+        var startTime = $('#StartTime').val();
+        var endTime = $('#EndTime').val();
+        var pictures = $('#Pictures').val();
+        var content = $('#Content').val();
+        if (!ValidationField(title, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
+        if (!ValidationField(startTime, "Vui lòng nhập Thời gian bắt đầu")) return false;
+        if (!ValidationField(endTime, "Vui lòng nhập Thời gian kết thúc")) return false;
+        if (!ValidationField(pictures, "Vui lòng tải ảnh")) return false;
+        if (!ValidationField(content, "Vui lòng nhập Nội dung giới thiệu")) return false;
+        return true;
+    }
+    function ValidationUpd() {
+        var title = $('#Title').val();
+        var startTime = $('#StartTime').val();
+        var endTime = $('#EndTime').val();
+        var content = $('#Content').val();
+        if (!ValidationField(title, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
+        if (!ValidationField(startTime, "Vui lòng nhập Thời gian bắt đầu")) return false;
+        if (!ValidationField(endTime, "Vui lòng nhập Thời gian kết thúc")) return false;
+        if (!ValidationField(content, "Vui lòng nhập Nội dung giới thiệu")) return false;
+        return true;
+    }
+    function ValidationField(value, message) {
+        if (value == "") {
+            ShowMessage(message);
+            return false;
+        }
+        return true;
+    }
+    function ShowMessage(value) {
+        $('#WarningMessage').text(value)
+        $('#Warning').modal('show');
+    }
+</script>

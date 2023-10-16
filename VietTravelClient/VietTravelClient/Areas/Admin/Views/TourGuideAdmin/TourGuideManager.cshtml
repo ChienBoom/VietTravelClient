@@ -25,7 +25,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="CreateTourGuide" method="post">
+                        <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="CreateTourGuide" method="post" onsubmit="return ValidationCre()">
                             <div class="modal-body row">
                                 <div class="col-12 col-sm-12 col-md-12 row">
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
@@ -165,7 +165,7 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="UpdateTourGuide" method="post">
+                                    <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="UpdateTourGuide" method="post" onsubmit="return ValidationUpd()">
                                             <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
@@ -286,4 +286,67 @@
                 }
         </table>
     </div>
+
+    @*Modal bootstrap*@
+    <div class="modal" id="Warning">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="WarningMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+    function ValidationCre() {
+        var name = $('#Name').val();
+        var sex = $('#Sex').val();
+        var email = $('#Email').val();
+        var address = $('#PhoneNumber').val();
+        var cityId = $('#CityId').val();
+        var address = $('#Address').val();
+        if (!ValidationField(name, "Vui lòng nhập Tên HDV")) return false;
+        if (!ValidationField(sex, "Vui lòng chọn giới tính")) return false;
+        if (!ValidationField(email, "Vui lòng nhập Email")) return false;
+        if (!ValidationField(phoneNumber, "Vui lòng nhập Số điện thoại")) return false;
+        if (!ValidationField(cityId, "Vui lòng chọn Thành phố trực thuộc")) return false;
+        if (!ValidationField(address, "Vui lòng nhập Địa chỉ")) return false;
+        return true;
+    }
+    function ValidationUpd() {
+        var name = $('#Name').val();
+        var sex = $('#Sex').val();
+        var email = $('#Email').val();
+        var address = $('#PhoneNumber').val();
+        var cityId = $('#CityId').val();
+        var address = $('#Address').val();
+        if (!ValidationField(name, "Vui lòng nhập Tên HDV")) return false;
+        if (!ValidationField(sex, "Vui lòng chọn giới tính")) return false;
+        if (!ValidationField(email, "Vui lòng nhập Email")) return false;
+        if (!ValidationField(phoneNumber, "Vui lòng nhập Số điện thoại")) return false;
+        if (!ValidationField(cityId, "Vui lòng chọn Thành phố trực thuộc")) return false;
+        if (!ValidationField(address, "Vui lòng nhập Địa chỉ")) return false;
+        return true;
+    }
+    function ValidationField(value, message) {
+        if (value == "") {
+            ShowMessage(message);
+            return false;
+        }
+        return true;
+    }
+    function ShowMessage(value) {
+        $('#WarningMessage').text(value)
+        $('#Warning').modal('show');
+    }
+</script>
