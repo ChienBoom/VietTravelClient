@@ -16,5 +16,6 @@ namespace VietTravelClient.Models
 		public string ContentIntroduct { get; set; }
         public long CityId { get; set; }
         public string Pictures { get; set; }
-	}
+        public string UniCodeName { get; set; }
+    }
 }

@@ -11,6 +11,7 @@ using VietTravelClient.Controllers;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using UnidecodeSharpCore;
+using static Microsoft.EntityFrameworkCore.Internal.AsyncLock;
 
 namespace VietTravelClient.Areas.Admin.Controllers
 {
@@ -47,18 +48,22 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("cityManager")]
-        public async Task<IActionResult> CityManager()
+        public async Task<IActionResult> CityManager(int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "city";
+            string url = domailServer + "city/page/" + page.ToString();
+            string urlTotalPage = domailServer + "city/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                if (responseData.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View()
 ;
                 }
@@ -71,22 +76,40 @@ namespace VietTravelClient.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Route("searchCityPost")]
+        public async Task<IActionResult> SearchCityPost(string searchValue, int page)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            return RedirectToAction("SearchCity", new { area = "Admin", controller = "CityAdmin", searchValue = searchValue, page = page });
+        }
+
+        [HttpGet]
         [Route("searchCity")]
-        public async Task<IActionResult> SearchCity(string searchValue)
+        public async Task<IActionResult> SearchCity(string searchValue, int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
-            string url = domailServer + "city/search/" + searchValue.Unidecode();
+            string url = domailServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
+            string urlTotalPage = domailServer + "search/totalPage" + searchValue.Unidecode();
             List<City> cities = new List<City>();
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                string result = responseData.Data;
-                cities = JsonConvert.DeserializeObject<List<City>>(result);
-                ViewData["UsernameAccount"] = usernameAccount;
-                ViewData["cities"] = cities;
-                return View();
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
+                {
+                    string result = responseData.Data;
+                    cities = JsonConvert.DeserializeObject<List<City>>(result);
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["cities"] = cities;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    ViewData["SearchValue"] = searchValue;
+                    return View();
+                }
+                return RedirectToAction("Error", "Home");
             }
             catch (Exception e)
             {
@@ -122,6 +145,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             string url = domailServer + "city";
             City city = new City();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
+            value.UniCodeName = value.Name.Unidecode();
             value.Pictures = _uploadFile.SaveFile(file).Message;
             try
             {

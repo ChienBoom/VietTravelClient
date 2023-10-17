@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System;
 using VietTravelClient.Common;
 using VietTravelClient.Models;
+using UnidecodeSharpCore;
 
 namespace VietTravelClient.Controllers
 {
@@ -144,17 +145,43 @@ namespace VietTravelClient.Controllers
             }
         }
 
+//        [HttpGet]
+//        [Route("TourManager")]
+//        public async Task<IActionResult> TourManager()
+//        {
+//            string url = domailServer + "tour";
+//            try
+//            {
+//                ResponseData responseData = await _callApi.GetApi(url);
+//                if (responseData.Success)
+//                {
+//                    ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseData.Data);
+//                    return View()
+//;
+//                }
+//                return RedirectToAction("Error", "Home");
+//            }
+//            catch (Exception ex)
+//            {
+//                return RedirectToAction("Error", "Home");
+//            }
+//        }
+
         [HttpGet]
         [Route("TourManager")]
-        public async Task<IActionResult> TourManager()
+        public async Task<IActionResult> TourManager(int page)
         {
-            string url = domailServer + "tour";
+            string url = domailServer + "tour/page/" + page.ToString();
+            string urlTotalPage = domailServer + "tour/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                if (responseData.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseData.Data);
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View()
 ;
                 }
@@ -167,24 +194,62 @@ namespace VietTravelClient.Controllers
         }
 
         //Search với từ khóa là tên của Tour
+        //[HttpPost]
+        //[Route("searchTour")]
+        //public async Task<IActionResult> SearchTour(string searchValue)
+        //{
+        //    if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("TourManager");
+        //    string url = domailServer + "tour/search/" + searchValue;
+        //    List<Tour> tours = new List<Tour>();
+        //    try
+        //    {
+        //        ResponseData responseData = await _callApi.GetApi(url);
+        //        string result = responseData.Data;
+        //        tours = JsonConvert.DeserializeObject<List<Tour>>(result);
+        //        ViewData["Tours"] = tours;
+        //        return View();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return View();
+        //    }
+        //}
+
         [HttpPost]
-        [Route("searchTour")]
-        public async Task<IActionResult> SearchTour(string searchValue)
+        [Route("searchTourPost")]
+        public async Task<IActionResult> SearchTourPost(string searchValue, int page)
         {
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("TourManager");
-            string url = domailServer + "tour/search/" + searchValue;
+            return RedirectToAction("SearchTour", new { controller = "Tour", searchValue = searchValue, page = page });
+        }
+
+        [HttpGet]
+        [Route("searchTour")]
+        public async Task<IActionResult> SearchTour(string searchValue, int page)
+        {
+            if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("TourManager");
+            string url = domailServer + "tour/search/" + searchValue.Unidecode() + "/" + page.ToString();
+            string urlTotalPage = domailServer + "tour/search/totalPage/" + searchValue.Unidecode();
             List<Tour> tours = new List<Tour>();
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                string result = responseData.Data;
-                tours = JsonConvert.DeserializeObject<List<Tour>>(result);
-                ViewData["Tours"] = tours;
-                return View();
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseDataTotalPage.Success && responseData.Success)
+                {
+                    string result = responseData.Data;
+                    tours = JsonConvert.DeserializeObject<List<Tour>>(result);
+                    ViewData["Tours"] = tours;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    ViewData["SearchValue"] = searchValue;
+                    return View();
+                }
+                return RedirectToAction("Error");
             }
             catch (Exception e)
             {
-                return View();
+                return RedirectToAction("Error");
             }
         }
 

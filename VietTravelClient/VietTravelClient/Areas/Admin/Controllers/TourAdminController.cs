@@ -11,6 +11,7 @@ using VietTravelClient.Models;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using UnidecodeSharpCore;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace VietTravelClient.Areas.Admin.Controllers
 {
@@ -62,18 +63,22 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("tourManager")]
-        public async Task<IActionResult> TourManager()
+        public async Task<IActionResult> TourManager(int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "tour";
+            string url = domailServer + "tour/page/" + page.ToString();
+            string urlTotalPage = domailServer + "tour/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                if (responseData.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View()
 ;
                 }
@@ -86,27 +91,45 @@ namespace VietTravelClient.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Route("searchTourPost")]
+        public async Task<IActionResult> SearchTourPost(string searchValue, int page)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            return RedirectToAction("SearchTour", new { area = "Admin", controller = "TourAdmin", searchValue = searchValue, page = page });
+        }
+
+        [HttpGet]
         [Route("searchTour")]
-        public async Task<IActionResult> SearchTour(string searchValue)
+        public async Task<IActionResult> SearchTour(string searchValue, int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (!searchValue.Trim().Equals("") || searchValue != null)
             {
-                string url = domailServer + "tour/search/" + searchValue.Unidecode();
+                string url = domailServer + "tour/search/" + searchValue.Unidecode() + "/" + page.ToString();
+                string urlTotalPage = domailServer + "tour/search/totalPage/" + searchValue.Unidecode();
                 List<Tour> tours = new List<Tour>();
                 try
                 {
                     ResponseData responseData = await _callApi.GetApi(url);
-                    string result = responseData.Data;
-                    tours = JsonConvert.DeserializeObject<List<Tour>>(result);
-                    ViewData["UsernameAccount"] = usernameAccount;
-                    ViewData["Tours"] = tours;
-                    return View();
+                    ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                    if (responseDataTotalPage.Success && responseData.Success)
+                    {
+                        string result = responseData.Data;
+                        tours = JsonConvert.DeserializeObject<List<Tour>>(result);
+                        ViewData["UsernameAccount"] = usernameAccount;
+                        ViewData["Tours"] = tours;
+                        ViewData["CurrentPage"] = page;
+                        ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                        ViewData["SearchValue"] = searchValue;
+                        return View();
+                    }
+                    return RedirectToAction("Error", "Home");
                 }
                 catch (Exception e)
                 {
-                    return View();
+                    return RedirectToAction("Error", "Home");
                 }
             }
             return RedirectToAction("TourManager");
@@ -120,6 +143,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             Tour Tour = new Tour();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.Pictures = _uploadFile.SaveFile(file).Message;
+            value.UniCodeName = value.Name.Unidecode();
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);

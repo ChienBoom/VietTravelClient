@@ -155,18 +155,22 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         [HttpGet]
         [Route("TourManager")]
-        public async Task<IActionResult> TourManager()
+        public async Task<IActionResult> TourManager(int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "tour";
+            string url = domailServer + "tour/page/" + page.ToString();
+            string urlTotalPage = domailServer + "tour/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                if (responseData.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View()
 ;
                 }
@@ -180,26 +184,44 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         //Search với từ khóa là tên của Tour
         [HttpPost]
+        [Route("searchTourPost")]
+        public async Task<IActionResult> SearchTourPost(string searchValue, int page)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            return RedirectToAction("SearchTour", new { area = "Customer", controller = "TourCustomer", searchValue = searchValue, page = page });
+        }
+
+        [HttpGet]
         [Route("searchTour")]
-        public async Task<IActionResult> SearchTour(string searchValue)
+        public async Task<IActionResult> SearchTour(string searchValue, int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("TourManager");
-            string url = domailServer + "tour/search/" + searchValue;
+            string url = domailServer + "tour/search/" + searchValue + "/" + page.ToString();
+            string urlTotalPage = domailServer + "tour/search/totalPage/" + searchValue;
             List<Tour> tours = new List<Tour>();
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                string result = responseData.Data;
-                tours = JsonConvert.DeserializeObject<List<Tour>>(result);
-                ViewData["Tours"] = tours;
-                ViewData["UsernameAccount"] = usernameAccount;
-                return View();
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
+                {
+                    string result = responseData.Data;
+                    tours = JsonConvert.DeserializeObject<List<Tour>>(result);
+                    ViewData["Tours"] = tours;
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["SearchValue"] = searchValue;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    return View();
+                }
+                return RedirectToAction("Error", "Home");
             }
             catch (Exception e)
             {
-                return View();
+                return RedirectToAction("Error", "Home");
             }
         }
 

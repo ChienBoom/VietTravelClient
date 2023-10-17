@@ -4,6 +4,8 @@
 @{
     ViewData["Title"] = "Quản lý thành phố";
     List<City> cities = (List < City>)ViewData["Cities"];
+    int currentPage = (int)ViewData["CurrentPage"];
+    int totalPage = (int)ViewData["TotalPage"];
 }
 <body>
     <div class="row" style="padding-top: 20px;">
@@ -12,10 +14,11 @@
                 <img src="~/Icon/logo.jpg" alt="" style="width:100px; height:100px">
                 VIET TRAVEL
             </div>
-            <form asp-area="Admin" asp-controller="CityAdmin" asp-action="SearchCity" method="post" onsubmit="return Validation()">
+            <form asp-area="Admin" asp-controller="CityAdmin" asp-action="SearchCityPost" method="post" onsubmit="return Validation()">
                 <div class="col-12 col-sm-12 col-md-12 text-info" style="padding-top: 30px; padding-left: 50px;">Tìm kiếm Thành phố<span style="color: red;">*</span></div>
                 <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 20px;">
                     <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" id="searchValue" name="searchValue" placeholder="NHẬP TÊN THÀNH PHỐ" value="">
+                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" id="Page" name="page" value="1" hidden>
                     <button class="col-12 col-sm-12 col-md-12 rounded border-info btn btn-info" style="height:60px; margin-top: 20px;">Tìm kiếm</button>
                 </div>
             </form>
@@ -111,6 +114,33 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row" style="margin-top: 80px;">
+        <ul class="pagination">
+            @{
+                if (currentPage > 1)
+                {
+                    <li class="page-item" id="prePage"><a class="page-link" asp-area="Admin" asp-controller="CityAdmin" asp-action="CityManager" asp-route-page="@(currentPage-1)">Trang trước</a></li>
+                }
+                else
+                {
+                    <li class="page-item" id="prePage"><a class="page-link" href="#">Trang trước</a></li>
+                }
+            }
+            <li class="page-item"><a class="page-link" href="#">@currentPage / @totalPage</a></li>
+            @{
+                if (currentPage < totalPage)
+                {
+                    <li class="page-item" id="nextPage"><a class="page-link" asp-area="Admin" asp-controller="CityAdmin" asp-action="CityManager" asp-route-page="@(currentPage+1)">Trang kế tiếp</a></li>
+                }
+                else
+                {
+                    <li class="page-item" id="nextPage"><a class="page-link" href="#">Trang kế tiếp</a></li>
+                }
+            }
+
+        </ul>
     </div>
 
     @*Modal bootstrap*@

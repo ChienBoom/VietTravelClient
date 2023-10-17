@@ -94,15 +94,19 @@ namespace VietTravelClient.Controllers
 
         [HttpGet]
         [Route("cityManager")]
-        public async Task<IActionResult> CityManager()
+        public async Task<IActionResult> CityManager(int page)
         {
-            string url = domailServer + "city";
+            string url = domailServer + "city/page/" + page.ToString();
+            string urlTotalPage = domailServer + "city/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                if (responseData.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseData.Data);
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View()
 ;
                 }
@@ -116,19 +120,35 @@ namespace VietTravelClient.Controllers
 
         //Search với từ khóa là tên của City
         [HttpPost]
+        [Route("searchCityPost")]
+        public async Task<IActionResult> SearchCityPost(string searchValue, int page)
+        {
+            return RedirectToAction("SearchCity", new { controller = "City", searchValue = searchValue, page = page });
+        }
+
+        [HttpGet]
         [Route("searchCity")]
-        public async Task<IActionResult> SearchCity(string searchValue)
+        public async Task<IActionResult> SearchCity(string searchValue, int page)
         {
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
-            string url = domailServer + "city/search/" + searchValue;
+            string url = domailServer + "city/search/" + searchValue + "/" + page.ToString();
+            string urlTotalPage = domailServer + "search/totalPage" + searchValue;
             List<City> cities = new List<City>();
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                string result = responseData.Data;
-                cities = JsonConvert.DeserializeObject<List<City>>(result);
-                ViewData["cities"] = cities;
-                return View();
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
+                {
+                    string result = responseData.Data;
+                    cities = JsonConvert.DeserializeObject<List<City>>(result);
+                    ViewData["cities"] = cities;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    ViewData["SearchValue"] = searchValue;
+                    return View();
+                }
+                return RedirectToAction("Error", "Home");
             }
             catch (Exception e)
             {

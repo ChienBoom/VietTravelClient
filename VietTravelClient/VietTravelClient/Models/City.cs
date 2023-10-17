@@ -13,6 +13,6 @@ namespace VietTravelClient.Models
         public string TitleIntroduct { get; set; }
         public string ContentIntroduct { get; set; }
 		public List<Tour> Tours { get; set; }
-
-	}
+        public string UniCodeName { get; set; }
+    }
 }

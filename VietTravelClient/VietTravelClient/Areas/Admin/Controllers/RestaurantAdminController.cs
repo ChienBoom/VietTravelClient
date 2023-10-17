@@ -53,23 +53,26 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 return View();
             }
-            return View();
         }
 
         [HttpGet]
         [Route("RestaurantManager")]
-        public async Task<IActionResult> RestaurantManager()
+        public async Task<IActionResult> RestaurantManager(int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "restaurant";
+            string url = domailServer + "restaurant/page/" + page.ToString();
+            string urlTotalPage = domailServer + "restaurant/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                if (responseData.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Restaurants"] = JsonConvert.DeserializeObject<List<Restaurant>>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View()
 ;
                 }
@@ -82,30 +85,44 @@ namespace VietTravelClient.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Route("searchRestaurant")]
-        public async Task<IActionResult> SearchRestaurant(string searchValue)
+        [Route("searchRestaurantPost")]
+        public async Task<IActionResult> SearchRestaurantPost(string searchValue, int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            if (searchValue != null || !searchValue.Trim().Equals(""))
+            return RedirectToAction("SearchRestaurant", new { area = "Admin", controller = "RestaurantAdmin", searchValue = searchValue, page = page });
+        }
+
+        [HttpGet]
+        [Route("searchRestaurant")]
+        public async Task<IActionResult> SearchRestaurant(string searchValue, int page)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            string url = domailServer + "restaurant/search/" + searchValue.Unidecode() + "/" + page.ToString();
+            string urlTotalPage = domailServer + "restaurant/search/totalPage/" + searchValue.Unidecode();
+            List<Restaurant> restaurants = new List<Restaurant>();
+            try
             {
-                string url = domailServer + "restaurant/search/" + searchValue.Unidecode();
-                List<Restaurant> restaurants = new List<Restaurant>();
-                try
+                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
                 {
-                    ResponseData responseData = await _callApi.GetApi(url);
                     string result = responseData.Data;
                     restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(result);
                     ViewData["UsernameAccount"] = usernameAccount;
                     ViewData["Restaurants"] = restaurants;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    ViewData["SearchValue"] = searchValue;
                     return View();
                 }
-                catch (Exception e)
-                {
-                    return View();
-                }
+                return RedirectToAction("Error", "Home");
             }
-            return RedirectToAction("RestaurantManager");
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
@@ -116,6 +133,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             Restaurant restaurant = new Restaurant();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.Pictures = _uploadFile.SaveFile(file).Message;
+            value.UniCodeName = value.Name.Unidecode();
             try
             {
                 value.Description = "";

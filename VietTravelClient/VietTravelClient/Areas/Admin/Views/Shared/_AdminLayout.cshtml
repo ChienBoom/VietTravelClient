@@ -28,16 +28,16 @@
             <div class="col-6 col-sm-6 col-md-6">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="HomeAdmin" asp-action="Home" asp-route-stringAccount="@ViewData["UsernameAccount"]">Trang chủ</a>
+                        <a class="nav-link text-light" asp-controller="HomeAdmin" asp-action="Home">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="CityAdmin" asp-action="CityManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Thành phố</a>
+                        <a class="nav-link text-light" asp-controller="CityAdmin" asp-action="CityManager" asp-route-page="1">Thành phố</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="TourAdmin" asp-action="TourManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Tour</a>
+                        <a class="nav-link text-light" asp-controller="TourAdmin" asp-action="TourManager" asp-route-page="1">Tour</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="HotelAdmin" asp-action="HotelManager" asp-route-stringAccount="@ViewData["UsernameAccount"]">Khách sạn</a>
+                        <a class="nav-link text-light" asp-controller="HotelAdmin" asp-action="HotelManager" asp-route-page="1">Khách sạn</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-controller="HomeAdmin" asp-action="RevenueStatisticsDetail" asp-route-stringAccount="@ViewData["UsernameAccount"]">Thống kê</a>

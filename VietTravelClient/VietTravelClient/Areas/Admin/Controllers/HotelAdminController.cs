@@ -57,18 +57,22 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("hotelManager")]
-        public async Task<IActionResult> HotelManager()
+        public async Task<IActionResult> HotelManager(int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "hotel";
+            string url = domailServer + "hotel/page/" + page.ToString();
+            string urlTotalPage = domailServer + "hotel/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                if (responseData.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View()
 ;
                 }
@@ -81,30 +85,44 @@ namespace VietTravelClient.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Route("searchHotel")]
-        public async Task<IActionResult> SearchHotel(string searchValue)
+        [Route("searchHotelPost")]
+        public async Task<IActionResult> SearchHotelPost(string searchValue, int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            if (searchValue != null || !searchValue.Trim().Equals(""))
+            return RedirectToAction("SearchHotel", new { area = "Admin", controller = "HotelAdmin", searchValue = searchValue, page = page });
+        }
+
+        [HttpGet]
+        [Route("searchHotel")]
+        public async Task<IActionResult> SearchHotel(string searchValue, int page)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            string url = domailServer + "hotel/search/" + searchValue.Unidecode() + "/" + page.ToString();
+            string urlTotalPage = domailServer + "hotel/search/totalPage/" + searchValue.Unidecode();
+            List<Hotel> hotels = new List<Hotel>();
+            try
             {
-                string url = domailServer + "hotel/search/" + searchValue.Unidecode();
-                List<Hotel> hotels = new List<Hotel>();
-                try
+                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
                 {
-                    ResponseData responseData = await _callApi.GetApi(url);
                     string result = responseData.Data;
                     hotels = JsonConvert.DeserializeObject<List<Hotel>>(result);
                     ViewData["UsernameAccount"] = usernameAccount;
                     ViewData["hotels"] = hotels;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    ViewData["SearchValue"] = searchValue;
                     return View();
                 }
-                catch (Exception e)
-                {
-                    return View();
-                }
+                return RedirectToAction("Error", "Home");
             }
-            return RedirectToAction("HotelManager");
+            catch (Exception e)
+            {
+                return View();
+            }
         }
 
         [HttpPost]
@@ -115,6 +133,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             Hotel hotel = new Hotel();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.Pictures = _uploadFile.SaveFile(file).Message;
+            value.UniCodeName = value.Name.Unidecode();
             try
             {
                 value.Description = "";

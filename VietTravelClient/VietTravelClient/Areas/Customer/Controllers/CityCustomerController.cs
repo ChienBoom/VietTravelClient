@@ -9,6 +9,7 @@ using VietTravelClient.Common;
 using VietTravelClient.Controllers;
 using VietTravelClient.Models;
 using Microsoft.AspNetCore.Http;
+using UnidecodeSharpCore;
 
 namespace VietTravelClient.Areas.Customer.Controllers
 {
@@ -104,18 +105,22 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         [HttpGet]
         [Route("cityManager")]
-        public async Task<IActionResult> CityManager()
+        public async Task<IActionResult> CityManager(int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "city";
+            string url = domailServer + "city/page/" + page.ToString();
+            string urlTotalPage = domailServer + "city/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                if (responseData.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View()
 ;
                 }
@@ -129,22 +134,40 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         //Search với từ khóa là tên của City
         [HttpPost]
-        [Route("searchCity")]
-        public async Task<IActionResult> SearchCity(string searchValue)
+        [Route("searchCityPost")]
+        public async Task<IActionResult> SearchCityPost(string searchValue, int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
-            string url = domailServer + "city/search/" + searchValue;
+            return RedirectToAction("SearchCity", new { area = "Customer", controller = "CityCustomer", searchValue = searchValue, page = page });
+        }
+
+        [HttpGet]
+        [Route("searchCity")]
+        public async Task<IActionResult> SearchCity(string searchValue, int page)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            //if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
+            string url = domailServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
+            string urlTotalPage = domailServer + "search/totalPage" + searchValue.Unidecode();
             List<City> cities = new List<City>();
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                string result = responseData.Data;
-                cities = JsonConvert.DeserializeObject<List<City>>(result);
-                ViewData["cities"] = cities;
-                ViewData["UsernameAccount"] = usernameAccount;
-                return View();
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
+                {
+                    string result = responseData.Data;
+                    cities = JsonConvert.DeserializeObject<List<City>>(result);
+                    ViewData["cities"] = cities;
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["SearchValue"] = searchValue;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    return View();
+                }
+                return RedirectToAction("Error", "Home");
             }
             catch (Exception e)
             {
