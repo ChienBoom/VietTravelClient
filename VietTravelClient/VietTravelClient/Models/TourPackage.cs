@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,5 +21,7 @@ namespace VietTravelClient.Models
         public long TourId { get; set; }
         public long HotelId { get; set; }
         public long TimePackageId { get; set; }
+        public string ListScheduleTourPackage { get; set; }
+        public List<ScheduleTourPackage> ScheduleTourPackages { get; set; }
     }
 }

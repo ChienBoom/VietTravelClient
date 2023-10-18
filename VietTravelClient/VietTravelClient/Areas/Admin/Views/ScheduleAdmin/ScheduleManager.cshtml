@@ -1,0 +1,358 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Quản lý địa điểm tham quan";
+    List<Schedule> schedules = (List<Schedule>)ViewData["Schedules"];
+    string tourId = (string)ViewData["TourId"];
+}
+<style>
+    .modal-dialog{
+        max-width: 1000px;
+    }
+</style>
+<body>
+    <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+        <div class="col-10"></div>
+        <div class="col-2">
+            <button class="btn btn-info" data-toggle="modal" data-target="#createTourGuide">Thêm mới </button>
+            <div id="createTourGuide" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="padding-left: 40px;">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-info">THÊM MỚI ĐỊA ĐIỂM THAM QUAN</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form asp-area="Admin" asp-controller="ScheduleAdmin" asp-action="CreateSchedule" method="post" enctype="multipart/form-data" onsubmit="return ValidationCre()">
+                            <div class="modal-body row">
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                        <label for="Title" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title">
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                        <label for="TicketEnable" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
+                                        <select name="TicketEnable" id="TicketEnable" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
+                                            <option value="1">Có</option>
+                                            <option value="0">Không</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                        <label for="PriceTicketAdult" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdult" name="PriceTicketAdult">
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                        <label for="PriceTicketKid" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKid" name="PriceTicketKid">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
+                                        <label for="Pictures" class="text-info font-italic">Tải ảnh<span style="color: red;">*</span></label>
+                                        <input type="file" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Pictures" name="file">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
+                                        <label for="Content" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
+                                        <textarea name="Content" id="Content" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                <button type="submit" class="btn btn-primary">Thêm mới</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <table class="col-10 col-sm-10 col-md-10 border" style="border: 1px; border-color: black;">
+            <tr class="">
+                <th style="width : 5%" class="text-center bg-info text-light border">STT</th>
+                <th style="width : 25%" class="text-center bg-info text-light border">TIÊU ĐỀ GIỚI THIỆU</th>
+                <th style="width : 15%" class="text-center bg-info text-light border">VÉ RA VÀO</th>
+                <th style="width : 35%" class="text-center bg-info text-light border">GIÁ VÉ</th>
+                <th style="width : 20%" class="text-center bg-info text-light border"></th>
+            </tr>
+            @{
+                for(int i=0;i<schedules.Count; i++)
+                {
+                    Schedule schedule = schedules[i];
+                    <tr>
+                        <td class="text-center border">@(i+1)</td>
+                        <td class="text-center border">@schedule.Title</td>
+                        @{
+                            if(schedule.TicketEnable == 1)
+                            {
+                                <td class="text-center border">Có</td>
+                            }
+                            else
+                            {
+                                <td class="text-center border">Không</td>
+                            }
+                        }
+                        <td class="text-center border">@schedule.PriceTicketAdult (VND/Người lớn) - @schedule.PriceTicketKid (VND/Trẻ em)</td>
+                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#detailSchedule@(schedule.Id)">Xem</button> <button class="btn btn-info" data-toggle="modal" data-target="#updateSchedule@(schedule.Id)">Sửa</button> <button class="btn btn-info" data-toggle="modal" data-target="#deleteSchedule@(schedule.Id)">Xóa</button> </td>
+
+                        <div id="detailSchedule@(schedule.Id)" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="padding-left: 40px;">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-info">CHI TIẾT THÔNG TIN ĐỊA ĐIỂM THAM QUAN</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form>
+                                        <div class="modal-body row">
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="Title" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@schedule.Title" disabled>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@schedule.Id" hidden>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="TicketEnable" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
+                                                    <select name="TicketEnable" id="TicketEnable" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" disabled>
+                                                        @{
+                                                            if(schedule.TicketEnable == 1)
+                                                            {
+                                                                <option value="1">Có</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="0">Không</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="PriceTicketAdult" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdult" name="PriceTicketAdult" value="@schedule.PriceTicketAdult" disabled>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="PriceTicketKid" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKid" name="PriceTicketKid" value="@schedule.PriceTicketKid" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
+                                                    <label for="Content" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
+                                                    <textarea name="Content" id="Content" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info" disabled>@schedule.Content</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="updateSchedule@(schedule.Id)" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="padding-left: 40px;">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-info">CẬP NHẬT THÔNG TIN DỊA ĐIỂM THAM QUAN</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form asp-area="Admin" asp-controller="ScheduleAdmin" asp-action="UpdateSchedule" method="post" onsubmit="return ValidationUpd()" enctype="multipart/form-data">
+                                        <div class="modal-body row">
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="Title" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@schedule.Title">
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@schedule.Id" hidden>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="TicketEnable" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
+                                                    <select name="TicketEnable" id="TicketEnable" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" >
+                                                        @{
+                                                            if (schedule.TicketEnable == 1)
+                                                            {
+                                                                <option value="1" selected>Có</option>
+                                                                <option value="0">Không</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="1" >Có</option>
+                                                                <option value="0" selected>Không</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="PriceTicketAdult" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdult" name="PriceTicketAdult" value="@schedule.PriceTicketAdult">
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="PriceTicketKid" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKid" name="PriceTicketKid" value="@schedule.PriceTicketKid">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
+                                                    <label for="Pictures" class="text-info font-italic">Tải ảnh</label>
+                                                    <input type="file" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Pictures" name="file">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
+                                                    <label for="Content" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
+                                                    <textarea name="Content" id="Content" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info">@schedule.Content</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="deleteSchedule@(schedule.Id)" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="padding-left: 40px;">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-info">BẠN CHẮC CHẮN MUỐN XÓA ĐỊA ĐIỂM THAM QUAN NÀY?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form asp-area="Admin" asp-controller="ScheduleAdmin" asp-action="DeleteSchedule" method="post">
+                                        <div class="modal-body row">
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="Title" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@schedule.Title" disabled>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@schedule.Id" hidden>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="TicketEnable" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
+                                                    <select name="TicketEnable" id="TicketEnable" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" disabled>
+                                                        @{
+                                                            if (schedule.TicketEnable == 1)
+                                                            {
+                                                                <option value="1">Có</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="0">Không</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                    <label for="PriceTicketAdult" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdult" name="PriceTicketAdult" value="@schedule.PriceTicketAdult" disabled>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                    <label for="PriceTicketKid" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKid" name="PriceTicketKid" value="@schedule.PriceTicketKid" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
+                                                    <label for="Content" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
+                                                    <textarea name="Content" id="Content" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info" disabled>@schedule.Content</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+
+    <div class="modal" id="Warning">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="WarningMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    //function ValidationCre() {
+    //    var title = $('#Title').val();
+    //    var ticketEnable = $('#TicketEnable').val();
+    //    var priceTicketAdult = $('#PriceTicketAdult').val();
+    //    var priceTicketKid = $('#PriceTicketKid').val();
+    //    var pictures = $('#Pictures').val();
+    //    var Content = $('#Content').val();
+    //    if (!ValidationField(title, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
+    //    if (!ValidationField(ticketEnable, "Vui lòng chọn Vé ra vào")) return false;
+    //    if (!ValidationField(priceTicketAdult, "Vui lòng nhập Giá vé người lớn")) return false;
+    //    if (!ValidationField(priceTicketKid, "Vui lòng nhập Gía vé trẻ em")) return false;
+    //    if (!ValidationField(pictures, "Vui lòng tải ảnh")) return false;
+    //    if (!ValidationField(Content, "Vui lòng nhập Nội dung giới thiệu")) return false;
+    //    return true;
+    //}
+    //function ValidationUpd() {
+    //    var title = $('#Title').val();
+    //    var ticketEnable = $('#TicketEnable').val();
+    //    var priceTicketAdult = $('#PriceTicketAdult').val();
+    //    var priceTicketKid = $('#PriceTicketKid').val();
+    //    var Content = $('#Content').val();
+    //    if (!ValidationField(title, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
+    //    if (!ValidationField(ticketEnable, "Vui lòng chọn Vé ra vào")) return false;
+    //    if (!ValidationField(priceTicketAdult, "Vui lòng nhập Giá vé người lớn")) return false;
+    //    if (!ValidationField(priceTicketKid, "Vui lòng nhập Gía vé trẻ em")) return false;
+    //    if (!ValidationField(Content, "Vui lòng nhập Nội dung giới thiệu")) return false;
+    //    return true;
+    //}
+    //function ValidationField(value, message) {
+    //    if (value == "") {
+    //        ShowMessage(message);
+    //        return false;
+    //    }
+    //    return true;
+    //}
+    //function ShowMessage(value) {
+    //    $('#WarningMessage').text(value)
+    //    $('#Warning').modal('show');
+    //}
+</script>
