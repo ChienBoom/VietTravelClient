@@ -191,3 +191,4 @@ E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\bin\Debug
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\ScheduleAdmin\ScheduleDetail.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\ScheduleAdmin\ScheduleManager.cshtml.g.cs
 E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\ScheduleAdmin\ScheduleUpdate.cshtml.g.cs
+E:\MyProjectPtit\VietTravelClientNet\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\TourPackageAdmin\TourPackageManager.cshtml.g.cs

@@ -21,10 +21,10 @@
                         </div>
                         <form asp-area="Admin" asp-controller="TimePackageAdmin" asp-action="CreateTimePackage" method="post" onsubmit="return ValidationCre()">
                             <div class="modal-body">
-                                <label for="Name" class="text-info font-italic">Nhập tên<span style="color: red;">*</span></label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Name" name="Name">
-                                <label for="Description" class="text-info font-italic">Nhập ghi chú chi tiết<span style="color: red;">*</span></label>
-                                <textarea name="Description" id="Description" cols="30" rows="6" class="col-12 rounded border-info text-info"></textarea>
+                                <label for="NameCre" class="text-info font-italic">Nhập tên<span style="color: red;">*</span></label>
+                                <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="NameCre" name="Name">
+                                <label for="DescriptionCre" class="text-info font-italic">Nhập ghi chú chi tiết<span style="color: red;">*</span></label>
+                                <textarea name="Description" id="DescriptionCre" cols="30" rows="6" class="col-12 rounded border-info text-info"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
@@ -66,11 +66,11 @@
                                     </div>
                                     <form asp-area="Admin" asp-controller="TimePackageAdmin" asp-action="UpdateTimePackage" method="post" onsubmit="return ValidationUpd()">
                                         <div class="modal-body">
-                                            <label for="Name" class="text-info font-italic">Nhập tên<span style="color: red;">*</span></label>
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name">
-                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
-                                            <label for="Description" class="text-info font-italic">Nhập ghi chú chi tiết<span style="color: red;">*</span></label>
-                                            <textarea name="Description" id="Description" cols="30" rows="6" class="col-12 rounded border-info text-info">@item.Description</textarea>
+                                            <label for="NameUpd" class="text-info font-italic">Nhập tên<span style="color: red;">*</span></label>
+                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="NameUpd" name="Name" value="@item.Name">
+                                            <input type="text" class="col-12 rounded border-info text-info" style="height: 40px; margin-bottom: 20px;" id="IdUpd" name="Id" value="@item.Id" hidden>
+                                            <label for="DescriptionUpd" class="text-info font-italic">Nhập ghi chú chi tiết<span style="color: red;">*</span></label>
+                                            <textarea name="Description" id="DescriptionUpd" cols="30" rows="6" class="col-12 rounded border-info text-info">@item.Description</textarea>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
@@ -134,15 +134,15 @@
 </body>
 <script>
     function ValidationCre() {
-        var name = $('#Name').val();
-        var description = $('#Description').val();
+        var name = $('#NameCre').val();
+        var description = $('#DescriptionCre').val();
         if (!ValidationField(name, "Vui lòng nhập Tên gói")) return false;
         if (!ValidationField(description, "Vui lòng nhập Nội dung gói")) return false;
         return true;
     }
     function ValidationUpd() {
-        var name = $('#Name').val();
-        var description = $('#Description').val();
+        var name = $('#NameUpd').val();
+        var description = $('#DescriptionUpd').val();
         if (!ValidationField(name, "Vui lòng nhập Tên gói")) return false;
         if (!ValidationField(description, "Vui lòng nhập Nội dung gói")) return false;
         return true;

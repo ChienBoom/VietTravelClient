@@ -12,5 +12,6 @@
         public long CityId { get; set; }
         public string Pictures { get; set; }
         public string UniCodeName { get; set; }
+        public decimal PriceDefault { get; set; }
     }
 }

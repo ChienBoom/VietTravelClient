@@ -29,28 +29,28 @@
                             <div class="modal-body row">
                                 <div class="col-12 col-sm-12 col-md-12 row">
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                        <label for="Name" class="text-info font-italic">Tên HDV<span style="color: red;">*</span></label>
-                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Name" name="Name">
+                                        <label for="NameCre" class="text-info font-italic">Tên HDV<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameCre" name="Name">
                                     </div>
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                        <label for="Sex" class="text-info font-italic">Giới tính<span style="color: red;">*</span></label>
-                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Sex" name="Sex">
+                                        <label for="SexCre" class="text-info font-italic">Giới tính<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="SexCre" name="Sex">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 row">
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                        <label for="Email" class="text-info font-italic">Email<span style="color: red;">*</span></label>
-                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Email" name="Email">
+                                        <label for="EmailCre" class="text-info font-italic">Email<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="EmailCre" name="Email">
                                     </div>
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                        <label for="PhoneNumber" class="text-info font-italic">Số điện thoại<span style="color: red;">*</span></label>
-                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber">
+                                        <label for="PhoneNumberCre" class="text-info font-italic">Số điện thoại<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumberCre" name="PhoneNumber">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 row">
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                        <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
-                                        <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityId" name="CityId">
+                                        <label for="CityIdCre" class="text-info font-italic">Thành phố hướng dẫn</label>
+                                        <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityIdCre" name="CityId">
                                             @{
                                                 foreach (City city in cities)
                                                 {
@@ -60,8 +60,8 @@
                                         </select>
                                     </div>
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                        <label for="Address" class="text-info font-italic">Địa chỉ<span style="color: red;">*</span></label>
-                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Address" name="Address">
+                                        <label for="AddressCre" class="text-info font-italic">Địa chỉ<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="AddressCre" name="Address">
                                     </div>
                                 </div>
                             </div>
@@ -108,28 +108,28 @@
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="Name" class="text-info font-italic">Tên HDV</label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name" disabled>
+                                                    <label for="NameDet" class="text-info font-italic">Tên HDV</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameDet" name="Name" value="@item.Name" disabled>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="Sex" class="text-info font-italic">Giới tính</label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Sex" name="Sex" value="@item.Sex" disabled>
+                                                    <label for="SexDet" class="text-info font-italic">Giới tính</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="SexDet" name="Sex" value="@item.Sex" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="Email" class="text-info font-italic">Email</label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Email" name="Email" value="@item.Email" disabled>
+                                                    <label for="EmailDet" class="text-info font-italic">Email</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="EmailDet" name="Email" value="@item.Email" disabled>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="PhoneNumber" class="text-info font-italic">Số điện thoại</label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber" value="@item.PhoneNumber" disabled>
+                                                    <label for="PhoneNumberDet" class="text-info font-italic">Số điện thoại</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumberDet" name="PhoneNumber" value="@item.PhoneNumber" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
-                                                    <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityId" name="CityId" disabled>
+                                                    <label for="CityIdDet" class="text-info font-italic">Thành phố hướng dẫn</label>
+                                                    <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityIdDet" name="CityId" disabled>
                                                         @{
                                                             foreach (City city in cities)
                                                             {
@@ -143,8 +143,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="Address" class="text-info font-italic">Địa chỉ</label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Address" name="Address" value="@item.Address" disabled>
+                                                    <label for="AddressDet" class="text-info font-italic">Địa chỉ</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="AddressDet" name="Address" value="@item.Address" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,29 +169,29 @@
                                             <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="Name" class="text-info font-italic">Tên HDV<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name">
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
+                                                    <label for="NameUpd" class="text-info font-italic">Tên HDV<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameUpd" name="Name" value="@item.Name">
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="IdUpd" name="Id" value="@item.Id" hidden>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="Sex" class="text-info font-italic">Giới tính<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Sex" name="Sex" value="@item.Sex">
+                                                    <label for="SexUpd" class="text-info font-italic">Giới tính<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="SexUpd" name="Sex" value="@item.Sex">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="Email" class="text-info font-italic">Email<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Email" name="Email" value="@item.Email">
+                                                    <label for="EmailUpd" class="text-info font-italic">Email<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="EmailUpd" name="Email" value="@item.Email">
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="PhoneNumber" class="text-info font-italic">Số điện thoại<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber" value="@item.PhoneNumber">
+                                                    <label for="PhoneNumberUpd" class="text-info font-italic">Số điện thoại<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumberUpd" name="PhoneNumber" value="@item.PhoneNumber">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
-                                                    <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityId" name="CityId">
+                                                    <label for="CityIdUpd" class="text-info font-italic">Thành phố hướng dẫn</label>
+                                                    <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityIdUpd" name="CityId">
                                                         @{
                                                             foreach (City city in cities)
                                                             {
@@ -205,8 +205,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="Address" class="text-info font-italic">Địa chỉ<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Address" name="Address" value="@item.Address">
+                                                    <label for="AddressUpd" class="text-info font-italic">Địa chỉ<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="AddressUpd" name="Address" value="@item.Address">
                                                 </div>
                                             </div>
                                             </div>
@@ -232,29 +232,29 @@
                                             <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="Name" class="text-info font-italic">Tên HDV</label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Name" name="Name" value="@item.Name" disabled>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
+                                                    <label for="NameDel" class="text-info font-italic">Tên HDV</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameDel" name="Name" value="@item.Name" disabled>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="IdDel" name="Id" value="@item.Id" hidden>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="Sex" class="text-info font-italic">Giới tính</label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Sex" name="Sex" value="@item.Sex" disabled>
+                                                    <label for="SexDel" class="text-info font-italic">Giới tính</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="SexDel" name="Sex" value="@item.Sex" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="Email" class="text-info font-italic">Email</label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Email" name="Email" value="@item.Email" disabled>
+                                                    <label for="EmailDel" class="text-info font-italic">Email</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="EmailDel" name="Email" value="@item.Email" disabled>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="PhoneNumber" class="text-info font-italic">Số điện thoại</label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumber" name="PhoneNumber" value="@item.PhoneNumber" disabled>
+                                                    <label for="PhoneNumberDel" class="text-info font-italic">Số điện thoại</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumberDel" name="PhoneNumber" value="@item.PhoneNumber" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="CityId" class="text-info font-italic">Thành phố hướng dẫn</label>
-                                                    <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityId" name="CityId" disabled>
+                                                    <label for="CityIdDel" class="text-info font-italic">Thành phố hướng dẫn</label>
+                                                    <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityIdDel" name="CityId" disabled>
                                                         @{
                                                             foreach (City city in cities)
                                                             {
@@ -268,8 +268,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="Address" class="text-info font-italic">Địa chỉ</label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Address" name="Address" value="@item.Address" disabled>
+                                                    <label for="AddressDel" class="text-info font-italic">Địa chỉ</label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="AddressDel" name="Address" value="@item.Address" disabled>
                                                 </div>
                                             </div>
                                             </div>
@@ -308,45 +308,45 @@
     </div>
 </body>
 <script>
-    //function ValidationCre() {
-    //    var name = $('#Name').val();
-    //    var sex = $('#Sex').val();
-    //    var email = $('#Email').val();
-    //    var address = $('#PhoneNumber').val();
-    //    var cityId = $('#CityId').val();
-    //    var address = $('#Address').val();
-    //    if (!ValidationField(name, "Vui lòng nhập Tên HDV")) return false;
-    //    if (!ValidationField(sex, "Vui lòng chọn giới tính")) return false;
-    //    if (!ValidationField(email, "Vui lòng nhập Email")) return false;
-    //    if (!ValidationField(phoneNumber, "Vui lòng nhập Số điện thoại")) return false;
-    //    if (!ValidationField(cityId, "Vui lòng chọn Thành phố trực thuộc")) return false;
-    //    if (!ValidationField(address, "Vui lòng nhập Địa chỉ")) return false;
-    //    return true;
-    //}
-    //function ValidationUpd() {
-    //    var name = $('#Name').val();
-    //    var sex = $('#Sex').val();
-    //    var email = $('#Email').val();
-    //    var address = $('#PhoneNumber').val();
-    //    var cityId = $('#CityId').val();
-    //    var address = $('#Address').val();
-    //    if (!ValidationField(name, "Vui lòng nhập Tên HDV")) return false;
-    //    if (!ValidationField(sex, "Vui lòng chọn giới tính")) return false;
-    //    if (!ValidationField(email, "Vui lòng nhập Email")) return false;
-    //    if (!ValidationField(phoneNumber, "Vui lòng nhập Số điện thoại")) return false;
-    //    if (!ValidationField(cityId, "Vui lòng chọn Thành phố trực thuộc")) return false;
-    //    if (!ValidationField(address, "Vui lòng nhập Địa chỉ")) return false;
-    //    return true;
-    //}
-    //function ValidationField(value, message) {
-    //    if (value == "") {
-    //        ShowMessage(message);
-    //        return false;
-    //    }
-    //    return true;
-    //}
-    //function ShowMessage(value) {
-    //    $('#WarningMessage').text(value)
-    //    $('#Warning').modal('show');
-    //}
+    function ValidationCre() {
+        var name = $('#NameCre').val();
+        var sex = $('#SexCre').val();
+        var email = $('#EmailCre').val();
+        var address = $('#PhoneNumberCre').val();
+        var cityId = $('#CityIdCre').val();
+        var address = $('#AddressCre').val();
+        if (!ValidationField(name, "Vui lòng nhập Tên HDV")) return false;
+        if (!ValidationField(sex, "Vui lòng chọn giới tính")) return false;
+        if (!ValidationField(email, "Vui lòng nhập Email")) return false;
+        if (!ValidationField(phoneNumber, "Vui lòng nhập Số điện thoại")) return false;
+        if (!ValidationField(cityId, "Vui lòng chọn Thành phố trực thuộc")) return false;
+        if (!ValidationField(address, "Vui lòng nhập Địa chỉ")) return false;
+        return true;
+    }
+    function ValidationUpd() {
+        var name = $('#NameUpd').val();
+        var sex = $('#SexUpd').val();
+        var email = $('#EmailUpd').val();
+        var address = $('#PhoneNumberUpd').val();
+        var cityId = $('#CityIdUpd').val();
+        var address = $('#AddressUpd').val();
+        if (!ValidationField(name, "Vui lòng nhập Tên HDV")) return false;
+        if (!ValidationField(sex, "Vui lòng chọn giới tính")) return false;
+        if (!ValidationField(email, "Vui lòng nhập Email")) return false;
+        if (!ValidationField(phoneNumber, "Vui lòng nhập Số điện thoại")) return false;
+        if (!ValidationField(cityId, "Vui lòng chọn Thành phố trực thuộc")) return false;
+        if (!ValidationField(address, "Vui lòng nhập Địa chỉ")) return false;
+        return true;
+    }
+    function ValidationField(value, message) {
+        if (value == "") {
+            ShowMessage(message);
+            return false;
+        }
+        return true;
+    }
+    function ShowMessage(value) {
+        $('#WarningMessage').text(value)
+        $('#Warning').modal('show');
+    }
 </script>

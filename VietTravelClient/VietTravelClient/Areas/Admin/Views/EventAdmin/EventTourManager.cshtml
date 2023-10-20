@@ -28,28 +28,28 @@
                         <form asp-area="Admin" asp-controller="EventAdmin" asp-action="CreateEvent" method="post" enctype="multipart/form-data" onsubmit="return ValidationCre()">
                             <div class="modal-body row">
                                 <div class="col-12 col-sm-12 col-md-12 row">
-                                    <label for="Title" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
-                                    <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title">
+                                    <label for="TitleCre" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
+                                    <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TitleCre" name="Title">
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 row">
                                     <div class="col-6 col-sm-6 col-md-6 row" style="margin-right: 44px;">
-                                        <label for="StartTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
-                                        <input type="datetime-local" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTime" name="StartTime">
+                                        <label for="StartTimeCre" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
+                                        <input type="datetime-local" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTimeCre" name="StartTime">
                                     </div>
                                     <div class="col-6 col-sm-6 col-md-6 row">
-                                        <label for="EndTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
-                                        <input type="datetime-local" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTime" name="EndTime">
+                                        <label for="EndTimeCre" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
+                                        <input type="datetime-local" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTimeCre" name="EndTime">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 row">
-                                    <label for="Pictures" class="text-info font-italic">Thêm ảnh<span style="color: red;">*</span></label>
-                                    <input type="file" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Pictures" name="file">
+                                    <label for="PicturesCre" class="text-info font-italic">Thêm ảnh<span style="color: red;">*</span></label>
+                                    <input type="file" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="PicturesCre" name="file">
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 row">
-                                    <label for="Content" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
-                                    <textarea name="Content" id="Content" style="width: 100%;" rows="6" class="border-info rounded"></textarea>
+                                    <label for="ContentCre" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
+                                    <textarea name="Content" id="ContentCre" style="width: 100%;" rows="6" class="border-info rounded"></textarea>
                                 </div>
-                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TourIdCre" name="TourId" value="@tourId" hidden>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
@@ -94,22 +94,22 @@
                                     <form>
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <label for="Title" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
-                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@item.Title" disable>
+                                                <label for="TitleDet" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TitleDet" name="Title" value="@item.Title" disable>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="margin-right: 44px;">
-                                                    <label for="StartTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTime" name="StartTime" value="@item.StartTime" disabled>
+                                                    <label for="StartTimeDet" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTimeDet" name="StartTime" value="@item.StartTime" disabled>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row">
-                                                    <label for="EndTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTime" name="EndTime" value="@item.EndTime" disabled>
+                                                    <label for="EndTimeDet" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTimeDet" name="EndTime" value="@item.EndTime" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <label for="Content" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
-                                                <textarea name="Content" id="Content" style="width: 100%;" rows="6" class="border-info rounded" disabled>@item.Content</textarea>
+                                                <label for="ContentDet" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
+                                                <textarea name="Content" id="ContentDet" style="width: 100%;" rows="6" class="border-info rounded" disabled>@item.Content</textarea>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -132,29 +132,29 @@
                                     <form asp-area="Admin" asp-controller="EventAdmin" asp-action="UpdateEvent" method="post" onsubmit="return ValidationUpd()">
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <label for="Title" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
-                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@item.Title">
+                                                <label for="TitleUpd" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TitleUpd" name="Title" value="@item.Title">
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="margin-right: 44px;">
-                                                    <label for="StartTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTime" name="StartTime" value="@item.StartTime">
+                                                    <label for="StartTimeUpd" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTimeUpd" name="StartTime" value="@item.StartTime">
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row">
-                                                    <label for="EndTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTime" name="EndTime" value="@item.EndTime">
+                                                    <label for="EndTimeUpd" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTimeUpd" name="EndTime" value="@item.EndTime">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <label for="Pictures" class="text-info font-italic">Thêm ảnh</label>
-                                                <input type="file" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Pictures" name="file">
+                                                <label for="PicturesUpd" class="text-info font-italic">Thêm ảnh</label>
+                                                <input type="file" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="PicturesUpd" name="file">
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <label for="Content" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
-                                                <textarea name="Content" id="Content" style="width: 100%;" rows="6" class="border-info rounded">@item.Content</textarea>
+                                                <label for="ContentUpd" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
+                                                <textarea name="Content" id="ContentUpd" style="width: 100%;" rows="6" class="border-info rounded">@item.Content</textarea>
                                             </div>
-                                            <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
-                                            <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                                            <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="IdUpd" name="Id" value="@item.Id" hidden>
+                                            <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TourIdUpd" name="TourId" value="@tourId" hidden>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
@@ -177,22 +177,22 @@
                                     <form asp-area="Admin" asp-controller="EventAdmin" asp-action="DeleteEvent" method="post">
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <label for="Title" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
-                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@item.Title" disable>
+                                                <label for="TitleDel" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TitleDel" name="Title" value="@item.Title" disable>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="margin-right: 44px;">
-                                                    <label for="StartTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTime" name="StartTime" value="@item.StartTime" disabled>
+                                                    <label for="StartTimeDel" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian bắt đầu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTimeDel" name="StartTime" value="@item.StartTime" disabled>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row">
-                                                    <label for="EndTime" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTime" name="EndTime" value="@item.EndTime" disabled>
+                                                    <label for="EndTimeDel" class="col-12 col-sm-12 col-md-12 text-info font-italic">Thời gian kết thúc<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTimeDel" name="EndTime" value="@item.EndTime" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <label for="Content" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
-                                                <textarea name="Content" id="Content" style="width: 100%;" rows="6" class="border-info rounded" disabled>@item.Content</textarea>
+                                                <label for="ContentDel" class="text-info font-italic">Nội dung<span style="color: red;">*</span></label>
+                                                <textarea name="Content" id="ContentDel" style="width: 100%;" rows="6" class="border-info rounded" disabled>@item.Content</textarea>
                                                 <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
                                                 <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
                                             </div>
@@ -216,7 +216,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title text-info">THÔNG BÁO</h4>
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -225,7 +225,7 @@
                     <p id="WarningMessage"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đồng ý</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
                 </div>
             </div>
         </div>
@@ -233,11 +233,11 @@
 </body>
 <script>
     function ValidationCre() {
-        var title = $('#Title').val();
-        var startTime = $('#StartTime').val();
-        var endTime = $('#EndTime').val();
-        var pictures = $('#Pictures').val();
-        var content = $('#Content').val();
+        var title = $('#TitleCre').val();
+        var startTime = $('#StartTimeCre').val();
+        var endTime = $('#EndTimeCre').val();
+        var pictures = $('#PicturesCre').val();
+        var content = $('#ContentCre').val();
         if (!ValidationField(title, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
         if (!ValidationField(startTime, "Vui lòng nhập Thời gian bắt đầu")) return false;
         if (!ValidationField(endTime, "Vui lòng nhập Thời gian kết thúc")) return false;
@@ -246,10 +246,10 @@
         return true;
     }
     function ValidationUpd() {
-        var title = $('#Title').val();
-        var startTime = $('#StartTime').val();
-        var endTime = $('#EndTime').val();
-        var content = $('#Content').val();
+        var title = $('#TitleUpd').val();
+        var startTime = $('#StartTimeUpd').val();
+        var endTime = $('#EndTimeUpd').val();
+        var content = $('#ContentUpd').val();
         if (!ValidationField(title, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
         if (!ValidationField(startTime, "Vui lòng nhập Thời gian bắt đầu")) return false;
         if (!ValidationField(endTime, "Vui lòng nhập Thời gian kết thúc")) return false;

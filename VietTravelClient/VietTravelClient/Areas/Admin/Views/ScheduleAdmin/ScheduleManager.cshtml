@@ -29,13 +29,13 @@
                             <div class="modal-body row">
                                 <div class="col-12 col-sm-12 col-md-12 row">
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                        <label for="Title" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
-                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title">
-                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                                        <label for="TitleCre" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TitleCre" name="Title">
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourIdCre" name="TourId" value="@tourId" hidden>
                                     </div>
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                        <label for="TicketEnable" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
-                                        <select name="TicketEnable" id="TicketEnable" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
+                                        <label for="TicketEnableCre" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
+                                        <select name="TicketEnable" id="TicketEnableCre" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
                                             <option value="1">Có</option>
                                             <option value="0">Không</option>
                                         </select>
@@ -43,24 +43,24 @@
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 row">
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                        <label for="PriceTicketAdult" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
-                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdult" name="PriceTicketAdult">
+                                        <label for="PriceTicketAdultCre" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdultCre" name="PriceTicketAdult">
                                     </div>
                                     <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                        <label for="PriceTicketKid" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
-                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKid" name="PriceTicketKid">
+                                        <label for="PriceTicketKidCre" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
+                                        <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKidCre" name="PriceTicketKid">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 row">
                                     <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
-                                        <label for="Pictures" class="text-info font-italic">Tải ảnh<span style="color: red;">*</span></label>
-                                        <input type="file" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Pictures" name="file">
+                                        <label for="PicturesCre" class="text-info font-italic">Tải ảnh<span style="color: red;">*</span></label>
+                                        <input type="file" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PicturesCre" name="file">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 row">
                                     <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
-                                        <label for="Content" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
-                                        <textarea name="Content" id="Content" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info"></textarea>
+                                        <label for="ContentCre" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
+                                        <textarea name="Content" id="ContentCre" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -117,14 +117,14 @@
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="Title" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@schedule.Title" disabled>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@schedule.Id" hidden>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                                                    <label for="TitleDet" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TitleDet" name="Title" value="@schedule.Title" disabled>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="IdDet" name="Id" value="@schedule.Id" hidden>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourIdDet" name="TourId" value="@tourId" hidden>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="TicketEnable" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
-                                                    <select name="TicketEnable" id="TicketEnable" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" disabled>
+                                                    <label for="TicketEnableDet" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
+                                                    <select name="TicketEnable" id="TicketEnableDet" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" disabled>
                                                         @{
                                                             if(schedule.TicketEnable == 1)
                                                             {
@@ -140,18 +140,18 @@
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="PriceTicketAdult" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdult" name="PriceTicketAdult" value="@schedule.PriceTicketAdult" disabled>
+                                                    <label for="PriceTicketAdultDet" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdultDet" name="PriceTicketAdult" value="@schedule.PriceTicketAdult" disabled>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="PriceTicketKid" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKid" name="PriceTicketKid" value="@schedule.PriceTicketKid" disabled>
+                                                    <label for="PriceTicketKidDet" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKidDet" name="PriceTicketKid" value="@schedule.PriceTicketKid" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
-                                                    <label for="Content" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
-                                                    <textarea name="Content" id="Content" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info" disabled>@schedule.Content</textarea>
+                                                    <label for="ContentDet" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
+                                                    <textarea name="Content" id="ContentDet" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info" disabled>@schedule.Content</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -176,14 +176,14 @@
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="Title" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@schedule.Title">
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@schedule.Id" hidden>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourId" name="TourId" value="@tourId" hidden>
+                                                    <label for="TitleUpd" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TitleUpd" name="Title" value="@schedule.Title">
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="IdUpd" name="Id" value="@schedule.Id" hidden>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourIdUpd" name="TourId" value="@tourId" hidden>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="TicketEnable" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
-                                                    <select name="TicketEnable" id="TicketEnable" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" >
+                                                    <label for="TicketEnableUpd" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
+                                                    <select name="TicketEnable" id="TicketEnableUpd" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
                                                         @{
                                                             if (schedule.TicketEnable == 1)
                                                             {
@@ -201,24 +201,24 @@
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="PriceTicketAdult" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdult" name="PriceTicketAdult" value="@schedule.PriceTicketAdult">
+                                                    <label for="PriceTicketAdultUpd" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdultUpd" name="PriceTicketAdult" value="@schedule.PriceTicketAdult">
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="PriceTicketKid" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKid" name="PriceTicketKid" value="@schedule.PriceTicketKid">
+                                                    <label for="PriceTicketKidUpd" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKidUpd" name="PriceTicketKid" value="@schedule.PriceTicketKid">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
-                                                    <label for="Pictures" class="text-info font-italic">Tải ảnh</label>
-                                                    <input type="file" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Pictures" name="file">
+                                                    <label for="PicturesUpd" class="text-info font-italic">Tải ảnh</label>
+                                                    <input type="file" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PicturesUpd" name="file">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
-                                                    <label for="Content" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
-                                                    <textarea name="Content" id="Content" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info">@schedule.Content</textarea>
+                                                    <label for="ContentUpd" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
+                                                    <textarea name="Content" id="ContentUpd" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info">@schedule.Content</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -244,13 +244,13 @@
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="Title" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Title" name="Title" value="@schedule.Title" disabled>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@schedule.Id" hidden>
+                                                    <label for="TitleDel" class="text-info font-italic">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TitleDel" name="Title" value="@schedule.Title" disabled>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="IdDel" name="Id" value="@schedule.Id" hidden>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="TicketEnable" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
-                                                    <select name="TicketEnable" id="TicketEnable" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" disabled>
+                                                    <label for="TicketEnableDel" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
+                                                    <select name="TicketEnable" id="TicketEnableDel" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" disabled>
                                                         @{
                                                             if (schedule.TicketEnable == 1)
                                                             {
@@ -266,18 +266,18 @@
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="PriceTicketAdult" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdult" name="PriceTicketAdult" value="@schedule.PriceTicketAdult" disabled>
+                                                    <label for="PriceTicketAdultDel" class="text-info font-italic">Gía vé người lớn(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketAdultDel" name="PriceTicketAdult" value="@schedule.PriceTicketAdult" disabled>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="PriceTicketKid" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKid" name="PriceTicketKid" value="@schedule.PriceTicketKid" disabled>
+                                                    <label for="PriceTicketKidDel" class="text-info font-italic">Gía vé trẻ em(VND)<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PriceTicketKidDel" name="PriceTicketKid" value="@schedule.PriceTicketKid" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
-                                                    <label for="Content" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
-                                                    <textarea name="Content" id="Content" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info" disabled>@schedule.Content</textarea>
+                                                    <label for="ContentDel" class="col-12 col-sm-12 col-md-12 text-info font-italic">Nội dung giới thiệu<span style="color: red;">*</span></label>
+                                                    <textarea name="Content" id="ContentDel" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info" disabled>@schedule.Content</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -316,43 +316,43 @@
     </div>
 </body>
 <script>
-    //function ValidationCre() {
-    //    var title = $('#Title').val();
-    //    var ticketEnable = $('#TicketEnable').val();
-    //    var priceTicketAdult = $('#PriceTicketAdult').val();
-    //    var priceTicketKid = $('#PriceTicketKid').val();
-    //    var pictures = $('#Pictures').val();
-    //    var Content = $('#Content').val();
-    //    if (!ValidationField(title, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
-    //    if (!ValidationField(ticketEnable, "Vui lòng chọn Vé ra vào")) return false;
-    //    if (!ValidationField(priceTicketAdult, "Vui lòng nhập Giá vé người lớn")) return false;
-    //    if (!ValidationField(priceTicketKid, "Vui lòng nhập Gía vé trẻ em")) return false;
-    //    if (!ValidationField(pictures, "Vui lòng tải ảnh")) return false;
-    //    if (!ValidationField(Content, "Vui lòng nhập Nội dung giới thiệu")) return false;
-    //    return true;
-    //}
-    //function ValidationUpd() {
-    //    var title = $('#Title').val();
-    //    var ticketEnable = $('#TicketEnable').val();
-    //    var priceTicketAdult = $('#PriceTicketAdult').val();
-    //    var priceTicketKid = $('#PriceTicketKid').val();
-    //    var Content = $('#Content').val();
-    //    if (!ValidationField(title, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
-    //    if (!ValidationField(ticketEnable, "Vui lòng chọn Vé ra vào")) return false;
-    //    if (!ValidationField(priceTicketAdult, "Vui lòng nhập Giá vé người lớn")) return false;
-    //    if (!ValidationField(priceTicketKid, "Vui lòng nhập Gía vé trẻ em")) return false;
-    //    if (!ValidationField(Content, "Vui lòng nhập Nội dung giới thiệu")) return false;
-    //    return true;
-    //}
-    //function ValidationField(value, message) {
-    //    if (value == "") {
-    //        ShowMessage(message);
-    //        return false;
-    //    }
-    //    return true;
-    //}
-    //function ShowMessage(value) {
-    //    $('#WarningMessage').text(value)
-    //    $('#Warning').modal('show');
-    //}
+    function ValidationCre() {
+        var title = $('#TitleCre').val();
+        var ticketEnable = $('#TicketEnableCre').val();
+        var priceTicketAdult = $('#PriceTicketAdultCre').val();
+        var priceTicketKid = $('#PriceTicketKidCre').val();
+        var pictures = $('#PicturesCre').val();
+        var Content = $('#ContentCre').val();
+        if (!ValidationField(title, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
+        if (!ValidationField(ticketEnable, "Vui lòng chọn Vé ra vào")) return false;
+        if (!ValidationField(priceTicketAdult, "Vui lòng nhập Giá vé người lớn")) return false;
+        if (!ValidationField(priceTicketKid, "Vui lòng nhập Gía vé trẻ em")) return false;
+        if (!ValidationField(pictures, "Vui lòng tải ảnh")) return false;
+        if (!ValidationField(Content, "Vui lòng nhập Nội dung giới thiệu")) return false;
+        return true;
+    }
+    function ValidationUpd() {
+        var title = $('#TitleUpd').val();
+        var ticketEnable = $('#TicketEnableUpd').val();
+        var priceTicketAdult = $('#PriceTicketAdultUpd').val();
+        var priceTicketKid = $('#PriceTicketKidUpd').val();
+        var Content = $('#ContentUpd').val();
+        if (!ValidationField(title, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
+        if (!ValidationField(ticketEnable, "Vui lòng chọn Vé ra vào")) return false;
+        if (!ValidationField(priceTicketAdult, "Vui lòng nhập Giá vé người lớn")) return false;
+        if (!ValidationField(priceTicketKid, "Vui lòng nhập Gía vé trẻ em")) return false;
+        if (!ValidationField(Content, "Vui lòng nhập Nội dung giới thiệu")) return false;
+        return true;
+    }
+    function ValidationField(value, message) {
+        if (value == "") {
+            ShowMessage(message);
+            return false;
+        }
+        return true;
+    }
+    function ShowMessage(value) {
+        $('#WarningMessage').text(value)
+        $('#Warning').modal('show');
+    }
 </script>
