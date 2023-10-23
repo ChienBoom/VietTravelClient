@@ -186,20 +186,32 @@
     </div>
 </body>
 <script>
+    //$(document).ready(function () {
+    //    $('#searchCitySelect').select2({
+    //        allowClear: true, // Cho phép xóa lựa chọn hiện tại
+    //        minimumInputLength: 1, // Số ký tự tối thiểu trước khi bắt đầu tìm kiếm
+    //        width: '100%', // Độ rộng của ô tìm kiếm
+    //        theme: 'classic', // Giao diện của Select2 (classic hoặc default)
+    //        // Các tùy chọn khác...
+    //    });
+    //    $('#searchTourSelect').select2({
+    //        allowClear: true, // Cho phép xóa lựa chọn hiện tại
+    //        minimumInputLength: 1, // Số ký tự tối thiểu trước khi bắt đầu tìm kiếm
+    //        width: '100%', // Độ rộng của ô tìm kiếm
+    //        theme: 'classic', // Giao diện của Select2 (classic hoặc default)
+    //        // Các tùy chọn khác...
+    //    });
+    //});
     $(document).ready(function () {
-        $('#searchCitySelect').select2({
-            allowClear: true, // Cho phép xóa lựa chọn hiện tại
-            minimumInputLength: 1, // Số ký tự tối thiểu trước khi bắt đầu tìm kiếm
-            width: '100%', // Độ rộng của ô tìm kiếm
-            theme: 'classic', // Giao diện của Select2 (classic hoặc default)
-            // Các tùy chọn khác...
+        $('#searchCitySelect').selectpicker({
+            liveSearch: true,
+            size: 5,
+            actionsBox: true,
         });
-        $('#searchTourSelect').select2({
-            allowClear: true, // Cho phép xóa lựa chọn hiện tại
-            minimumInputLength: 1, // Số ký tự tối thiểu trước khi bắt đầu tìm kiếm
-            width: '100%', // Độ rộng của ô tìm kiếm
-            theme: 'classic', // Giao diện của Select2 (classic hoặc default)
-            // Các tùy chọn khác...
+        $('#searchTourSelect').selectpicker({
+            liveSearch: true,
+            size: 5,
+            actionsBox: true,
         });
     });
 </script>

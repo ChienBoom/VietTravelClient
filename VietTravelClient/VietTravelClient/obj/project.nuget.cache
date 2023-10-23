@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iPUExqQuj38QUw5/w41vmsnenvw31NbR7hSo3ncn/6nm11aniAR4Vt+Fs0mtRdQlasqlmd+gjOwy18khZqJ7ZA==",
+  "dgSpecHash": "PZ2GkCTl+VJrdPHIzoTGHS/m6KIA4+ivR7dGo6BgRmrj3KFGHizonK0bKMuZKml0hri9p4vjTHfVKi/aLh20Yg==",
   "success": true,
-  "projectFilePath": "E:\\MyProjectPtit\\VietTravelClientNet\\VietTravelClient\\VietTravelClient\\VietTravelClient.csproj",
+  "projectFilePath": "D:\\MyProject\\VietTravelClientDev\\VietTravelClient\\VietTravelClient\\VietTravelClient.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\2.2.0\\microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.aspnetcore.dataprotection\\2.2.0\\microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",

@@ -22,7 +22,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly CallApi _callApi;
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
         private readonly string uploadPath;
 
         public ScheduleAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
@@ -30,7 +30,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
             uploadPath = _configuration["UploadPath"];
             _uploadFile = uploadFile;
         }
@@ -41,7 +41,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "schedule/getByTourId/" + TourId.ToString();
+            string url = domainServer + "schedule/getByTourId/" + TourId.ToString();
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -80,7 +80,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveSchedule")]
         public async Task<IActionResult> CreateSchedule(Schedule value, IFormFile file)
         {
-            string url = domailServer + "schedule";
+            string url = domainServer + "schedule";
             Schedule schedule = new Schedule();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.Pictures = _uploadFile.SaveFile(file).Message;
@@ -105,7 +105,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateSchedule")]
         public async Task<IActionResult> UpdateSchedule(Schedule value, IFormFile file)
         {
-            string url = domailServer + "schedule/" + value.Id.ToString();
+            string url = domainServer + "schedule/" + value.Id.ToString();
             Schedule schedule = new Schedule();
             if (!_uploadFile.SaveFile(file).Success)
             {
@@ -133,7 +133,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteSchedule")]
         public async Task<IActionResult> DeleteSchedule(Schedule value)
         {
-            string url = domailServer + "schedule/" + value.Id.ToString();
+            string url = domainServer + "schedule/" + value.Id.ToString();
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);

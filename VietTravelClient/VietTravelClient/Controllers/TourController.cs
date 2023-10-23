@@ -16,24 +16,24 @@ namespace VietTravelClient.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
 
         public TourController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
         }
 
         [HttpGet]
         [Route("tourDetail")]
         public async Task<IActionResult> TourDetail(string tourId)
         {
-            string urlTour = domailServer + "tour/" + tourId;
-            string urlTourPackage = domailServer + "tourpackage/searchByTourId/" + tourId;
-            string urlTimePackage = domailServer + "timepackage";
-            string urlEva = domailServer + "evaluate/evaTour/" + tourId;
+            string urlTour = domainServer + "tour/" + tourId;
+            string urlTourPackage = domainServer + "tourpackage/searchByTourId/" + tourId;
+            string urlTimePackage = domainServer + "timepackage";
+            string urlEva = domainServer + "evaluate/evaTour/" + tourId;
             Tour tour = new Tour();
             List<TourPackage> tourPackages = new List<TourPackage>();
             List<TimePackage> timePackages = new List<TimePackage>();
@@ -50,8 +50,8 @@ namespace VietTravelClient.Controllers
                     tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseDataTourPackage.Data);
                     timePackages = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
-                    string urlTourGuide = domailServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
-                    string urlHotel = domailServer + "hotel/searchByCityId/" + tour.CityId.ToString();
+                    string urlTourGuide = domainServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
+                    string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     List<TourGuide> tourGuides = new List<TourGuide>();
                     List<Hotel> hotels = new List<Hotel>();
                     try
@@ -90,10 +90,10 @@ namespace VietTravelClient.Controllers
         [Route("searchTourDetail")]
         public async Task<IActionResult> SearchTourDetail(string searchTourSelect)
         {
-            string urlTour = domailServer + "tour/" + searchTourSelect;
-            string urlTourPackage = domailServer + "tourpackage/searchByTourId/" + searchTourSelect;
-            string urlTimePackage = domailServer + "timepackage";
-            string urlEva = domailServer + "evaluate/evaTour/" + searchTourSelect;
+            string urlTour = domainServer + "tour/" + searchTourSelect;
+            string urlTourPackage = domainServer + "tourpackage/searchByTourId/" + searchTourSelect;
+            string urlTimePackage = domainServer + "timepackage";
+            string urlEva = domainServer + "evaluate/evaTour/" + searchTourSelect;
             Tour tour = new Tour();
             List<TourPackage> tourPackages = new List<TourPackage>();
             List<TimePackage> timePackages = new List<TimePackage>();
@@ -110,8 +110,8 @@ namespace VietTravelClient.Controllers
                     tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseDataTourPackage.Data);
                     timePackages = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
-                    string urlTourGuide = domailServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
-                    string urlHotel = domailServer + "hotel/searchByCityId/" + tour.CityId.ToString();
+                    string urlTourGuide = domainServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
+                    string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     List<TourGuide> tourGuides = new List<TourGuide>();
                     List<Hotel> hotels = new List<Hotel>();
                     try
@@ -149,7 +149,7 @@ namespace VietTravelClient.Controllers
 //        [Route("TourManager")]
 //        public async Task<IActionResult> TourManager()
 //        {
-//            string url = domailServer + "tour";
+//            string url = domainServer + "tour";
 //            try
 //            {
 //                ResponseData responseData = await _callApi.GetApi(url);
@@ -171,8 +171,8 @@ namespace VietTravelClient.Controllers
         [Route("TourManager")]
         public async Task<IActionResult> TourManager(int page)
         {
-            string url = domailServer + "tour/page/" + page.ToString();
-            string urlTotalPage = domailServer + "tour/totalPage";
+            string url = domainServer + "tour/page/" + page.ToString();
+            string urlTotalPage = domainServer + "tour/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -199,7 +199,7 @@ namespace VietTravelClient.Controllers
         //public async Task<IActionResult> SearchTour(string searchValue)
         //{
         //    if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("TourManager");
-        //    string url = domailServer + "tour/search/" + searchValue;
+        //    string url = domainServer + "tour/search/" + searchValue;
         //    List<Tour> tours = new List<Tour>();
         //    try
         //    {
@@ -228,8 +228,8 @@ namespace VietTravelClient.Controllers
         public async Task<IActionResult> SearchTour(string searchValue, int page)
         {
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("TourManager");
-            string url = domailServer + "tour/search/" + searchValue.Unidecode() + "/" + page.ToString();
-            string urlTotalPage = domailServer + "tour/search/totalPage/" + searchValue.Unidecode();
+            string url = domainServer + "tour/search/" + searchValue.Unidecode() + "/" + page.ToString();
+            string urlTotalPage = domainServer + "tour/search/totalPage/" + searchValue.Unidecode();
             List<Tour> tours = new List<Tour>();
             try
             {

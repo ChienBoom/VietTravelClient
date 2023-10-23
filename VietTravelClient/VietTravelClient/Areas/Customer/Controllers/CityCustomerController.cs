@@ -20,14 +20,14 @@ namespace VietTravelClient.Areas.Customer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
 
         public CityCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
         }
 
         [HttpGet]
@@ -36,9 +36,9 @@ namespace VietTravelClient.Areas.Customer.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCity = domailServer + "city/" + cityId;
-            string urlEva = domailServer + "evaluate/evaCity/" + cityId;
-            string urlTour = domailServer + "tour/searchByCityId/" + cityId;
+            string urlCity = domainServer + "city/" + cityId;
+            string urlEva = domainServer + "evaluate/evaCity/" + cityId;
+            string urlTour = domainServer + "tour/searchByCityId/" + cityId;
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -73,9 +73,9 @@ namespace VietTravelClient.Areas.Customer.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCity = domailServer + "city/" + searchCitySelect;
-            string urlTour = domailServer + "tour/searchByCityId/" + searchCitySelect;
-            string urlEva = domailServer + "evaluate/evaCity/" + searchCitySelect;
+            string urlCity = domainServer + "city/" + searchCitySelect;
+            string urlTour = domainServer + "tour/searchByCityId/" + searchCitySelect;
+            string urlEva = domainServer + "evaluate/evaCity/" + searchCitySelect;
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -109,8 +109,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "city/page/" + page.ToString();
-            string urlTotalPage = domailServer + "city/totalPage";
+            string url = domainServer + "city/page/" + page.ToString();
+            string urlTotalPage = domainServer + "city/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -149,8 +149,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             //if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
-            string url = domailServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
-            string urlTotalPage = domailServer + "search/totalPage" + searchValue.Unidecode();
+            string url = domainServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
+            string urlTotalPage = domainServer + "search/totalPage" + searchValue.Unidecode();
             List<City> cities = new List<City>();
             try
             {

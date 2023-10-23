@@ -17,22 +17,22 @@ namespace VietTravelClient.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
 
         public HomeController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
         }
 
         //[HttpGet]
         //[Route("/home")]
         public async Task<IActionResult> Home()
         {
-            string urlCity = domailServer + "city";
-            string urlTour = domailServer + "tour";
+            string urlCity = domainServer + "city";
+            string urlTour = domainServer + "tour";
             try
             {
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);

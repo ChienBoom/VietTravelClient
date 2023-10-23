@@ -17,22 +17,22 @@ namespace VietTravelClient.Areas.Customer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
 
         public EvaluateCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
         }
 
         [HttpPost]
         [Route("saveEvaluate")]
         public async Task<IActionResult> SaveEvaluate(Evaluate value, string usernameAccount, string controllerName, string actionName)
         {
-            string url = domailServer + "evaluate";
-            string urlUser = domailServer + "user/searchUserByUsername/" + usernameAccount;
+            string url = domainServer + "evaluate";
+            string urlUser = domainServer + "user/searchUserByUsername/" + usernameAccount;
             User user = new User();
             try
             {

@@ -19,14 +19,14 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
 
         public HomeAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
         }
 
         [HttpGet]
@@ -35,8 +35,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCity = domailServer + "city";
-            string urlTour = domailServer + "tour";
+            string urlCity = domainServer + "city";
+            string urlTour = domainServer + "tour";
             try
             {
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
@@ -63,7 +63,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "user/searchUserByUsername/" + usernameAccount;
+            string url = domainServer + "user/searchUserByUsername/" + usernameAccount;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);

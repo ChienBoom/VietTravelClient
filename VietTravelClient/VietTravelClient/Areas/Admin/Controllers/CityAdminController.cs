@@ -23,7 +23,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly CallApi _callApi;
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
         private readonly string uploadPath;
 
         public CityAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
@@ -31,7 +31,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
             uploadPath = _configuration["UploadPath"];
             _uploadFile = uploadFile;
         }
@@ -52,8 +52,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "city/page/" + page.ToString();
-            string urlTotalPage = domailServer + "city/totalPage";
+            string url = domainServer + "city/page/" + page.ToString();
+            string urlTotalPage = domainServer + "city/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -91,8 +91,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
-            string url = domailServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
-            string urlTotalPage = domailServer + "search/totalPage" + searchValue.Unidecode();
+            string url = domainServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
+            string urlTotalPage = domainServer + "search/totalPage" + searchValue.Unidecode();
             List<City> cities = new List<City>();
             try
             {
@@ -121,7 +121,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         //[Route("searchCityTourDetail")]
         //public async Task<IActionResult> SearchCityTourDetail(string searchCitySelect, string UsernameAccount)
         //{
-        //    string url = domailServer + "search/" + searchCitySelect;
+        //    string url = domainServer + "search/" + searchCitySelect;
         //    City city = new City();
         //    try
         //    {
@@ -142,7 +142,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveCity")]
         public async Task<IActionResult> CreateCity(City value, IFormFile file)
         {
-            string url = domailServer + "city";
+            string url = domainServer + "city";
             City city = new City();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.UniCodeName = value.Name.Unidecode();
@@ -164,7 +164,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateCity")]
         public async Task<IActionResult> UpdateCity(City value, IFormFile file)
         {
-            string url = domailServer + "city/" + value.Id.ToString();
+            string url = domainServer + "city/" + value.Id.ToString();
             City city = new City();
             if (!_uploadFile.SaveFile(file).Success)
             {
@@ -191,7 +191,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "city/" + cityId.ToString();
+            string url = domainServer + "city/" + cityId.ToString();
             City city = new City();
             try
             {
@@ -212,7 +212,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         //[Route("CityById")]
         //public async Task<IActionResult> GetCityById(long id)
         //{
-        //    string url = domailServer + "city/" + id.ToString();
+        //    string url = domainServer + "city/" + id.ToString();
         //    City city = new City();
         //    try
         //    {
@@ -232,7 +232,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteCity")]
         public async Task<IActionResult> DeleteCity(string CityId)
         {
-            string url = domailServer + "city/" + CityId;
+            string url = domainServer + "city/" + CityId;
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);

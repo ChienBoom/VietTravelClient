@@ -23,7 +23,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly CallApi _callApi;
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
         private readonly string uploadPath;
 
         public TourAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
@@ -31,7 +31,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
             _uploadFile = uploadFile;
             uploadPath = _configuration["UploadPath"];
         }
@@ -42,7 +42,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "city";
+            string url = domainServer + "city";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -67,8 +67,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "tour/page/" + page.ToString();
-            string urlTotalPage = domailServer + "tour/totalPage";
+            string url = domainServer + "tour/page/" + page.ToString();
+            string urlTotalPage = domainServer + "tour/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -107,8 +107,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (!searchValue.Trim().Equals("") || searchValue != null)
             {
-                string url = domailServer + "tour/search/" + searchValue.Unidecode() + "/" + page.ToString();
-                string urlTotalPage = domailServer + "tour/search/totalPage/" + searchValue.Unidecode();
+                string url = domainServer + "tour/search/" + searchValue.Unidecode() + "/" + page.ToString();
+                string urlTotalPage = domainServer + "tour/search/totalPage/" + searchValue.Unidecode();
                 List<Tour> tours = new List<Tour>();
                 try
                 {
@@ -139,7 +139,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveTour")]
         public async Task<IActionResult> CreateTour(Tour value, IFormFile file)
         {
-            string url = domailServer + "tour";
+            string url = domainServer + "tour";
             Tour Tour = new Tour();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.Pictures = _uploadFile.SaveFile(file).Message;
@@ -164,8 +164,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCities = domailServer + "city";
-            string urlTour = domailServer + "tour/" + tourId.ToString();
+            string urlCities = domainServer + "city";
+            string urlTour = domainServer + "tour/" + tourId.ToString();
             Tour tour = new Tour();
             try
             {
@@ -188,7 +188,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateTour")]
         public async Task<IActionResult> UpdateTour(Tour value, IFormFile file)
         {
-            string url = domailServer + "tour/" + value.Id.ToString();
+            string url = domainServer + "tour/" + value.Id.ToString();
             Tour city = new Tour();
             if (!_uploadFile.SaveFile(file).Success)
             {
@@ -214,7 +214,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "Tour/" + id.ToString();
+            string url = domainServer + "Tour/" + id.ToString();
             Tour Tour = new Tour();
             try
             {
@@ -235,7 +235,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteTour")]
         public async Task<IActionResult> DeleteTour(string TourId)
         {
-            string url = domailServer + "tour/" + TourId;
+            string url = domainServer + "tour/" + TourId;
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);

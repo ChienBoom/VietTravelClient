@@ -21,7 +21,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly CallApi _callApi;
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
         private readonly string uploadPath;
 
         public TourPackageAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
@@ -29,7 +29,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
             _uploadFile = uploadFile;
             uploadPath = _configuration["UploadPath"];
         }
@@ -40,9 +40,9 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlTours = domailServer + "tour";
-            string urlHotels = domailServer + "hotel";
-            string urlTimePackage = domailServer + "timepackage";
+            string urlTours = domainServer + "tour";
+            string urlHotels = domainServer + "hotel";
+            string urlTimePackage = domainServer + "timepackage";
             try
             {
                 ResponseData responseDataTours = await _callApi.GetApi(urlTours);
@@ -71,10 +71,10 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "tourpackage/searchByTourId/" + TourId;
-            string urlTimePackage = domailServer + "timepackage";
-            string urlTour = domailServer + "tour/" + TourId;
-            string urlSchedule = domailServer + "schedule/getByTourId/" + TourId;
+            string url = domainServer + "tourpackage/searchByTourId/" + TourId;
+            string urlTimePackage = domainServer + "timepackage";
+            string urlTour = domainServer + "tour/" + TourId;
+            string urlSchedule = domainServer + "schedule/getByTourId/" + TourId;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -84,7 +84,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 if (responseData.Success && responseDataTimePackage.Success && responseDataTour.Success && responseDataSchedule.Success)
                 {
                     Tour tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
-                    string urlHotel = domailServer + "hotel/searchByCityId/" + tour.CityId.ToString();
+                    string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     try
                     {
                         ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
@@ -128,8 +128,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
             tourPackage.TimePackageId = value.TimePackageId;
             tourPackage.Description = value.Description;
 
-            string urlTimePackage = domailServer + "timepackage/" + value.TimePackageId.ToString();
-            string urlHotel = domailServer + "hotel/" + value.HotelId.ToString();
+            string urlTimePackage = domainServer + "timepackage/" + value.TimePackageId.ToString();
+            string urlHotel = domainServer + "hotel/" + value.HotelId.ToString();
             try
             {
                 ResponseData responseTimePackage = await _callApi.GetApi(urlTimePackage);
@@ -168,8 +168,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
             tourPackage.TimePackageId = value.TimePackageId;
             tourPackage.Description = value.Description;
 
-            string urlTimePackage = domailServer + "timepackage/" + value.TimePackageId.ToString();
-            string urlHotel = domailServer + "hotel/" + value.HotelId.ToString();
+            string urlTimePackage = domainServer + "timepackage/" + value.TimePackageId.ToString();
+            string urlHotel = domainServer + "hotel/" + value.HotelId.ToString();
             try
             {
                 ResponseData responseTimePackage = await _callApi.GetApi(urlTimePackage);
@@ -183,7 +183,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     decimal PriceHotel = hotel.PriceHour * timePackage.HourNumber;
                     decimal PriceSchedule = 12;
                     tourPackage.BasePrice = PriceHotel + PriceSchedule;
-                    string urlSave = domailServer + "tourpackage";
+                    string urlSave = domainServer + "tourpackage";
                     try
                     {
                         ResponseData responseDataSave = await _callApi.PostApi(urlSave, JsonConvert.SerializeObject(tourPackage));

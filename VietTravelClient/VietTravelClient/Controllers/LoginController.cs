@@ -17,13 +17,13 @@ namespace VietTravelClient.Controllers
     {
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
 
         public LoginController(CallApi callApi, IConfiguration configuration)
         {
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
         }
 
         [HttpGet]
@@ -37,7 +37,7 @@ namespace VietTravelClient.Controllers
         [Route("recoverPassword")]
         public async Task<IActionResult> RecoverPassword(string EmailAccount)
         {
-            string url = domailServer + "recoverPassword";
+            string url = domainServer + "recoverPassword";
             try
             {
                 Account account = new Account();
@@ -71,7 +71,7 @@ namespace VietTravelClient.Controllers
         [Route("/checkLogin")]
         public async Task<IActionResult> CheckLogin(Account value)
         {
-            string url = domailServer + "checkLogin";
+            string url = domainServer + "checkLogin";
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);

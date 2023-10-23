@@ -13,13 +13,13 @@ namespace VietTravelClient.Controllers
     {
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
 
         public RegisterController(CallApi callApi, IConfiguration configuration)
         {
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
         }
 
         public IActionResult Register(int status, string username, string password)
@@ -46,7 +46,7 @@ namespace VietTravelClient.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterForm(Account value)
         {
-            string url = domailServer + "checkEmailExis";
+            string url = domainServer + "checkEmailExis";
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
@@ -68,7 +68,7 @@ namespace VietTravelClient.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveRegister(User value)
         {
-            string url = domailServer + "user";
+            string url = domainServer + "user";
             value.Role = "Customer";
             try
             {

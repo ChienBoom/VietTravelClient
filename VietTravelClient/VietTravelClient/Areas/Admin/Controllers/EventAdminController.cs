@@ -24,14 +24,14 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly CallApi _callApi;
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
 
         public EventAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
             _uploadFile = uploadFile;
         }
 
@@ -58,7 +58,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "event/searchEvent/" + TourId;
+            string url = domainServer + "event/searchEvent/" + TourId;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -85,7 +85,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         //    string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
         //    if (searchValue != null || !searchValue.Trim().Equals(""))
         //    {
-        //        string url = domailServer + "Event/search/" + searchValue;
+        //        string url = domainServer + "Event/search/" + searchValue;
         //        List<Event> Events = new List<Event>();
         //        try
         //        {
@@ -108,7 +108,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveEvent")]
         public async Task<IActionResult> CreateEvent(Event value, IFormFile file)
         {
-            string url = domailServer + "event";
+            string url = domainServer + "event";
             Event Event = new Event();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.Pictures = _uploadFile.SaveFile(file).Message;
@@ -129,7 +129,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateEvent")]
         public async Task<IActionResult> UpdateEvent(Event value, IFormFile file)
         {
-            string url = domailServer + "event/" + value.Id.ToString();
+            string url = domainServer + "event/" + value.Id.ToString();
             Event Event = new Event();
             if (!_uploadFile.SaveFile(file).Success)
             {
@@ -154,7 +154,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         //[Route("EventById")]
         //public async Task<IActionResult> GetEventById(long id)
         //{
-        //    string url = domailServer + "Event/" + id.ToString();
+        //    string url = domainServer + "Event/" + id.ToString();
         //    Event Event = new Event();
         //    try
         //    {
@@ -174,7 +174,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteEvent")]
         public async Task<IActionResult> DeleteEvent(string Id)
         {
-            string url = domailServer + "event/" + Id;
+            string url = domainServer + "event/" + Id;
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);

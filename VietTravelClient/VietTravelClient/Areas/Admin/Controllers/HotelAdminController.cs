@@ -22,7 +22,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly CallApi _callApi;
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
         private readonly string uploadPath;
 
         public HotelAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
@@ -30,7 +30,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
             uploadPath = _configuration["UploadPath"];
             _uploadFile = uploadFile;
         }
@@ -41,7 +41,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCities = domailServer + "city";
+            string urlCities = domainServer + "city";
             try
             {
                 ResponseData responseDataCities = await _callApi.GetApi(urlCities);
@@ -61,8 +61,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "hotel/page/" + page.ToString();
-            string urlTotalPage = domailServer + "hotel/totalPage";
+            string url = domainServer + "hotel/page/" + page.ToString();
+            string urlTotalPage = domainServer + "hotel/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -99,8 +99,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "hotel/search/" + searchValue.Unidecode() + "/" + page.ToString();
-            string urlTotalPage = domailServer + "hotel/search/totalPage/" + searchValue.Unidecode();
+            string url = domainServer + "hotel/search/" + searchValue.Unidecode() + "/" + page.ToString();
+            string urlTotalPage = domainServer + "hotel/search/totalPage/" + searchValue.Unidecode();
             List<Hotel> hotels = new List<Hotel>();
             try
             {
@@ -129,7 +129,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveHotel")]
         public async Task<IActionResult> CreateHotel(Hotel value, IFormFile file)
         {
-            string url = domailServer + "hotel";
+            string url = domainServer + "hotel";
             Hotel hotel = new Hotel();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.Pictures = _uploadFile.SaveFile(file).Message;
@@ -152,7 +152,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateHotel")]
         public async Task<IActionResult> UpdateHotel(Hotel value, IFormFile file)
         {
-            string url = domailServer + "hotel/" + value.Id.ToString();
+            string url = domainServer + "hotel/" + value.Id.ToString();
             Hotel Hotel = new Hotel();
             if (!_uploadFile.SaveFile(file).Success)
             {
@@ -179,8 +179,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCities = domailServer + "city";
-            string urlHotel = domailServer + "hotel/" + HotelId.ToString();
+            string urlCities = domainServer + "city";
+            string urlHotel = domainServer + "hotel/" + HotelId.ToString();
             Hotel hotel = new Hotel();
             try
             {
@@ -203,7 +203,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         //[Route("HotelById")]
         //public async Task<IActionResult> GetHotelById(long id)
         //{
-        //    string url = domailServer + "Hotel/" + id.ToString();
+        //    string url = domainServer + "Hotel/" + id.ToString();
         //    Hotel Hotel = new Hotel();
         //    try
         //    {
@@ -223,7 +223,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteHotel")]
         public async Task<IActionResult> DeleteHotel(string HotelId)
         {
-            string url = domailServer + "hotel/" + HotelId;
+            string url = domainServer + "hotel/" + HotelId;
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);

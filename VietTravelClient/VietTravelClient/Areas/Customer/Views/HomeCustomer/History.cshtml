@@ -1,0 +1,115 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Lịch sử đặt Tour";
+    List<Ticket> tickets = (List<Ticket>)ViewData["Tickets"];
+}
+<style>
+    .modal-dialog {
+        max-width: 800px;
+    }
+</style>
+<body>
+    <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+        <div class="col-10"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <table class="col-10 col-sm-10 col-md-10 border" style="border: 1px; border-color: black;">
+            <tr class="">
+                <th style="width : 5%" class="text-center bg-info text-light border">STT</th>
+                <th style="width : 20%" class="text-center bg-info text-light border">Tên Tour</th>
+                <th style="width : 20%" class="text-center bg-info text-light border">Ngày đặt Tour</th>
+                <th style="width : 35%" class="text-center bg-info text-light border">Gía Tour</th>
+                <th style="width : 20%" class="text-center bg-info text-light border"></th>
+            </tr>
+            @{
+                for(int i =0; i<tickets.Count; i++)
+                {
+                    Ticket item = tickets[i];
+                    <tr>
+                        <td class="text-center border">@(i + 1)</td>
+                        <td class="text-center border">@item.TourPackageId</td>
+                        <td class="text-center border">@item.BookingDate</td>
+                        <td class="text-center border">@item.TourPackageId</td>
+                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#readTourGuide@(item.Id)">Xem</button></td>
+
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+    <@*div id="readTourGuide@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="padding-left: 40px;">
+                <div class="modal-header">
+                    <h4 class="modal-title text-info">CHI TIẾT THÔNG TIN HƯỚNG DẪN VIÊN</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body row">
+                        <div class="col-12 col-sm-12 col-md-12 row">
+                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                <label for="NameDet" class="text-info font-italic">Tên HDV</label>
+                                <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameDet" name="Name" value="@item.Name" disabled>
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                <label for="SexDet" class="text-info font-italic">Giới tính</label>
+                                <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="SexDet" name="Sex" value="@item.Sex" disabled>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 row">
+                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                <label for="EmailDet" class="text-info font-italic">Email</label>
+                                <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="EmailDet" name="Email" value="@item.Email" disabled>
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                <label for="PhoneNumberDet" class="text-info font-italic">Số điện thoại</label>
+                                <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumberDet" name="PhoneNumber" value="@item.PhoneNumber" disabled>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 row">
+                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                <label for="CityIdDet" class="text-info font-italic">Thành phố hướng dẫn</label>
+                                <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityIdDet" name="CityId" disabled>
+                                    
+                                </select>
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                <label for="AddressDet" class="text-info font-italic">Địa chỉ</label>
+                                <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="AddressDet" name="Address" value="@item.Address" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>*@
+
+    @*Modal bootstrap*@
+    <div class="modal" id="Warning">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="WarningMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

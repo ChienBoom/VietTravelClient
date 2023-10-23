@@ -22,7 +22,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly CallApi _callApi;
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
         private readonly string uploadPath;
 
         public RestaurantAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
@@ -30,7 +30,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
             uploadPath = _configuration["UploadPath"];
             _uploadFile = uploadFile;
         }
@@ -41,7 +41,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCities = domailServer + "city";
+            string urlCities = domainServer + "city";
             try
             {
                 ResponseData responseDataCities = await _callApi.GetApi(urlCities);
@@ -61,8 +61,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "restaurant/page/" + page.ToString();
-            string urlTotalPage = domailServer + "restaurant/totalPage";
+            string url = domainServer + "restaurant/page/" + page.ToString();
+            string urlTotalPage = domainServer + "restaurant/totalPage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -99,8 +99,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "restaurant/search/" + searchValue.Unidecode() + "/" + page.ToString();
-            string urlTotalPage = domailServer + "restaurant/search/totalPage/" + searchValue.Unidecode();
+            string url = domainServer + "restaurant/search/" + searchValue.Unidecode() + "/" + page.ToString();
+            string urlTotalPage = domainServer + "restaurant/search/totalPage/" + searchValue.Unidecode();
             List<Restaurant> restaurants = new List<Restaurant>();
             try
             {
@@ -129,7 +129,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveRestaurant")]
         public async Task<IActionResult> CreateRestaurant(Restaurant value, IFormFile file)
         {
-            string url = domailServer + "restaurant";
+            string url = domainServer + "restaurant";
             Restaurant restaurant = new Restaurant();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.Pictures = _uploadFile.SaveFile(file).Message;
@@ -152,7 +152,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateRestaurant")]
         public async Task<IActionResult> UpdateRestaurant(Restaurant value, IFormFile file)
         {
-            string url = domailServer + "restaurant/" + value.Id.ToString();
+            string url = domainServer + "restaurant/" + value.Id.ToString();
             Restaurant restaurant = new Restaurant();
             if (!_uploadFile.SaveFile(file).Success)
             {
@@ -179,8 +179,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCities = domailServer + "city";
-            string urlRestaurant = domailServer + "restaurant/" + restaurantId.ToString();
+            string urlCities = domainServer + "city";
+            string urlRestaurant = domainServer + "restaurant/" + restaurantId.ToString();
             Restaurant restaurant = new Restaurant();
             try
             {
@@ -203,7 +203,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         //[Route("RestaurantById")]
         //public async Task<IActionResult> GetRestaurantById(long id)
         //{
-        //    string url = domailServer + "Restaurant/" + id.ToString();
+        //    string url = domainServer + "Restaurant/" + id.ToString();
         //    Restaurant Restaurant = new Restaurant();
         //    try
         //    {
@@ -223,7 +223,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteRestaurant")]
         public async Task<IActionResult> DeleteRestaurant(string restaurantId)
         {
-            string url = domailServer + "restaurant/" + restaurantId;
+            string url = domainServer + "restaurant/" + restaurantId;
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);

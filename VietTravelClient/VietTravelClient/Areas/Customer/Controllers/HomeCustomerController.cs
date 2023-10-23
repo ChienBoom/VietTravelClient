@@ -19,14 +19,14 @@ namespace VietTravelClient.Areas.Customer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
 
         public HomeCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
         }
 
         [HttpGet]
@@ -35,8 +35,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCity = domailServer + "city";
-            string urlTour = domailServer + "tour";
+            string urlCity = domainServer + "city";
+            string urlTour = domainServer + "tour";
             try
             {
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
@@ -58,12 +58,42 @@ namespace VietTravelClient.Areas.Customer.Controllers
         }
 
         [HttpGet]
+        [Route("history")]
+        public async Task<IActionResult> History()
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            string urlUser = domainServer + "user/searchUserByUsername/" + usernameAccount;
+            try
+            {
+                ResponseData responseData = new ResponseData();
+                responseData = await _callApi.GetApi(urlUser);
+                if (responseData.Success)
+                {
+                    User user = JsonConvert.DeserializeObject<User>(responseData.Data);
+                    string url = domainServer + "ticket/getTicketByUserId/" + user.Id;
+                    ResponseData responseDataUser = await _callApi.GetApi(url);
+                    ViewData["Tickets"] = JsonConvert.DeserializeObject<List<Ticket>>(responseDataUser.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    return View();
+                }
+                return RedirectToAction("Error");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error");
+            }
+            
+            
+        }
+
+        [HttpGet]
         [Route("accountManager")]
         public async Task<IActionResult> AccountManager()
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "user/searchUserByUsername/" + usernameAccount;
+            string url = domainServer + "user/searchUserByUsername/" + usernameAccount;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);

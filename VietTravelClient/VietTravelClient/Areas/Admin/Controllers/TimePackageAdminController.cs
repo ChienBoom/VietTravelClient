@@ -22,7 +22,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly CallApi _callApi;
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
         private readonly string uploadPath;
 
         public TimePackageAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
@@ -30,7 +30,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
             _uploadFile = uploadFile;
             uploadPath = _configuration["UploadPath"];
         }
@@ -41,7 +41,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "timepackage";
+            string url = domainServer + "timepackage";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -64,7 +64,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveTimePackage")]
         public async Task<IActionResult> CreateTimePackage(TimePackage value)
         {
-            string url = domailServer + "timepackage";
+            string url = domainServer + "timepackage";
             TimePackage timePackage = new TimePackage();
             try
             {
@@ -83,7 +83,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateTimePackage")]
         public async Task<IActionResult> UpdateTimePackage(TimePackage value)
         {
-            string url = domailServer + "timepackage/" + value.Id.ToString();
+            string url = domainServer + "timepackage/" + value.Id.ToString();
             TimePackage timePackage = new TimePackage();
             try
             {
@@ -102,7 +102,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteTimePackage")]
         public async Task<IActionResult> DeleteTimePackage(string TimePackageId)
         {
-            string url = domailServer + "timepackage/" + TimePackageId;
+            string url = domainServer + "timepackage/" + TimePackageId;
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);

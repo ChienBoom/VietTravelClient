@@ -20,7 +20,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly CallApi _callApi;
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
-        private readonly string domailServer;
+        private readonly string domainServer;
         private readonly string uploadPath;
 
         public TourGuideAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
@@ -28,7 +28,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
-            domailServer = _configuration["DomainServer"];
+            domainServer = _configuration["DomainServer"];
             _uploadFile = uploadFile;
             uploadPath = _configuration["UploadPath"];
         }
@@ -39,8 +39,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domailServer + "tourGuide";
-            string urlCity = domailServer + "city";
+            string url = domainServer + "tourGuide";
+            string urlCity = domainServer + "city";
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
@@ -65,7 +65,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveTourGuide")]
         public async Task<IActionResult> CreateTourGuide(TourGuide value)
         {
-            string url = domailServer + "tourGuide";
+            string url = domainServer + "tourGuide";
             TourGuide tourGuide = new TourGuide();
             try
             {
@@ -84,7 +84,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateTourGuide")]
         public async Task<IActionResult> UpdateTourGuide(TourGuide value)
         {
-            string url = domailServer + "tourGuide/" + value.Id.ToString();
+            string url = domainServer + "tourGuide/" + value.Id.ToString();
             TourGuide tourGuide = new TourGuide();
             try
             {
@@ -103,7 +103,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteTourGuide")]
         public async Task<IActionResult> DeleteTourGuide(string tourGuideId)
         {
-            string url = domailServer + "tourGuide/" + tourGuideId;
+            string url = domainServer + "tourGuide/" + tourGuideId;
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);
