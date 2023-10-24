@@ -37,9 +37,9 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("timePackageManager")]
-        public async Task<IActionResult> TimePackageManager()
+        public async Task<IActionResult> TimePackageManager(string status)
         {
-            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "timepackage";
             try
@@ -49,14 +49,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     ViewData["TimePackages"] = JsonConvert.DeserializeObject<List<TimePackage>>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["Status"] = status;
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area="Admin", controller="HomeAdmin"});
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -70,12 +71,16 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PostApi(url, stringValue);
-                timePackage = JsonConvert.DeserializeObject<TimePackage>(responseData.Data);
-                return RedirectToAction("timePackageManager");
+                if(responseData.Success)
+                {
+                    timePackage = JsonConvert.DeserializeObject<TimePackage>(responseData.Data);
+                    return RedirectToAction("timePackageManager", new { area = "Admin", controller = "TimePackageAdmin", status = "CreateSuccess" });
+                }
+                return RedirectToAction("timePackageManager", new { area = "Admin", controller = "TimePackageAdmin", status = "CreateFaild" });
             }
             catch(Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("timePackageManager", new { area = "Admin", controller = "TimePackageAdmin", status = "CreateFaild" });
             }
         }
 
@@ -89,12 +94,16 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PutApi(url, stringValue);
-                timePackage = JsonConvert.DeserializeObject<TimePackage>(responseData.Data);
-                return RedirectToAction("timePackageManager");
+                if(responseData.Success)
+                {
+                    timePackage = JsonConvert.DeserializeObject<TimePackage>(responseData.Data);
+                    return RedirectToAction("timePackageManager", new { area = "Admin", controller = "TimePackageAdmin", status = "UpdateSuccess" });
+                }
+                return RedirectToAction("timePackageManager", new { area = "Admin", controller = "TimePackageAdmin", status = "UpdateFaild" });
             }
             catch (Exception e)
             {
-                return View();
+                return RedirectToAction("timePackageManager", new { area = "Admin", controller = "TimePackageAdmin", status = "UpdateFaild" });
             }
         }
 
@@ -106,12 +115,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);
-                return RedirectToAction("timePackageManager");
+                if(responseData.Success)
+                {
+                    return RedirectToAction("timePackageManager", new { area = "Admin", controller = "TimePackageAdmin", status = "DeleteSuccess" });
+                }
+                return RedirectToAction("timePackageManager", new { area = "Admin", controller = "TimePackageAdmin", status = "DeleteFaild" });
             }
             catch (Exception e)
             {
-                Console.WriteLine($"HttpRequestException: {e.Message}");
-                return View();
+                return RedirectToAction("timePackageManager", new { area = "Admin", controller = "TimePackageAdmin", status = "DeleteFaild" });
             }
         }
 

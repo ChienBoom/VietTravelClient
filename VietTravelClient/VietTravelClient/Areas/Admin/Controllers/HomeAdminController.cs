@@ -100,5 +100,12 @@ namespace VietTravelClient.Areas.Admin.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("error")]
+        public IActionResult Error()
+        {
+            return View();
+        }
+
     }
 }

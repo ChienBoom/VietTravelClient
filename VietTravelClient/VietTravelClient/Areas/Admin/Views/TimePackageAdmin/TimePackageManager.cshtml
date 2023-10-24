@@ -4,9 +4,13 @@
 @{
     ViewData["Title"] = "Thêm gói thời gian";
     List<TimePackage> timePackages = (List<TimePackage>)ViewData["TimePackages"];
+    string status = (string)ViewData["Status"];
 }
 <body>
     <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+        <div hidden>
+            <input type="text" id="Status" value="@status"/>
+        </div>
         <div class="col-10"></div>
         <div class="col-2">
             <button class="btn btn-info" data-toggle="modal" data-target="#createTimePackage">Thêm mới </button>
@@ -131,8 +135,57 @@
             </div>
         </div>
     </div>
+
+    @*Modal Status bootstrap*@
+    <div class="modal" id="StatusModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="StatusMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
+    $(document).ready(function () {
+        var status = $("#Status").val();
+        switch (status) {
+            case "CreateSuccess":
+                $('#StatusMessage').text("THÊM MỚI GÓI THỜI GIAN THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "CreateFaild":
+                $('#StatusMessage').text("THÊM MỚI GÓI THỜI GIAN THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+            case "UpdateSuccess":
+                $('#StatusMessage').text("CẬP NHẬT GÓI THỜI GIAN THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "UpdateFaild":
+                $('#StatusMessage').text("CẬP NHẬT GÓI THỜI GIAN THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+            case "DeleteSuccess":
+                $('#StatusMessage').text("XÓA GÓI THỜI GIAN THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "DeleteFaild":
+                $('#StatusMessage').text("XÓA GÓI THỜI GIAN THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+        }
+    });
     function ValidationCre() {
         var name = $('#NameCre').val();
         var description = $('#DescriptionCre').val();

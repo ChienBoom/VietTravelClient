@@ -49,17 +49,17 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new {area="Customer", controller="Home"});
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
         }
 
         [HttpGet]
         [Route("history")]
-        public async Task<IActionResult> History()
+        public async Task<IActionResult> History(string status)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
@@ -74,14 +74,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     string url = domainServer + "ticket/getTicketByUserId/" + user.Id;
                     ResponseData responseDataUser = await _callApi.GetApi(url);
                     ViewData["Tickets"] = JsonConvert.DeserializeObject<List<Ticket>>(responseDataUser.Data);
+                    ViewData["Status"] = status;
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             
             
@@ -104,11 +105,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
         }
 
@@ -123,6 +124,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [HttpGet]
         [Route("revenueStatisticsDetail")]
         public IActionResult RevenueStatisticsDetail()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("error")]
+        public async Task<IActionResult> Error()
         {
             return View();
         }

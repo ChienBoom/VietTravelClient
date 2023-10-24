@@ -53,17 +53,17 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area="Admin", controller="HomeAdmin"});
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
         [HttpGet]
         [Route("tourManager")]
-        public async Task<IActionResult> TourManager(int page)
+        public async Task<IActionResult> TourManager(int page, string status)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
@@ -79,14 +79,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     ViewData["CurrentPage"] = page;
                     ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    ViewData["Status"] = status;
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin"});
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -125,14 +126,14 @@ namespace VietTravelClient.Areas.Admin.Controllers
                         ViewData["SearchValue"] = searchValue;
                         return View();
                     }
-                    return RedirectToAction("Error", "Home");
+                    return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
                 }
                 catch (Exception e)
                 {
-                    return RedirectToAction("Error", "Home");
+                    return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
                 }
             }
-            return RedirectToAction("TourManager");
+            return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
         }
 
         [HttpPost]
@@ -148,13 +149,16 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PostApi(url, stringValue);
-                Tour = JsonConvert.DeserializeObject<Tour>(responseData.Data);
-                return RedirectToAction("TourManager");
+                if(responseData.Success)
+                {
+                    Tour = JsonConvert.DeserializeObject<Tour>(responseData.Data);
+                    return RedirectToAction("TourManager", new { area = "Admin", controller = "TourAdmin", page = 1, status = "CreateSuccess" });
+                }
+                return RedirectToAction("TourManager", new { area = "Admin", controller = "TourAdmin", page = 1, status = "CreateFaild" });
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine($"HttpRequestException: {e.Message}");
-                return View();
+                return RedirectToAction("TourManager", new { area = "Admin", controller = "TourAdmin", page = 1, status = "CreateFaild" });
             }
         }
 
@@ -180,7 +184,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             }
             catch (HttpRequestException e)
             {
-                return View();
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -199,12 +203,16 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PutApi(url, stringValue);
-                city = JsonConvert.DeserializeObject<Tour>(responseData.Data);
-                return RedirectToAction("TourManager");
+                if (responseData.Success)
+                {
+                    city = JsonConvert.DeserializeObject<Tour>(responseData.Data);
+                    return RedirectToAction("TourManager", new { area = "Admin", controller = "TourAdmin", page = 1, status = "UpdateSuccess" });
+                }
+                return RedirectToAction("TourManager", new { area = "Admin", controller = "TourAdmin", page = 1, status = "UpdateFaild" });
             }
             catch (HttpRequestException e)
             {
-                return View();
+                return RedirectToAction("TourManager", new { area = "Admin", controller = "TourAdmin", page = 1, status = "UpdateFaild" });
             }
         }
 
@@ -226,8 +234,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine($"HttpRequestException: {e.Message}");
-                return View();
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -239,12 +246,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);
-                return RedirectToAction("TourManager");
+                if (responseData.Success)
+                {
+                    return RedirectToAction("TourManager", new { area = "Admin", controller = "TourAdmin", page = 1, status = "DeleteSuccess" });
+                }
+                return RedirectToAction("TourManager", new { area = "Admin", controller = "TourAdmin", page = 1, status = "DeleteFaild" });
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine($"HttpRequestException: {e.Message}");
-                return View();
+                return RedirectToAction("TourManager", new { area = "Admin", controller = "TourAdmin", page = 1, status = "DeleteFaild" });
             }
         }
 

@@ -37,7 +37,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("scheduleManager")]
-        public async Task<IActionResult> ScheduleManager(int TourId)
+        public async Task<IActionResult> ScheduleManager(int TourId, string status)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
@@ -51,13 +51,14 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["Schedules"] = schedules;
                     ViewData["UsernameAccount"] = usernameAccount;
                     ViewData["TourId"] = TourId.ToString();
+                    ViewData["Status"] = status;
                     return View();
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new {area="Admin", controller="HomeAdmin"});
             }
             catch(Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             
         }
@@ -82,7 +83,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             string url = domainServer + "schedule";
             Schedule schedule = new Schedule();
-            if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
+            if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             value.Pictures = _uploadFile.SaveFile(file).Message;
             try
             {
@@ -91,13 +92,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 if (responseData.Success)
                 {
                     schedule = JsonConvert.DeserializeObject<Schedule>(responseData.Data);
-                    return RedirectToAction("ScheduleManager", new {controller = "ScheduleAdmin", TourId = value.TourId});
+                    return RedirectToAction("ScheduleManager", new {controller = "ScheduleAdmin", TourId = value.TourId, status="CreateSuccess"});
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId, status = "CreateFaild" });
             }
             catch (HttpRequestException e)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId, status = "CreateFaild" });
             }
         }
 
@@ -119,13 +120,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 if(responseData.Success)
                 {
                     schedule = JsonConvert.DeserializeObject<Schedule>(responseData.Data);
-                    return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId });
+                    return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId, status = "UpdateSuccess" });
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId, status = "UpdateFaild" });
             }
             catch (HttpRequestException e)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId, status = "UpdateFaild" });
             }
         }
 
@@ -137,12 +138,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);
-                return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId });
+                if(responseData.Success)
+                {
+                    return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId, status = "DeleteSuccess" });
+                }
+                return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId, status = "DeleteFaild" });
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine($"HttpRequestException: {e.Message}");
-                return View();
+                return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId, status = "DeleteFaild" });
             }
         }
 

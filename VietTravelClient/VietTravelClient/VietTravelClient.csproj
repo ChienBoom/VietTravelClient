@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Views\ScheduleTourPackageAdmin\**" />
+    <Content Remove="Areas\Admin\Views\ScheduleTourPackageAdmin\**" />
+    <EmbeddedResource Remove="Areas\Admin\Views\ScheduleTourPackageAdmin\**" />
+    <None Remove="Areas\Admin\Views\ScheduleTourPackageAdmin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.31" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.31">
@@ -24,7 +31,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\ScheduleTourPackageAdmin\" />
     <Folder Include="Areas\Customer\Data\" />
     <Folder Include="Areas\Customer\Models\" />
   </ItemGroup>

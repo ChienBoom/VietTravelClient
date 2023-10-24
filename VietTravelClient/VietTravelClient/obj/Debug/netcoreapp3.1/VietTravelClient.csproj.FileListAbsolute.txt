@@ -387,3 +387,6 @@ D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\net
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.pdb
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.genruntimeconfig.cache
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\HomeCustomer\History.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HomeAdmin\Error.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\HomeCustomer\Error.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Home\Error.cshtml.g.cs

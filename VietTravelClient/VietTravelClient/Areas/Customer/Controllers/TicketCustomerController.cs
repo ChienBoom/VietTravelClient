@@ -50,15 +50,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ResponseData responseDataTicket = await _callApi.PostApi(urlTicket, stringTicket);
                     if(responseDataTicket.Success)
                     {
-                        return RedirectToAction("History", "HomeCustomer");
+                        return RedirectToAction("History", new {area = "Customer", controller= "HomeCustomer", status = 1 });
                     }
-                    return RedirectToAction("Error");
+                    return RedirectToAction("TourDetail", new {area = "Customer", controller="TourCustomer", status = 2});
                 }
-                return RedirectToAction("Error");
+                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2 });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error");
+                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 3 });
             }
         }
     }

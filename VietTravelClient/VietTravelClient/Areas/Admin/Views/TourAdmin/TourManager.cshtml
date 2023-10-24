@@ -6,9 +6,13 @@
     List<Tour> tours = (List<Tour>)ViewData["Tours"];
     int currentPage = (int)ViewData["CurrentPage"];
     int totalPage = (int)ViewData["TotalPage"];
+    string status = (string)ViewData["Status"];
 }
 <body>
     <div class="row" style="padding-top: 20px;">
+        <div hidden>
+            <input type="text" id="Status" value="@status"/>
+        </div>
         <div class="col-4 col-sm-4 col-md-4">
             <div class="col-12 col-sm-12 col-md-12 text-info font-weight-bold" style="font-size: 30px; padding-left: 50px;">
                 <img src="~/Icon/logo.jpg" alt="" style="width:100px; height:100px">
@@ -171,8 +175,57 @@
             </div>
         </div>
     </div>
+
+    @*Modal Status bootstrap*@
+    <div class="modal" id="StatusModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="StatusMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
+    $(document).ready(function () {
+        var status = $("#Status").val();
+        switch (status) {
+            case "CreateSuccess":
+                $('#StatusMessage').text("THÊM MỚI TOUR THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "CreateFaild":
+                $('#StatusMessage').text("THÊM MỚI TOUR THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+            case "UpdateSuccess":
+                $('#StatusMessage').text("CẬP NHẬT TOUR THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "UpdateFaild":
+                $('#StatusMessage').text("CẬP NHẬT TOUR THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+            case "DeleteSuccess":
+                $('#StatusMessage').text("XÓA TOUR THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "DeleteFaild":
+                $('#StatusMessage').text("XÓA TOUR THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+        }
+    });
     function Validation() {
         var searchValue = $('#searchValue').val();
         if (!ValidationField(searchValue, "Vui lòng nhập từ khóa tìm kiếm")) return false;

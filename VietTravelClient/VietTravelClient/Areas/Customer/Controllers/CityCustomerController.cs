@@ -58,11 +58,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
         }
 
@@ -95,11 +95,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
         }
 
@@ -124,11 +124,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
         }
 
@@ -167,11 +167,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View();
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             catch (Exception e)
             {
-                return View();
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
         }
 

@@ -58,35 +58,28 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     List<TourGuide> tourGuides = new List<TourGuide>();
                     List<Hotel> hotels = new List<Hotel>();
-                    try
+                    ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
+                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
+                    if (responseDataTourGuide.Success && responseDataHotel.Success)
                     {
-                        ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
-                        ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                        if (responseDataTourGuide.Success && responseDataHotel.Success)
-                        {
-                            tourGuides = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
-                            hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
-                            ViewData["Tour"] = tour;
-                            ViewData["TourGuides"] = tourGuides;
-                            ViewData["TourPackages"] = tourPackages;
-                            ViewData["Hotels"] = hotels;
-                            ViewData["TimePackages"] = timePackages;
-                            ViewData["Evaluates"] = evaluates;
-                            ViewData["UsernameAccount"] = usernameAccount;
-                            return View();
-                        }
-                        return RedirectToAction("Error");
+                        tourGuides = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
+                        hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
+                        ViewData["Tour"] = tour;
+                        ViewData["TourGuides"] = tourGuides;
+                        ViewData["TourPackages"] = tourPackages;
+                        ViewData["Hotels"] = hotels;
+                        ViewData["TimePackages"] = timePackages;
+                        ViewData["Evaluates"] = evaluates;
+                        ViewData["UsernameAccount"] = usernameAccount;
+                        return View();
                     }
-                    catch (Exception ex)
-                    {
-                        return RedirectToAction("Error");
-                    }
+                    return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
                 }
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
         }
 
@@ -121,35 +114,28 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     List<TourGuide> tourGuides = new List<TourGuide>();
                     List<Hotel> hotels = new List<Hotel>();
-                    try
+                    ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
+                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
+                    if (responseDataTourGuide.Success && responseDataHotel.Success)
                     {
-                        ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
-                        ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                        if (responseDataTourGuide.Success && responseDataHotel.Success)
-                        {
-                            tourGuides = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
-                            hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
-                            ViewData["Tour"] = tour;
-                            ViewData["TourGuides"] = tourGuides;
-                            ViewData["TourPackages"] = tourPackages;
-                            ViewData["Hotels"] = hotels;
-                            ViewData["TimePackages"] = timePackages;
-                            ViewData["Evaluates"] = evaluates;
-                            ViewData["UsernameAccount"] = usernameAccount;
-                            return View();
-                        }
-                        return RedirectToAction("Error");
+                        tourGuides = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
+                        hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
+                        ViewData["Tour"] = tour;
+                        ViewData["TourGuides"] = tourGuides;
+                        ViewData["TourPackages"] = tourPackages;
+                        ViewData["Hotels"] = hotels;
+                        ViewData["TimePackages"] = timePackages;
+                        ViewData["Evaluates"] = evaluates;
+                        ViewData["UsernameAccount"] = usernameAccount;
+                        return View();
                     }
-                    catch (Exception ex)
-                    {
-                        return RedirectToAction("Error");
-                    }
+                    return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
                 }
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
         }
 
@@ -174,11 +160,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
         }
 
@@ -217,11 +203,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View();
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
             catch (Exception e)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
             }
         }
 

@@ -35,7 +35,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("tourGuideManager")]
-        public async Task<IActionResult> TourGuideManager()
+        public async Task<IActionResult> TourGuideManager(string status)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
@@ -50,14 +50,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCity.Data);
                     ViewData["TourGuides"] = JsonConvert.DeserializeObject<List<TourGuide>>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["Status"] = status;
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area="Admin", controller="HomeAdmin"});
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -71,12 +72,16 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PostApi(url, stringValue);
-                tourGuide = JsonConvert.DeserializeObject<TourGuide>(responseData.Data);
-                return RedirectToAction("TourGuideManager");
+                if (responseData.Success)
+                {
+                    tourGuide = JsonConvert.DeserializeObject<TourGuide>(responseData.Data);
+                    return RedirectToAction("TourGuideManager", new { area="Admin", controller="TourGuideAdmin", status="CreateSuccess"});
+                }
+                return RedirectToAction("TourGuideManager", new { area = "Admin", controller = "TourGuideAdmin", status = "CreateFaild" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("TourGuideManager", new { area = "Admin", controller = "TourGuideAdmin", status = "CreateFaild" });
             }
         }
 
@@ -90,12 +95,16 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PutApi(url, stringValue);
-                tourGuide = JsonConvert.DeserializeObject<TourGuide>(responseData.Data);
-                return RedirectToAction("TourGuideManager");
+                if(responseData.Success)
+                {
+                    tourGuide = JsonConvert.DeserializeObject<TourGuide>(responseData.Data);
+                    return RedirectToAction("TourGuideManager", new { area = "Admin", controller = "TourGuideAdmin", status = "UpdateSuccess" });
+                }
+                return RedirectToAction("TourGuideManager", new { area = "Admin", controller = "TourGuideAdmin", status = "UpdateFaild" });
             }
             catch (Exception e)
             {
-                return View();
+                return RedirectToAction("TourGuideManager", new { area = "Admin", controller = "TourGuideAdmin", status = "UpdateFaild" });
             }
         }
 
@@ -107,12 +116,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);
-                return RedirectToAction("TourGuideManager");
+                if (responseData.Success)
+                {
+                    return RedirectToAction("TourGuideManager", new { area = "Admin", controller = "TourGuideAdmin", status = "DeleteSuccess" });
+                }
+                return RedirectToAction("TourGuideManager", new { area = "Admin", controller = "TourGuideAdmin", status = "DeleteFaild" });
             }
             catch (Exception e)
             {
-                Console.WriteLine($"HttpRequestException: {e.Message}");
-                return View();
+                return RedirectToAction("TourGuideManager", new { area = "Admin", controller = "TourGuideAdmin", status = "DeleteFaild" });
             }
         }
 
