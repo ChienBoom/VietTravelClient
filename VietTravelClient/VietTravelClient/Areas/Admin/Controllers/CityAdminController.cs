@@ -93,7 +93,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
             string url = domainServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
-            string urlTotalPage = domainServer + "search/totalPage" + searchValue.Unidecode();
+            string urlTotalPage = domainServer + "city/search/totalPage/" + searchValue.Unidecode();
             List<City> cities = new List<City>();
             try
             {

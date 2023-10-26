@@ -36,9 +36,9 @@
                     Ticket item = tickets[i];
                     <tr>
                         <td class="text-center border">@(i + 1)</td>
-                        <td class="text-center border">@item.TourPackageId</td>
+                        <td class="text-center border">@item.TourPackage.Tour.Name</td>
                         <td class="text-center border">@item.BookingDate</td>
-                        <td class="text-center border">@item.TourPackageId</td>
+                        <td class="text-center border">@item.TourPackage.LastPrice</td>
                         <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#readTourGuide@(item.Id)">Xem</button></td>
 
                     </tr>
@@ -47,7 +47,7 @@
         </table>
     </div>
 
-    <@*div id="readTourGuide@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+    @*<div id="readTourGuide@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="padding-left: 40px;">
                 <div class="modal-header">

@@ -78,7 +78,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@tour.Name" data-placement="top">@tour.Name</h5>
                                     <p class="card-text col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@tour.ContentIntroduct" data-placement="top">@tour.ContentIntroduct</p>
-                                    <a asp-area="Customer" asp-controller="TourCustomer" asp-action="TourDetail" asp-route-tourId="@tour.Id" class="btn btn-primary">Xem Tour</a>
+                                    <a asp-area="Customer" asp-controller="TourCustomer" asp-action="TourDetail" asp-route-itemId="@tour.Id" class="btn btn-primary">Xem Tour</a>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                             <input type="text" name="Eva" id="Eva" value="1" hidden />
                             <input type="text" name="EvaId" id="EvaId" value="@city.Id" hidden />
                             <input type="text" name="controllerName" id="controllerName" value="CityCustomer" hidden />
-                            <input type="text" name="actionName" id="actionName" value="CityManager" hidden />
+                            <input type="text" name="actionName" id="actionName" value="SearchCityDetail" hidden />
                             <input type="text" name="UsernameAccount" id="UsernameAccount" value="@usernameAccount" hidden />
                             <textarea class="form-control border-info" id="Content" name="Content" rows="3"></textarea>
                         </div>

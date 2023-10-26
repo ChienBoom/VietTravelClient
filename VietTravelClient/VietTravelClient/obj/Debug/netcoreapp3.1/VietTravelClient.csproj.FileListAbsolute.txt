@@ -296,7 +296,6 @@ D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\net
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.csproj.AssemblyReference.cache
-D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.GeneratedMSBuildEditorConfig.editorconfig
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.AssemblyInfoInputs.cache
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.AssemblyInfo.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.csproj.CoreCompileInputs.cache
@@ -304,11 +303,6 @@ D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\net
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.RazorAssemblyInfo.cache
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.RazorAssemblyInfo.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\staticwebassets\VietTravelClient.StaticWebAssets.Manifest.cache
-D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\staticwebassets\VietTravelClient.StaticWebAssets.Pack.cache
-D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.VietTravelClient.Microsoft.AspNetCore.StaticWebAssets.props
-D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.build.VietTravelClient.props
-D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.buildMultiTargeting.VietTravelClient.props
-D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.buildTransitive.VietTravelClient.props
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.TagHelpers.input.cache
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.TagHelpers.output.cache
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.RazorCoreGenerate.cache
@@ -390,3 +384,5 @@ D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\net
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HomeAdmin\Error.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\HomeCustomer\Error.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Home\Error.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\staticwebassets\VietTravelClient.StaticWebAssets.xml

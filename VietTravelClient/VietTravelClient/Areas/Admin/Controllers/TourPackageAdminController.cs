@@ -155,55 +155,80 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("saveTourPackage")]
-        public async Task<IActionResult> CreateTourPackage(TourPackageDto value)
+        public async Task<IActionResult> CreateTourPackage(TourPackage value, string ScheduleList)
         {
-            TourPackage tourPackage = new TourPackage();
-            tourPackage.Name = value.Name;
-            tourPackage.StartTime = value.StartTime;
-            tourPackage.NumberOfAdult = value.NumberOfAdult;
-            tourPackage.NumberOfChildren = value.NumberOfChildren;
-            tourPackage.Discount = value.Discount;
-            tourPackage.TourId = value.TourId;
-            tourPackage.HotelId = value.HotelId;
-            tourPackage.TimePackageId = value.TimePackageId;
-            tourPackage.Description = value.Description;
+            string[] ArrayScheduleId = ScheduleList.Split(',');
+            List<Schedule> schedules = new List<Schedule>();
+            foreach (string item in ArrayScheduleId)
+            {
+                string urlSchedule = domainServer + "schedule/" + item;
+                try
+                {
+                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
+                    if (!responseDataSchedule.Success)
+                    {
+                        return RedirectToAction("Error", "Home");
+                    }
+                    schedules.Add(JsonConvert.DeserializeObject<Schedule>(responseDataSchedule.Data));
+                }
+                catch (Exception e)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+            }
+            value.ListScheduleTourPackage = JsonConvert.SerializeObject(schedules);
+            value = await CompleteTourPackage(value);
+            if (value == null) return RedirectToAction("Error", "Home");
 
-            string urlTimePackage = domainServer + "timepackage/" + value.TimePackageId.ToString();
-            string urlHotel = domainServer + "hotel/" + value.HotelId.ToString();
+            string urlSave = domainServer + "tourpackage";
             try
             {
-                ResponseData responseTimePackage = await _callApi.GetApi(urlTimePackage);
-                ResponseData responseHotel = await _callApi.GetApi(urlHotel);
-                if (responseTimePackage.Success && responseHotel.Success)
+                ResponseData responseDataSave = await _callApi.PostApi(urlSave, JsonConvert.SerializeObject(value));
+                if (responseDataSave.Success)
                 {
-                    TimePackage timePackage = JsonConvert.DeserializeObject<TimePackage>(responseTimePackage.Data);
-                    Hotel hotel = JsonConvert.DeserializeObject<Hotel>(responseHotel.Data);
 
-                    tourPackage.EndTime = value.StartTime.AddHours(timePackage.HourNumber);
-                    decimal PriceHotel = hotel.PriceHour * timePackage.HourNumber;
-                    decimal PriceSchedule = 12;
-                    tourPackage.BasePrice = PriceHotel + PriceSchedule;
-                    string urlSave = domainServer + "tourpackage";
-                    try
-                    {
-                        ResponseData responseDataSave = await _callApi.PostApi(urlSave, JsonConvert.SerializeObject(tourPackage));
-                        if (responseDataSave.Success)
-                        {
-
-                            return RedirectToAction("TourPackageManager", new { area = "Admin", controller = "TourPackageAdmin", TourId = value.TourId });
-                        }
-                        return RedirectToAction("Error", "Home");
-                    }
-                    catch (Exception ex)
-                    {
-                        return RedirectToAction("Error", "Home");
-                    }
+                    return RedirectToAction("TourPackageManager", new { area = "Admin", controller = "TourPackageAdmin", TourId = value.TourId });
                 }
                 return RedirectToAction("Error", "Home");
             }
             catch (Exception ex)
             {
                 return RedirectToAction("Error", "Home");
+            }
+        }
+
+        public async Task<TourPackage> CompleteTourPackage(TourPackage tourPackage)
+        {
+            tourPackage.CreateBy = "Admin";
+            List<Schedule> schedules = new List<Schedule>();
+            schedules = JsonConvert.DeserializeObject<List<Schedule>>(tourPackage.ListScheduleTourPackage);
+            string urlHotel = domainServer + "hotel/" + tourPackage.HotelId.ToString();
+            string urlRestaurant = domainServer + "restaurant/" + tourPackage.RestaurantId.ToString();
+            string urlTimePackage = domainServer + "timepackage/" + tourPackage.TimePackageId.ToString();
+            try
+            {
+                ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
+                ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
+                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
+                if (responseDataHotel.Success && responseDataRestaurant.Success && responseDataTimePackage.Success)
+                {
+                    Hotel hotel = JsonConvert.DeserializeObject<Hotel>(responseDataHotel.Data);
+                    Restaurant restaurant = JsonConvert.DeserializeObject<Restaurant>(responseDataRestaurant.Data);
+                    TimePackage timePackage = JsonConvert.DeserializeObject<TimePackage>(responseDataTimePackage.Data);
+                    tourPackage.BasePrice = hotel.PriceHour * timePackage.HourNumber;
+                    foreach (Schedule schedule in schedules)
+                    {
+                        tourPackage.BasePrice += schedule.PriceTicketAdult * tourPackage.NumberOfAdult + schedule.PriceTicketKid * tourPackage.NumberOfChildren;
+                    }
+                    tourPackage.Discount = 0;
+                    tourPackage.LastPrice = tourPackage.BasePrice;
+                    return tourPackage;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
 

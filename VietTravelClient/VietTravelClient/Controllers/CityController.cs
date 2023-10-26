@@ -27,11 +27,11 @@ namespace VietTravelClient.Controllers
 
         [HttpGet]
         [Route("cityDetail")]
-        public async Task<IActionResult> CityDetail(string cityId)
+        public async Task<IActionResult> CityDetail(string itemId)
         {
-            string urlEva = domainServer + "evaluate/evaCity/" + cityId; 
-            string urlCity = domainServer + "city/" + cityId;
-            string urlTour = domainServer + "tour/searchByCityId/" + cityId;
+            string urlEva = domainServer + "evaluate/evaCity/" + itemId; 
+            string urlCity = domainServer + "city/" + itemId;
+            string urlTour = domainServer + "tour/searchByCityId/" + itemId;
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -61,11 +61,11 @@ namespace VietTravelClient.Controllers
         //Search với Id của City
         [HttpPost]
         [Route("searchCityDetail")]
-        public async Task<IActionResult> SearchCityDetail(string searchCitySelect)
+        public async Task<IActionResult> SearchCityDetail(string itemId)
         {
-            string urlEva = domainServer + "evaluate/evaCity/" + searchCitySelect;
-            string urlCity = domainServer + "city/" + searchCitySelect;
-            string urlTour = domainServer + "tour/searchByCityId/" + searchCitySelect;
+            string urlEva = domainServer + "evaluate/evaCity/" + itemId;
+            string urlCity = domainServer + "city/" + itemId;
+            string urlTour = domainServer + "tour/searchByCityId/" + itemId;
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -132,7 +132,7 @@ namespace VietTravelClient.Controllers
         {
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
             string url = domainServer + "city/search/" + searchValue + "/" + page.ToString();
-            string urlTotalPage = domainServer + "search/totalPage" + searchValue;
+            string urlTotalPage = domainServer + "city/search/totalPage/" + searchValue;
             List<City> cities = new List<City>();
             try
             {

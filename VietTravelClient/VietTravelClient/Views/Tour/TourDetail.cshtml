@@ -6,9 +6,11 @@
     Tour tour = (Tour)ViewData["Tour"];
     List<TourPackage> tourPackages = (List<TourPackage>)ViewData["TourPackages"];
     List<Hotel> hotels = (List<Hotel>)ViewData["Hotels"];
+    List<Restaurant> restaurants = (List<Restaurant>)ViewData["Restaurants"];
     List<TimePackage> timePackages = (List<TimePackage>)ViewData["TimePackages"];
     List<TourGuide> tourGuides = (List<TourGuide>)ViewData["TourGuides"];
     List<Evaluate> evaluates = (List<Evaluate>)ViewData["Evaluates"];
+    List<Schedule> schedules = (List<Schedule>)ViewData["Schedules"];
 }
 <style>
     .modal-dialog{
@@ -213,13 +215,27 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-sm-6 col-md-6">
-                                    <label for="TourGuideId" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn HDV</label>
-                                    <select name="TourGuideId" id="TourGuideId"
+                                    <label for="RestaurantId" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Nhà hàng</label>
+                                    <select name="RestaurantId" id="RestaurantId"
                                             class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;">
                                         @{
-                                            foreach (TourGuide tourGuide in tourGuides)
+                                            foreach (Restaurant restaurant in restaurants)
                                             {
-                                                <option value="@tourGuide.Id">@tourGuide.Name</option>
+                                                <option value="@restaurant.Id">@restaurant.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12">
+                                    <label for="ScheduleList" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Lịch trình</label>
+                                    <select name="ScheduleList" id="ScheduleList"
+                                            class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;" multiple>
+                                        @{
+                                            foreach (Schedule schedule in schedules)
+                                            {
+                                                <option value="@schedule.Id">@schedule.Title</option>
                                             }
                                         }
                                     </select>
@@ -228,7 +244,7 @@
                             <button type="button" style="height:60px; margin-top: 50px;"
                                     class="btn-outline-info rounded col-12 col-sm-12 col-md-12" data-toggle="modal"
                                     data-target="#confirmBooking">
-                                    Đặt Tour
+                                Đặt Tour
                             </button>
                         </form>
                     </div>
@@ -348,6 +364,21 @@
     debugger
     $(document).ready(function () {
         ChangeTourPackage();
+        $('#ScheduleList').selectpicker({
+            liveSearch: true,
+            size: 5,
+            actionsBox: true,
+        });
+        $('#RestaurantId').selectpicker({
+            liveSearch: true,
+            size: 5,
+            actionsBox: true,
+        });
+        $('#HotelId').selectpicker({
+            liveSearch: true,
+            size: 5,
+            actionsBox: true,
+        });
     });
     function ChangeTourPackageType(radio) {
         if (radio.value == "package1") {

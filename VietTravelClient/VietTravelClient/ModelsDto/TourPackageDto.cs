@@ -11,6 +11,7 @@ namespace VietTravelClient.ModelsDto
         public long Discount { get; set; }
         public long TourId { get; set; }
         public long HotelId { get; set; }
+        public long RestaurantId { get; set; }
         public long TimePackageId { get; set; }
         public string Description { get; set; }
     }

@@ -17,7 +17,7 @@
             <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 20px;">
                 <form asp-controller="City" asp-action="SearchCityDetail" method="post">
                     <label for="searchCitySelect" class="text-info text-center font-italic">Chọn tên Thành phố muốn đến</label>
-                    <select name="searchCitySelect" id="searchCitySelect" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;">
+                    <select name="itemId" id="searchCitySelect" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;">
                         @{
                             foreach (City city in cities)
                             {
@@ -34,7 +34,7 @@
             <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 10px;">
                 <form asp-controller="Tour" asp-action="SearchTourDetail" method="post">
                     <label for="searchTourSelect" class="text-info text-center font-italic">Chọn tên Tour muốn đến</label>
-                    <select name="searchTourSelect" id="searchTourSelect" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;">
+                    <select name="itemId" id="searchTourSelect" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;">
                         @{
                             foreach (Tour tour in tours)
                             {

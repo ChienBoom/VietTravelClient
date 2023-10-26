@@ -28,9 +28,7 @@ using VietTravelClient.Models;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9bb112a988f3288d45b40df01e79677bb89cbf9f", @"/Areas/Admin/Views/EventAdmin/EventTourManager.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f0efa66d1bcb428e72df198de36b8c870586a0c5", @"/Areas/Admin/Views/_ViewImports.cshtml")]
-    #nullable restore
     public class Areas_Admin_Views_EventAdmin_EventTourManager : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
-    #nullable disable
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-area", "Admin", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "EventAdmin", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -79,7 +77,7 @@ using VietTravelClient.Models;
 #line hidden
 #nullable disable
             WriteLiteral("<style>\r\n    .modal-dialog{\r\n        max-width: 800px;\r\n    }\r\n</style>\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bb112a988f3288d45b40df01e79677bb89cbf9f7029", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bb112a988f3288d45b40df01e79677bb89cbf9f6983", async() => {
                 WriteLiteral("\r\n    <div class=\"row\" style=\"margin-top: 40px; margin-bottom: 10px;\">\r\n        <div hidden>\r\n            <input type=\"text\" id=\"Status\"");
                 BeginWriteAttribute("value", " value=\"", 551, "\"", 566, 1);
 #nullable restore
@@ -105,7 +103,7 @@ WriteAttributeValue("", 559, status, 559, 7, false);
                             </button>
                         </div>
                         ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bb112a988f3288d45b40df01e79677bb89cbf9f8703", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bb112a988f3288d45b40df01e79677bb89cbf9f8657", async() => {
                     WriteLiteral(@"
                             <div class=""modal-body row"">
                                 <div class=""col-12 col-sm-12 col-md-12 row"">
@@ -279,7 +277,7 @@ WriteAttributeValue("", 6243, item.Id, 6243, 10, false);
                                         </button>
                                     </div>
                                     ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bb112a988f3288d45b40df01e79677bb89cbf9f20532", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bb112a988f3288d45b40df01e79677bb89cbf9f20486", async() => {
                     WriteLiteral(@"
                                         <div class=""modal-body row"">
                                             <div class=""col-12 col-sm-12 col-md-12 row"">
@@ -377,7 +375,7 @@ WriteAttributeValue("", 9832, item.Id, 9832, 10, false);
                                         </button>
                                     </div>
                                     ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bb112a988f3288d45b40df01e79677bb89cbf9f27619", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bb112a988f3288d45b40df01e79677bb89cbf9f27573", async() => {
                     WriteLiteral(@"
                                         <div class=""modal-body row"">
                                             <div class=""col-12 col-sm-12 col-md-12 row"">
@@ -508,7 +506,7 @@ WriteAttributeValue("", 14440, item.Id, 14440, 10, false);
                                         </button>
                                     </div>
                                     ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bb112a988f3288d45b40df01e79677bb89cbf9f37411", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bb112a988f3288d45b40df01e79677bb89cbf9f37365", async() => {
                     WriteLiteral(@"
                                         <div class=""modal-body row"">
                                             <div class=""col-12 col-sm-12 col-md-12 row"">
@@ -745,26 +743,16 @@ WriteAttributeValue("", 17951, tourId, 17951, 7, false);
 </script>");
         }
         #pragma warning restore 1998
-        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; } = default!;
-        #nullable disable
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; }
     }
 }
 #pragma warning restore 1591

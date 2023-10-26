@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Trang chủ";
+    List<City> cities = (List<City>)ViewData["Cities"];
+    List<Tour> tours = (List<Tour>)ViewData["Tours"];
 }
 
 <body>
@@ -15,9 +17,9 @@
             <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 20px;">
                 <form asp-area="Customer" asp-controller="CityCustomer" asp-action="SearchCityDetail" method="post">
                     <label for="searchCitySelect" class="text-info text-center font-italic">Chọn tên Thành phố muốn đến</label>
-                    <select name="searchCitySelect" id="searchCitySelect" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;">
+                    <select name="itemId" id="searchCitySelect" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;">
                         @{
-                            foreach (City city in (List<City>)ViewData["Cities"])
+                            foreach (City city in cities)
                             {
                                 <option value="@city.Id">@city.Name</option>
                             }
@@ -33,9 +35,9 @@
             <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 10px;">
                 <form asp-area="Customer" asp-controller="TourCustomer" asp-action="SearchTourDetail" method="post">
                     <label for="searchTourSelect" class="text-info text-center font-italic">Chọn tên Tour muốn đến</label>
-                    <select name="searchTourSelect" id="searchTourSelect" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;">
+                    <select name="itemId" id="searchTourSelect" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;">
                         @{
-                            foreach (Tour tour in (List<Tour>)ViewData["Tours"])
+                            foreach (Tour tour in tours)
                             {
                                 <option value="@tour.Id">@tour.Name</option>
                             }

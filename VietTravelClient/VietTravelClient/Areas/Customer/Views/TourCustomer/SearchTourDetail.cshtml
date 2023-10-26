@@ -6,9 +6,11 @@
     Tour tour = (Tour)ViewData["Tour"];
     List<TourPackage> tourPackages = (List<TourPackage>)ViewData["TourPackages"];
     List<Hotel> hotels = (List<Hotel>)ViewData["Hotels"];
+    List<Restaurant> restaurants = (List<Restaurant>)ViewData["Restaurants"];
     List<TimePackage> timePackages = (List<TimePackage>)ViewData["TimePackages"];
     List<TourGuide> tourGuides = (List<TourGuide>)ViewData["TourGuides"];
     List<Evaluate> evaluates = (List<Evaluate>)ViewData["Evaluates"];
+    List<Schedule> schedules = (List<Schedule>)ViewData["Schedules"];
     string usernameAccount = (string)ViewData["UsernameAccount"];
     string status = (string)ViewData["Status"];
 }
@@ -21,7 +23,7 @@
     <div class="row" style="margin-top: 20px;">
         @*Status*@
         <div hidden>
-            <input type="text" id="Status" value="@status"/>
+            <input type="text" id="Status" value="@status" />
         </div>
 
         <div class="media col-12 col-sm-12 col-md-12 border" style="margin-left: 10px; margin-right: 10px;">
@@ -65,7 +67,7 @@
                             </div>
                         </div>
                         <button type="button" style="height:60px; margin-top: 50px;"
-                                class="btn-outline-info rounded col-12 col-sm-12 col-md-12" onclick="confirmBookingTour()">
+                                class="btn-outline-info rounded col-12 col-sm-12 col-md-12" onclick="confirmBookingTourPackage()">
                             Đặt Tour
                         </button>
                     </div>
@@ -159,110 +161,96 @@
                         }
                     }
 
-                    <div id="Package2" class="col-10 col-sm-10 col-md-10" style="margin-top: 30px;" hidden>
-                        <form action="">
-                            <div class="row">
-                                <div class="col-6 col-sm-6 col-md-6">
-                                    <label for="NumberOfAdult" class="col-12 col-sm-12 col-md-12 text-info">
-                                        Số lượng
-                                        người lớn(>12 tuổi) <span style="color: red;">*</span>
-                                    </label>
-                                    <input type="number" id="NumberOfAdult"
-                                           class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;" value="2">
-                                </div>
-                                <div class="col-6 col-sm-6 col-md-6">
-                                    <label for="" class="col-12 col-sm-12 col-md-12 text-info">
-                                        Số lượng trẻ em(<12 tuổi)<span style="color: red;">*</span>
-                                    </label>
-                                    <input type="number" class="col-12 col-sm-12 col-md-12 border-info"
-                                           style="height: 60px;" value="2">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 col-sm-6 col-md-6">
-                                    <label for="" class="col-12 col-sm-12 col-md-12 text-info"
-                                           style="white-space: nowrap;">
-                                        Thời gian khởi đầu<span style="color: red;">*</span>
-                                    </label>
-                                    <input type="datetime-local" id="" class="col-12 col-sm-12 col-md-12 border-info"
-                                           style="height: 60px;">
-                                </div>
-                                <div class="col-6 col-sm-6 col-md-6">
-                                    <label for="" class="col-12 col-sm-12 col-md-12 text-info">
-                                        Lựa chọn gói thời
-                                        gian<span style="color: red;">*</span>
-                                    </label>
-                                    <select name="TimePackageId" id="TimePackageId"
-                                            class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;">
-                                        @{
-                                            foreach (TimePackage timePackage in timePackages)
-                                            {
-                                                <option value="@timePackage.Id">@timePackage.Name</option>
-                                            }
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 col-sm-6 col-md-6">
-                                    <label for="HotelId" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Khách sạn</label>
-                                    <select name="HotelId" id="HotelId"
-                                            class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;">
-                                        @{
-                                            foreach (Hotel hotel in hotels)
-                                            {
-                                                <option value="@hotel.Id">@hotel.Name</option>
-                                            }
-                                        }
-                                    </select>
-                                </div>
-                                <div class="col-6 col-sm-6 col-md-6">
-                                    <label for="TourGuideId" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn HDV</label>
-                                    <select name="TourGuideId" id="TourGuideId"
-                                            class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;">
-                                        @{
-                                            foreach (TourGuide tourGuide in tourGuides)
-                                            {
-                                                <option value="@tourGuide.Id">@tourGuide.Name</option>
-                                            }
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="button" style="height:60px; margin-top: 50px;"
-                                    class="btn-outline-info rounded col-12 col-sm-12 col-md-12" data-toggle="modal"
-                                    data-target="#confirmBooking">
-                                Đặt Tour
-                            </button>
-                        </form>
-                    </div>
-
-                    @*Modal confirm Booking*@
-                    <div id="confirmBooking" class="modal fade" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <form asp-area="Customer" asp-controller="TicketCustomer" asp-action="SaveTicket" method="post">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title text-info">Xác nhận đặt Tour</h4>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div>BẠN CHẮC CHẮN ĐẶT TOUR NÀY</div>
-                                        <input type="text" id="TourPackageIdConfirmBooking" name="TourPackageId" value="" hidden/>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                                        <button type="submit" class="btn btn-primary">Xác nhận</button>
-                                    </div>
-                                </form>
-                            </div>
+                <div id="Package2" class="col-10 col-sm-10 col-md-10" style="margin-top: 30px;" hidden>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6">
+                            <label for="NumberOfAdult" class="col-12 col-sm-12 col-md-12 text-info">
+                                Số lượng
+                                người lớn(>12 tuổi) <span style="color: red;">*</span>
+                            </label>
+                            <input type="number" id="NumberOfAdult"
+                                   class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;" value="2">
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6">
+                            <label for="NumberOfChildren" class="col-12 col-sm-12 col-md-12 text-info">
+                                Số lượng trẻ em(<12 tuổi)<span style="color: red;">*</span>
+                            </label>
+                            <input type="number" id="NumberOfChildren" class="col-12 col-sm-12 col-md-12 border-info"
+                                   style="height: 60px;" value="2">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6">
+                            <label for="StartTime" class="col-12 col-sm-12 col-md-12 text-info"
+                                   style="white-space: nowrap;">
+                                Thời gian khởi đầu<span style="color: red;">*</span>
+                            </label>
+                            <input type="datetime-local" id="StartTime" class="col-12 col-sm-12 col-md-12 border-info"
+                                   style="height: 60px;">
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6">
+                            <label for="TimePackageId" class="col-12 col-sm-12 col-md-12 text-info">
+                                Lựa chọn gói thời
+                                gian<span style="color: red;">*</span>
+                            </label>
+                            <select id="TimePackageId"
+                                    class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;">
+                                @{
+                                    foreach (TimePackage timePackage in timePackages)
+                                    {
+                                        <option value="@timePackage.Id">@timePackage.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6">
+                            <label for="HotelId" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Khách sạn</label>
+                            <select name="HotelId" id="HotelId"
+                                    class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;">
+                                @{
+                                    foreach (Hotel hotel in hotels)
+                                    {
+                                        <option value="@hotel.Id">@hotel.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6">
+                            <label for="RestaurantId" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Nhà hàng</label>
+                            <select name="RestaurantId" id="RestaurantId"
+                                    class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;">
+                                @{
+                                    foreach (Restaurant restaurant in restaurants)
+                                    {
+                                        <option value="@restaurant.Id">@restaurant.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12">
+                            <label for="ScheduleList" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Lịch trình</label>
+                            <select name="ScheduleList" id="ScheduleList"
+                                    class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;" multiple>
+                                @{
+                                    foreach (Schedule schedule in schedules)
+                                    {
+                                        <option value="@schedule.Id">@schedule.Title</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" style="height:60px; margin-top: 50px;"
+                            class="btn-outline-info rounded col-12 col-sm-12 col-md-12" onclick="confirmBookingTourSingle()">
+                        Đặt Tour
+                    </button>
                 </div>
 
+                </div>
             </div>
         </div>
     </div>
@@ -343,6 +331,109 @@
         </ul>
     </div>
 
+    @*Modal confirm Booking Tour Package*@
+    <div id="confirmBookingPackage" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form asp-area="Customer" asp-controller="TicketCustomer" asp-action="SaveTicketPackage" method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-info">Xác nhận đặt Tour</h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>BẠN CHẮC CHẮN ĐẶT TOUR NÀY</div>
+                        <input type="text" id="TourPackageIdConfirmBooking" name="TourPackageId" value="" hidden />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                        <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @*Modal confirm Booking Tour Single*@
+    <div id="confirmBookingSingle" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form asp-area="Customer" asp-controller="TicketCustomer" asp-action="SaveTicketSingle" method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-info">Xác nhận đặt Tour</h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>BẠN CHẮC CHẮN ĐẶT TOUR NÀY</div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="NumberOfAdultSingle" class="col-12 col-sm-12 col-md-12 text-info">
+                                    Số lượng
+                                    người lớn(>12 tuổi) <span style="color: red;">*</span>
+                                </label>
+                                <input type="number" id="NumberOfAdultSingle" name="NumberOfAdult"
+                                       class="col-12 col-sm-12 col-md-12 border-info" style="height: 60px;" value="" readonly>
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="NumberOfChildrenSingle" class="col-12 col-sm-12 col-md-12 text-info">
+                                    Số lượng trẻ em(<12 tuổi)<span style="color: red;">*</span>
+                                </label>
+                                <input type="number" id="NumberOfChildrenSingle" name="NumberOfChildren" class="col-12 col-sm-12 col-md-12 border-info"
+                                       style="height: 60px;" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="StartTimeSingle" class="col-12 col-sm-12 col-md-12 text-info"
+                                       style="white-space: nowrap;">
+                                    Thời gian khởi hành<span style="color: red;">*</span>
+                                </label>
+                                <input type="text" id="StartTimeSingle" name="StartTime" class="col-12 col-sm-12 col-md-12 border-info"
+                                       style="height: 60px;" readonly>
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="TimePackageIdSingle" class="col-12 col-sm-12 col-md-12 text-info">
+                                    Lựa chọn gói thời
+                                    gian<span style="color: red;">*</span>
+                                </label>
+                                <input type="text" id="TimePackageIdSingle" name="TimePackageId" class="col-12 col-sm-12 col-md-12 border-info"
+                                       style="height: 60px;" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="HotelIdSingle" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Khách sạn</label>
+                                <input type="text" id="HotelIdSingle" name="HotelId" class="col-12 col-sm-12 col-md-12 border-info"
+                                       style="height: 60px;" value="" readonly>
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="RestaurantIdSingle" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Nhà hàng</label>
+                                <input type="text" id="RestaurantIdSingle" name="RestaurantId" class="col-12 col-sm-12 col-md-12 border-info"
+                                       style="height: 60px;" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12">
+                                <label for="ScheduleListSingle" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Lịch trình</label>
+                                <input type="text" id="ScheduleListSingle" name="ScheduleList" class="col-12 col-sm-12 col-md-12 border-info"
+                                       style="height: 60px;" value="" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                        <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     @*Modal Status*@
     @*Modal bootstrap*@
     <div class="modal" id="Status">
@@ -364,11 +455,46 @@
         </div>
     </div>
 
+    @*Modal bootstrap*@
+    <div class="modal" id="Warning">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-info">THÔNG BÁO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="WarningMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 <script>
     debugger
     $(document).ready(function () {
         ChangeTourPackage();
+        $('#ScheduleList').selectpicker({
+            liveSearch: true,
+            size: 5,
+            actionsBox: true,
+        });
+        $('#RestaurantId').selectpicker({
+            liveSearch: true,
+            size: 5,
+            actionsBox: true,
+        });
+        $('#HotelId').selectpicker({
+            liveSearch: true,
+            size: 5,
+            actionsBox: true,
+        });
         var status = $("#Status").val();
         if (status == 1) {
             $('#StatusMessage').text("ĐẶT TOUR THÀNH CÔNG")
@@ -409,9 +535,53 @@
         //var scheduleTourPackages = $(`#ScheduleTourPackages${tourPackageId}`).val();
         $(`#TourPackageDetail${tourPackageId}`).modal('show');
     }
-    function confirmBookingTour(){
+    function confirmBookingTourPackage(){
         var tourPackageId = $('#TourPackageId').val();
         $('#TourPackageIdConfirmBooking').val(tourPackageId);
-        $('#confirmBooking').modal('show');
+        $('#confirmBookingPackage').modal('show');
+    }
+    function confirmBookingTourSingle() {
+        var NumberOfAdultSingle = $('#NumberOfAdult').val();
+        var NumberOfChildrenSingle = $('#NumberOfChildren').val();
+        var StartTimeSingle = $('#StartTime').val();
+        var TimePackageIdSingle = $('#TimePackageId').val();
+        var HotelIdSingle = $('#HotelId').val();
+        var RestaurantIdSingle = $('#RestaurantId').val();
+        var ScheduleListSingle = $('#ScheduleList').val();
+        if (!ValidationField(NumberOfAdultSingle, "Vui lòng nhập Số lượng người lớn")) return false;
+        if (!ValidationField(NumberOfChildrenSingle, "Vui lòng nhập Số lượng trẻ em")) return false;
+        if (!ValidationFieldNumber(NumberOfAdultSingle, "Vui lòng nhập Số lượng người lớn (>0)", 1)) return false;
+        if (!ValidationFieldNumber(NumberOfChildrenSingle, "Vui lòng nhập Số lượng trẻ em(>=0)", 0)) return false;
+        if (!ValidationField(StartTimeSingle, "Vui lòng nhập Ngày khởi hành")) return false;
+        if (!ValidationField(TimePackageIdSingle, "Vui lòng chọn Gói thời gian")) return false;
+        if (!ValidationField(HotelIdSingle, "Vui lòng chọn Khách sạn")) return false;
+        if (!ValidationField(RestaurantIdSingle, "Vui lòng chọn Nhà hàng")) return false;
+        if (!ValidationField(ScheduleListSingle, "Vui lòng chọn Lịch trình")) return false;
+        $('#NumberOfAdultSingle').val(NumberOfAdultSingle);
+        $('#NumberOfChildrenSingle').val(NumberOfChildrenSingle);
+        $('#StartTimeSingle').val(StartTimeSingle);
+        $('#TimePackageIdSingle').val(TimePackageIdSingle);
+        $('#HotelIdSingle').val(HotelIdSingle);
+        $('#RestaurantIdSingle').val(RestaurantIdSingle);
+        $('#ScheduleListSingle').val(ScheduleListSingle);
+        $('#confirmBookingSingle').modal('show');
+    }
+    function ValidationField(value, message) {
+        if (value == "") {
+            ShowMessage(message);
+            return false;
+        }
+        return true;
+    }
+    function ValidationFieldNumber(value, message, number) {
+        if (value < number) {
+            ShowMessage(message);
+            return false;
+        }
+        return true;
+    }
+    function ShowMessage(value) {
+        $('#WarningMessage').text(value)
+        $('#Warning').modal('show');
     }
 </script>

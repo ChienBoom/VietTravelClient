@@ -45,11 +45,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 ResponseData responseData = await _callApi.PostApi(url, stringValue);
                 if(!responseData.Success) return RedirectToAction("Error", "Home");
                 Evaluate evaluate = JsonConvert.DeserializeObject<Evaluate>(responseData.Data);
-                return RedirectToAction(actionName, new {area="Customer", controller= controllerName});
+                return RedirectToAction(actionName, new {area="Customer", controller= controllerName, itemId =value.EvaId});
             }
             catch (Exception ex)
             {
-                return RedirectToAction(actionName, new { area = "Customer", controller = controllerName });
+                return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = value.EvaId });
             }
         }
 

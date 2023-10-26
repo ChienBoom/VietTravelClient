@@ -73,7 +73,21 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     User user = JsonConvert.DeserializeObject<User>(responseData.Data);
                     string url = domainServer + "ticket/getTicketByUserId/" + user.Id;
                     ResponseData responseDataUser = await _callApi.GetApi(url);
-                    ViewData["Tickets"] = JsonConvert.DeserializeObject<List<Ticket>>(responseDataUser.Data);
+                    List<Ticket> tickets = JsonConvert.DeserializeObject<List<Ticket>>(responseDataUser.Data);
+                    foreach(Ticket ticket in tickets)
+                    {
+                        ticket.TourPackage = await getTourPackage(ticket.TourPackageId.ToString());
+                        ticket.TourPackage.Hotel = await getHotel(ticket.TourPackage.HotelId.ToString());
+                        ticket.TourPackage.Restaurant = await getRestaurant(ticket.TourPackage.RestaurantId.ToString());
+                        ticket.TourPackage.Tour = await getTour(ticket.TourPackage.TourId.ToString());
+                        ticket.TourPackage.TimePackage = await getTimePackage(ticket.TourPackage.TimePackageId.ToString());
+                        if (ticket.TourPackage == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+                        if (ticket.TourPackage.Hotel == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+                        if (ticket.TourPackage.Restaurant == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+                        if (ticket.TourPackage.Tour == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+                        if (ticket.TourPackage.TimePackage == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+                    }
+                    ViewData["Tickets"] = tickets;
                     ViewData["Status"] = status;
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
@@ -133,6 +147,96 @@ namespace VietTravelClient.Areas.Customer.Controllers
         public async Task<IActionResult> Error()
         {
             return View();
+        }
+
+        public async Task<TourPackage> getTourPackage(string id)
+        {
+            string url = domainServer + "tourpackage/" + id;
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    return JsonConvert.DeserializeObject<TourPackage>(responseData.Data);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Hotel> getHotel(string id)
+        {
+            string url = domainServer + "hotel/" + id;
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    return JsonConvert.DeserializeObject<Hotel>(responseData.Data);
+                }
+                return null;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Restaurant> getRestaurant(string id)
+        {
+            string url = domainServer + "restaurant/" + id;
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    return JsonConvert.DeserializeObject<Restaurant>(responseData.Data);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<TimePackage> getTimePackage(string id)
+        {
+            string url = domainServer + "timepackage/" + id;
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    return JsonConvert.DeserializeObject<TimePackage>(responseData.Data);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Tour> getTour(string id)
+        {
+            string url = domainServer + "tour/" + id;
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    return JsonConvert.DeserializeObject<Tour>(responseData.Data);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
     }

@@ -20,8 +20,14 @@ namespace VietTravelClient.Models
         public decimal LastPrice { get; set; }
         public long TourId { get; set; }
         public long HotelId { get; set; }
+        public long RestaurantId { get; set; }
         public long TimePackageId { get; set; }
+        public string CreateBy { get; set; }
         public string ListScheduleTourPackage { get; set; }
+        public Hotel Hotel { get; set; }
+        public Restaurant Restaurant { get; set; }
+        public Tour Tour { get; set; }
+        public TimePackage TimePackage { get; set; }
         public List<ScheduleTourPackage> ScheduleTourPackages { get; set; }
     }
 }

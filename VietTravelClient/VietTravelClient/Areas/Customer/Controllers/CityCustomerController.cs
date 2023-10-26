@@ -32,13 +32,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         [HttpGet]
         [Route("cityDetail")]
-        public async Task<IActionResult> CityDetail(string cityId)
+        public async Task<IActionResult> CityDetail(string itemId)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCity = domainServer + "city/" + cityId;
-            string urlEva = domainServer + "evaluate/evaCity/" + cityId;
-            string urlTour = domainServer + "tour/searchByCityId/" + cityId;
+            string urlCity = domainServer + "city/" + itemId;
+            string urlEva = domainServer + "evaluate/evaCity/" + itemId;
+            string urlTour = domainServer + "tour/searchByCityId/" + itemId;
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -69,13 +69,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
         //Search với Id của City
         [HttpPost]
         [Route("searchCityDetail")]
-        public async Task<IActionResult> SearchCityDetail(string searchCitySelect)
+        public async Task<IActionResult> SearchCityDetail(string itemId)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string urlCity = domainServer + "city/" + searchCitySelect;
-            string urlTour = domainServer + "tour/searchByCityId/" + searchCitySelect;
-            string urlEva = domainServer + "evaluate/evaCity/" + searchCitySelect;
+            string urlCity = domainServer + "city/" + itemId;
+            string urlTour = domainServer + "tour/searchByCityId/" + itemId;
+            string urlEva = domainServer + "evaluate/evaCity/" + itemId;
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -150,7 +150,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             //if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
             string url = domainServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
-            string urlTotalPage = domainServer + "search/totalPage" + searchValue.Unidecode();
+            string urlTotalPage = domainServer + "city/search/totalPage/" + searchValue.Unidecode();
             List<City> cities = new List<City>();
             try
             {

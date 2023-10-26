@@ -28,12 +28,12 @@ namespace VietTravelClient.Controllers
 
         [HttpGet]
         [Route("tourDetail")]
-        public async Task<IActionResult> TourDetail(string tourId)
+        public async Task<IActionResult> TourDetail(string itemId)
         {
-            string urlTour = domainServer + "tour/" + tourId;
-            string urlTourPackage = domainServer + "tourpackage/searchByTourId/" + tourId;
+            string urlTour = domainServer + "tour/" + itemId;
+            string urlTourPackage = domainServer + "tourpackage/searchByTourId/" + itemId;
             string urlTimePackage = domainServer + "timepackage";
-            string urlEva = domainServer + "evaluate/evaTour/" + tourId;
+            string urlEva = domainServer + "evaluate/evaTour/" + itemId;
             Tour tour = new Tour();
             List<TourPackage> tourPackages = new List<TourPackage>();
             List<TimePackage> timePackages = new List<TimePackage>();
@@ -52,29 +52,31 @@ namespace VietTravelClient.Controllers
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     string urlTourGuide = domainServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
+                    string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
+                    string urlSchedule = domainServer + "schedule/getByTourId/" + itemId;
                     List<TourGuide> tourGuides = new List<TourGuide>();
                     List<Hotel> hotels = new List<Hotel>();
-                    try
+                    List<Restaurant> restaurants = new List<Restaurant>();
+                    List<Schedule> schedules = new List<Schedule>();
+                    ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
+                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
+                    ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
+                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
+                    if (responseDataTourGuide.Success && responseDataHotel.Success && responseDataRestaurant.Success && responseDataSchedule.Success)
                     {
-                        ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
-                        ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                        if (responseDataTourGuide.Success && responseDataHotel.Success)
-                        {
-                            tourGuides = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
-                            hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
-                            ViewData["Tour"] = tour;
-                            ViewData["TourGuides"] = tourGuides;
-                            ViewData["TourPackages"] = tourPackages;
-                            ViewData["Hotels"] = hotels;
-                            ViewData["TimePackages"] = timePackages;
-                            ViewData["Evaluates"] = evaluates;
-                            return View();
-                        }
-                        return RedirectToAction("Error");
-                    }
-                    catch (Exception ex)
-                    {
-                        return RedirectToAction("Error");
+                        tourGuides = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
+                        hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
+                        restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
+                        schedules = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
+                        ViewData["Tour"] = tour;
+                        ViewData["TourGuides"] = tourGuides;
+                        ViewData["TourPackages"] = tourPackages;
+                        ViewData["Hotels"] = hotels;
+                        ViewData["Restaurants"] = restaurants;
+                        ViewData["TimePackages"] = timePackages;
+                        ViewData["Evaluates"] = evaluates;
+                        ViewData["Schedules"] = schedules;
+                        return View();
                     }
                 }
                 return RedirectToAction("Error");
@@ -88,12 +90,12 @@ namespace VietTravelClient.Controllers
         //Search với Id của Tour
         [HttpPost]
         [Route("searchTourDetail")]
-        public async Task<IActionResult> SearchTourDetail(string searchTourSelect)
+        public async Task<IActionResult> SearchTourDetail(string itemId)
         {
-            string urlTour = domainServer + "tour/" + searchTourSelect;
-            string urlTourPackage = domainServer + "tourpackage/searchByTourId/" + searchTourSelect;
+            string urlTour = domainServer + "tour/" + itemId;
+            string urlTourPackage = domainServer + "tourpackage/searchByTourId/" + itemId;
             string urlTimePackage = domainServer + "timepackage";
-            string urlEva = domainServer + "evaluate/evaTour/" + searchTourSelect;
+            string urlEva = domainServer + "evaluate/evaTour/" + itemId;
             Tour tour = new Tour();
             List<TourPackage> tourPackages = new List<TourPackage>();
             List<TimePackage> timePackages = new List<TimePackage>();
@@ -112,29 +114,31 @@ namespace VietTravelClient.Controllers
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     string urlTourGuide = domainServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
+                    string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
+                    string urlSchedule = domainServer + "schedule/getByTourId/" + itemId;
                     List<TourGuide> tourGuides = new List<TourGuide>();
                     List<Hotel> hotels = new List<Hotel>();
-                    try
+                    List<Restaurant> restaurants = new List<Restaurant>();
+                    List<Schedule> schedules = new List<Schedule>();
+                    ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
+                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
+                    ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
+                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
+                    if (responseDataTourGuide.Success && responseDataHotel.Success && responseDataRestaurant.Success && responseDataSchedule.Success)
                     {
-                        ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
-                        ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                        if (responseDataTourGuide.Success && responseDataHotel.Success)
-                        {
-                            tourGuides = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
-                            hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
-                            ViewData["Tour"] = tour;
-                            ViewData["TourGuides"] = tourGuides;
-                            ViewData["TourPackages"] = tourPackages;
-                            ViewData["Hotels"] = hotels;
-                            ViewData["TimePackages"] = timePackages;
-                            ViewData["Evaluates"] = evaluates;
-                            return View();
-                        }
-                        return RedirectToAction("Error");
-                    }
-                    catch (Exception ex)
-                    {
-                        return RedirectToAction("Error");
+                        tourGuides = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
+                        hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
+                        restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
+                        schedules = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
+                        ViewData["Tour"] = tour;
+                        ViewData["TourGuides"] = tourGuides;
+                        ViewData["TourPackages"] = tourPackages;
+                        ViewData["Hotels"] = hotels;
+                        ViewData["Restaurants"] = restaurants;
+                        ViewData["TimePackages"] = timePackages;
+                        ViewData["Evaluates"] = evaluates;
+                        ViewData["Schedules"] = schedules;
+                        return View();
                     }
                 }
                 return RedirectToAction("Error");

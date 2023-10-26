@@ -28,9 +28,7 @@ using VietTravelClient.Models;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ff016ce13e2cb7cfd31dd159b872f89cee1c9da8", @"/Areas/Admin/Views/TimePackageAdmin/TimePackageManager.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f0efa66d1bcb428e72df198de36b8c870586a0c5", @"/Areas/Admin/Views/_ViewImports.cshtml")]
-    #nullable restore
     public class Areas_Admin_Views_TimePackageAdmin_TimePackageManager : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
-    #nullable disable
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-area", "Admin", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "TimePackageAdmin", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -76,7 +74,7 @@ using VietTravelClient.Models;
 #line default
 #line hidden
 #nullable disable
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff016ce13e2cb7cfd31dd159b872f89cee1c9da86599", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff016ce13e2cb7cfd31dd159b872f89cee1c9da86553", async() => {
                 WriteLiteral("\r\n    <div class=\"row\" style=\"margin-top: 40px; margin-bottom: 10px;\">\r\n        <div hidden>\r\n            <input type=\"text\" id=\"Status\"");
                 BeginWriteAttribute("value", " value=\"", 451, "\"", 466, 1);
 #nullable restore
@@ -102,7 +100,7 @@ WriteAttributeValue("", 459, status, 459, 7, false);
                             </button>
                         </div>
                         ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff016ce13e2cb7cfd31dd159b872f89cee1c9da88271", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff016ce13e2cb7cfd31dd159b872f89cee1c9da88225", async() => {
                     WriteLiteral(@"
                             <div class=""modal-body"">
                                 <label for=""NameCre"" class=""text-info font-italic"">Nhập tên<span style=""color: red;"">*</span></label>
@@ -228,7 +226,7 @@ WriteAttributeValue("", 3880, item.Id, 3880, 10, false);
                                         </button>
                                     </div>
                                     ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff016ce13e2cb7cfd31dd159b872f89cee1c9da816434", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff016ce13e2cb7cfd31dd159b872f89cee1c9da816388", async() => {
                     WriteLiteral(@"
                                         <div class=""modal-body"">
                                             <label for=""NameUpd"" class=""text-info font-italic"">Nhập tên<span style=""color: red;"">*</span></label>
@@ -312,7 +310,7 @@ WriteAttributeValue("", 6281, item.Id, 6281, 10, false);
                                         </button>
                                     </div>
                                     ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff016ce13e2cb7cfd31dd159b872f89cee1c9da822725", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff016ce13e2cb7cfd31dd159b872f89cee1c9da822679", async() => {
                     WriteLiteral(@"
                                         <div class=""modal-body"">
                                             <label for=""Name"" class=""text-info font-italic"">Tên gói<span style=""color: red;"">*</span></label>
@@ -496,26 +494,16 @@ WriteAttributeValue("", 7692, item.Id, 7692, 8, false);
             WriteLiteral("n true;\r\n    }\r\n    function ShowMessage(value) {\r\n        $(\'#WarningMessage\').text(value)\r\n        $(\'#Warning\').modal(\'show\');\r\n    }\r\n</script>");
         }
         #pragma warning restore 1998
-        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; } = default!;
-        #nullable disable
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; }
     }
 }
 #pragma warning restore 1591

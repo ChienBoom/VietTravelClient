@@ -28,9 +28,7 @@ using VietTravelClient.Models;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a7ff2326447da1b532284d9cdd0164c9110e5f18", @"/Areas/Admin/Views/TourGuideAdmin/TourGuideManager.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f0efa66d1bcb428e72df198de36b8c870586a0c5", @"/Areas/Admin/Views/_ViewImports.cshtml")]
-    #nullable restore
     public class Areas_Admin_Views_TourGuideAdmin_TourGuideManager : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
-    #nullable disable
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-area", "Admin", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "TourGuideAdmin", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -79,7 +77,7 @@ using VietTravelClient.Models;
 #line hidden
 #nullable disable
             WriteLiteral("<style>\r\n    .modal-dialog{\r\n        max-width: 800px;\r\n    }\r\n</style>\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f186866", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f186820", async() => {
                 WriteLiteral("\r\n    <div class=\"row\" style=\"margin-top: 40px; margin-bottom: 10px;\">\r\n        <div hidden>\r\n            <input type=\"text\" id=\"Status\"");
                 BeginWriteAttribute("value", " value=\"", 577, "\"", 592, 1);
 #nullable restore
@@ -105,7 +103,7 @@ WriteAttributeValue("", 585, status, 585, 7, false);
                             </button>
                         </div>
                         ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f188561", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f188515", async() => {
                     WriteLiteral(@"
                             <div class=""modal-body row"">
                                 <div class=""col-12 col-sm-12 col-md-12 row"">
@@ -145,7 +143,7 @@ WriteAttributeValue("", 585, status, 585, 7, false);
 #line hidden
 #nullable disable
                     WriteLiteral("                                                    ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1812150", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1812104", async() => {
 #nullable restore
 #line 61 "D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\Areas\Admin\Views\TourGuideAdmin\TourGuideManager.cshtml"
                                                                         Write(city.Name);
@@ -325,7 +323,7 @@ WriteAttributeValue("", 7227, item.Id, 7227, 10, false);
                                         </button>
                                     </div>
                                     ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1823474", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1823428", async() => {
                     WriteLiteral(@"
                                         <div class=""modal-body row"">
                                             <div class=""col-12 col-sm-12 col-md-12 row"">
@@ -405,7 +403,7 @@ WriteAttributeValue("", 10257, item.PhoneNumber, 10257, 17, false);
 #line hidden
 #nullable disable
                     WriteLiteral("                                                                    ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1829140", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1829094", async() => {
 #nullable restore
 #line 142 "D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\Areas\Admin\Views\TourGuideAdmin\TourGuideManager.cshtml"
                                                                                                  Write(city.Name);
@@ -447,7 +445,7 @@ WriteAttributeValue("", 10257, item.PhoneNumber, 10257, 17, false);
 #line hidden
 #nullable disable
                     WriteLiteral("                                                                ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1831970", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1831924", async() => {
 #nullable restore
 #line 144 "D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\Areas\Admin\Views\TourGuideAdmin\TourGuideManager.cshtml"
                                                                                     Write(city.Name);
@@ -542,7 +540,7 @@ WriteAttributeValue("", 12910, item.Id, 12910, 10, false);
                                             </button>
                                         </div>
                                     ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1838359", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1838313", async() => {
                     WriteLiteral(@"
                                             <div class=""modal-body row"">
                                             <div class=""col-12 col-sm-12 col-md-12 row"">
@@ -632,7 +630,7 @@ WriteAttributeValue("", 16413, item.PhoneNumber, 16413, 17, false);
 #line hidden
 #nullable disable
                     WriteLiteral("                                                                    ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1844774", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1844728", async() => {
 #nullable restore
 #line 204 "D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\Areas\Admin\Views\TourGuideAdmin\TourGuideManager.cshtml"
                                                                                                  Write(city.Name);
@@ -674,7 +672,7 @@ WriteAttributeValue("", 16413, item.PhoneNumber, 16413, 17, false);
 #line hidden
 #nullable disable
                     WriteLiteral("                                                                ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1847604", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1847558", async() => {
 #nullable restore
 #line 206 "D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\Areas\Admin\Views\TourGuideAdmin\TourGuideManager.cshtml"
                                                                                     Write(city.Name);
@@ -779,7 +777,7 @@ WriteAttributeValue("", 19218, item.Id, 19218, 10, false);
                                             </button>
                                         </div>
                                     ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1855099", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1855053", async() => {
                     WriteLiteral(@"
                                             <div class=""modal-body row"">
                                             <div class=""col-12 col-sm-12 col-md-12 row"">
@@ -869,7 +867,7 @@ WriteAttributeValue("", 22587, item.PhoneNumber, 22587, 17, false);
 #line hidden
 #nullable disable
                     WriteLiteral("                                                                    ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1861415", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1861369", async() => {
 #nullable restore
 #line 267 "D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\Areas\Admin\Views\TourGuideAdmin\TourGuideManager.cshtml"
                                                                                                  Write(city.Name);
@@ -911,7 +909,7 @@ WriteAttributeValue("", 22587, item.PhoneNumber, 22587, 17, false);
 #line hidden
 #nullable disable
                     WriteLiteral("                                                                ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1864245", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7ff2326447da1b532284d9cdd0164c9110e5f1864199", async() => {
 #nullable restore
 #line 269 "D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\Areas\Admin\Views\TourGuideAdmin\TourGuideManager.cshtml"
                                                                                     Write(city.Name);
@@ -1129,26 +1127,16 @@ WriteAttributeValue("", 24611, item.Address, 24611, 13, false);
             WriteLiteral("age\').text(value)\r\n        $(\'#Warning\').modal(\'show\');\r\n    }\r\n</script>");
         }
         #pragma warning restore 1998
-        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; } = default!;
-        #nullable disable
-        #nullable restore
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; } = default!;
-        #nullable disable
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; }
     }
 }
 #pragma warning restore 1591
