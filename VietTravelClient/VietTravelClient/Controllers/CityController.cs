@@ -27,11 +27,12 @@ namespace VietTravelClient.Controllers
 
         [HttpGet]
         [Route("cityDetail")]
-        public async Task<IActionResult> CityDetail(string itemId)
+        public async Task<IActionResult> CityDetail(string itemId, int page)
         {
             string urlEva = domainServer + "evaluate/evaCity/" + itemId; 
             string urlCity = domainServer + "city/" + itemId;
-            string urlTour = domainServer + "tour/searchByCityId/" + itemId;
+            string urlTour = domainServer + "tour/searchByCityId/" + itemId + "/" + page.ToString();
+            string urlTotalPage = domainServer + "city/totalPage";
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -40,7 +41,8 @@ namespace VietTravelClient.Controllers
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
                 ResponseData responseDataEva = await _callApi.GetApi(urlEva);
                 ResponseData responseDataTours = await _callApi.GetApi(urlTour);
-                if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseDataCity.Success && responseDataTours.Success && responseDataTotalPage.Success && responseDataEva.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
@@ -48,6 +50,8 @@ namespace VietTravelClient.Controllers
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
                     ViewData["Evaluates"] = evaluates;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View();
                 }
                 return RedirectToAction("Error");
@@ -60,12 +64,20 @@ namespace VietTravelClient.Controllers
 
         //Search với Id của City
         [HttpPost]
+        [Route("searchCityDetailPost")]
+        public async Task<IActionResult> SearchCityDetailPost(string itemId, int page)
+        {
+            return RedirectToAction("SearchCityDetail", new { controller = "City", itemId = itemId, page = page });
+        }
+
+        [HttpGet]
         [Route("searchCityDetail")]
-        public async Task<IActionResult> SearchCityDetail(string itemId)
+        public async Task<IActionResult> SearchCityDetail(string itemId, int page)
         {
             string urlEva = domainServer + "evaluate/evaCity/" + itemId;
             string urlCity = domainServer + "city/" + itemId;
-            string urlTour = domainServer + "tour/searchByCityId/" + itemId;
+            string urlTour = domainServer + "tour/searchByCityId/" + itemId + "/" + page.ToString();
+            string urlTotalPage = domainServer + "city/totalPage";
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -74,7 +86,8 @@ namespace VietTravelClient.Controllers
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
                 ResponseData responseDataEva = await _callApi.GetApi(urlEva);
                 ResponseData responseDataTours = await _callApi.GetApi(urlTour);
-                if (responseDataCity.Success && responseDataTours.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseDataCity.Success && responseDataTours.Success && responseDataTotalPage.Success && responseDataEva.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
@@ -82,6 +95,8 @@ namespace VietTravelClient.Controllers
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
                     ViewData["Evaluates"] = evaluates;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View();
                 }
                 return RedirectToAction("Error");

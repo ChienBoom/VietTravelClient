@@ -15,7 +15,7 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 text-info" style="padding-top: 30px; padding-left: 50px;">SEARCH</div>
             <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 20px;">
-                <form asp-area="Customer" asp-controller="CityCustomer" asp-action="SearchCityDetail" method="post">
+                <form asp-area="Customer" asp-controller="CityCustomer" asp-action="SearchCityDetailPost" method="post">
                     <label for="searchCitySelect" class="text-info text-center font-italic">Chọn tên Thành phố muốn đến</label>
                     <select name="itemId" id="searchCitySelect" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;">
                         @{
@@ -25,8 +25,9 @@
                             }
                         }
                     </select>
-                    <input type="text" value="@ViewData["stringAccount"]" name="stringAccount" hidden/>
-                    <button  type="submit" class="btn btn-info col-12 col-sm-12 col-md-12 rounded border-info" style="height:40px; margin-top: 10px;">Tìm kiếm</button>
+                    <input type="text" value="1" name="page" hidden />
+                    @*<input type="text" value="@ViewData["stringAccount"]" name="stringAccount" hidden />*@
+                    <button type="submit" class="btn btn-info col-12 col-sm-12 col-md-12 rounded border-info" style="height:40px; margin-top: 10px;">Tìm kiếm</button>
                 </form>
             </div>
             <div class="text-info text-center col-11 col-sm-11 col-md-11">
@@ -43,6 +44,7 @@
                             }
                         }
                     </select>
+                    <input type="text" value="1" name="page" hidden />
                     <button type="submit" class="btn btn-info col-12 col-sm-12 col-md-12 rounded border-info" style="height:40px; margin-top: 10px;">Tìm kiếm</button>
                 </form>
             </div>

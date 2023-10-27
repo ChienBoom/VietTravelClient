@@ -16,6 +16,11 @@
 </style>
 <body>
     <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+        <div class="col-10">
+            <div class="text-info font-italic" style="font-size:30px; margin-left: 100px;">QUẢN LÝ GÓI TOUR</div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
         <div class="col-10"></div>
         <div class="col-2">
             <button class="btn btn-info" data-toggle="modal" data-target="#createTourGuide">Thêm mới </button>
@@ -56,7 +61,7 @@
                                         <label for="TimePackageIdCre" class="text-info font-italic">Gói thời gian<span style="color: red;">*</span></label>
                                         <select name="TimePackageId" id="TimePackageIdCre" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
                                             @{
-                                                foreach(TimePackage item in timePackages)
+                                                foreach (TimePackage item in timePackages)
                                                 {
                                                     <option value="@item.Id">@item.Name</option>
                                                 }
@@ -124,7 +129,7 @@
                 <th style="width : 20%" class="text-center bg-info text-light border"></th>
             </tr>
             @{
-                for(int i=0;i<tourPackages.Count; i++)
+                for (int i = 0; i < tourPackages.Count; i++)
                 {
                     TourPackage tourPackage = tourPackages[i];
                     <tr>

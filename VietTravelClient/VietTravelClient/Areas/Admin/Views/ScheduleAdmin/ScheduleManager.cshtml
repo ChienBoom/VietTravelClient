@@ -14,8 +14,13 @@
 </style>
 <body>
     <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+        <div class="col-10">
+            <div class="text-info font-italic" style="font-size:30px; margin-left: 100px;">QUẢN LÝ LỊCH TRÌNH</div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
         <div hidden>
-            <input type="text" id="Status" value="@status"/>
+            <input type="text" id="Status" value="@status" />
         </div>
         <div class="col-10"></div>
         <div class="col-2">
@@ -89,14 +94,14 @@
                 <th style="width : 20%" class="text-center bg-info text-light border"></th>
             </tr>
             @{
-                for(int i=0;i<schedules.Count; i++)
+                for (int i = 0; i < schedules.Count; i++)
                 {
                     Schedule schedule = schedules[i];
                     <tr>
                         <td class="text-center border">@(i+1)</td>
                         <td class="text-center border">@schedule.Title</td>
                         @{
-                            if(schedule.TicketEnable == 1)
+                            if (schedule.TicketEnable == 1)
                             {
                                 <td class="text-center border">Có</td>
                             }
@@ -130,7 +135,7 @@
                                                     <label for="TicketEnableDet" class="text-info font-italic">Vé ra vào<span style="color: red;">*</span></label>
                                                     <select name="TicketEnable" id="TicketEnableDet" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" disabled>
                                                         @{
-                                                            if(schedule.TicketEnable == 1)
+                                                            if (schedule.TicketEnable == 1)
                                                             {
                                                                 <option value="1">Có</option>
                                                             }
@@ -196,7 +201,7 @@
                                                             }
                                                             else
                                                             {
-                                                                <option value="1" >Có</option>
+                                                                <option value="1">Có</option>
                                                                 <option value="0" selected>Không</option>
                                                             }
                                                         }

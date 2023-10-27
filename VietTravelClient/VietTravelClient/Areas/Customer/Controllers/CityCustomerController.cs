@@ -32,13 +32,14 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         [HttpGet]
         [Route("cityDetail")]
-        public async Task<IActionResult> CityDetail(string itemId)
+        public async Task<IActionResult> CityDetail(string itemId, int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domainServer + "city/" + itemId;
             string urlEva = domainServer + "evaluate/evaCity/" + itemId;
-            string urlTour = domainServer + "tour/searchByCityId/" + itemId;
+            string urlTour = domainServer + "tour/searchByCityId/" + itemId +"/" + page.ToString();
+            string urlTotalPage = domainServer + "city/totalPage";
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -47,7 +48,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
                 ResponseData responseDataTours = await _callApi.GetApi(urlTour);
                 ResponseData responseDataEva = await _callApi.GetApi(urlEva);
-                if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success && responseDataTotalPage.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
@@ -55,6 +57,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
                     ViewData["Evaluates"] = evaluates;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
@@ -68,14 +72,22 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         //Search với Id của City
         [HttpPost]
+        [Route("searchCityDetailPost")]
+        public async Task<IActionResult> SearchCityDetailPost(string itemId, int page)
+        {
+            return RedirectToAction("SearchCityDetail", new { area="Customer", controller = "CityCustomer", itemId = itemId, page = page });
+        }
+
+        [HttpGet]
         [Route("searchCityDetail")]
-        public async Task<IActionResult> SearchCityDetail(string itemId)
+        public async Task<IActionResult> SearchCityDetail(string itemId, int page)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domainServer + "city/" + itemId;
-            string urlTour = domainServer + "tour/searchByCityId/" + itemId;
+            string urlTour = domainServer + "tour/searchByCityId/" + itemId +"/" + page.ToString();
             string urlEva = domainServer + "evaluate/evaCity/" + itemId;
+            string urlTotalPage = domainServer + "city/totalPage";
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -84,7 +96,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
                 ResponseData responseDataTours = await _callApi.GetApi(urlTour);
                 ResponseData responseDataEva = await _callApi.GetApi(urlEva);
-                if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success)
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success && responseDataTotalPage.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
@@ -93,6 +106,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ViewData["Tours"] = tours;
                     ViewData["Evaluates"] = evaluates;
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View();
                 }
                 return RedirectToAction("Error", new { area = "Customer", controller = "Home" });

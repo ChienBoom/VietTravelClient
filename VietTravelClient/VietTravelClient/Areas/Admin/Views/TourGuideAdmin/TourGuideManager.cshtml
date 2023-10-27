@@ -14,8 +14,13 @@
 </style>
 <body>
     <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+        <div class="col-10">
+            <div class="text-info font-italic" style="font-size:30px; margin-left: 100px;">QUẢN LÝ HƯỚNG DẪN VIÊN</div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
         <div hidden>
-            <input type="text" id="Status" value="@status"/>
+            <input type="text" id="Status" value="@status" />
         </div>
         <div class="col-10"></div>
         <div class="col-2">
@@ -89,10 +94,10 @@
                 <th style="width : 35%" class="text-center bg-info text-light border">Email HDV</th>
                 <th style="width : 20%" class="text-center bg-info text-light border"></th>
             </tr>
-                @{
+            @{
                 foreach (TourGuide item in tourGuides)
-                    {
-                        <tr>
+                {
+                    <tr>
                         <td class="text-center border">@item.Id</td>
                         <td class="text-center border">@item.Name</td>
                         <td class="text-center border">@item.Email</td>
@@ -161,16 +166,16 @@
                         </div>
 
                         <div id="updateTourGuide@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
-                                <div class="modal-dialog" role="document">
+                            <div class="modal-dialog" role="document">
                                 <div class="modal-content" style="padding-left: 40px;">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title text-info">CẬP NHẬT THÔNG TIN HƯỚNG DẪN VIÊN</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-info">CẬP NHẬT THÔNG TIN HƯỚNG DẪN VIÊN</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
                                     <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="UpdateTourGuide" method="post" onsubmit="return ValidationUpd()">
-                                            <div class="modal-body row">
+                                        <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
                                                     <label for="NameUpd" class="text-info font-italic">Tên HDV<span style="color: red;">*</span></label>
@@ -213,27 +218,27 @@
                                                     <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="AddressUpd" name="Address" value="@item.Address">
                                                 </div>
                                             </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                                                <button type="submit" class="btn btn-primary">Cập nhật</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
+                        </div>
 
                         <div id="deleteTourGuide@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
-                                <div class="modal-dialog" role="document">
+                            <div class="modal-dialog" role="document">
                                 <div class="modal-content" style="padding-left: 40px;">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title text-info">BẠN CHẮC CHẮN MUỐN XÓA HƯỚNG DẪN VIÊN NÀY?</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-info">BẠN CHẮC CHẮN MUỐN XÓA HƯỚNG DẪN VIÊN NÀY?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
                                     <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="DeleteTourGuide" method="post">
-                                            <div class="modal-body row">
+                                        <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
                                                     <label for="NameDel" class="text-info font-italic">Tên HDV</label>
@@ -276,18 +281,18 @@
                                                     <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="AddressDel" name="Address" value="@item.Address" disabled>
                                                 </div>
                                             </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                                                <button type="submit" class="btn btn-primary">Xác nhận</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                        </tr>
-                    }
+                        </div>
+                    </tr>
                 }
+            }
         </table>
     </div>
 
