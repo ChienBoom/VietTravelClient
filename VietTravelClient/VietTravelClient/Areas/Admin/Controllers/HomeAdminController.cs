@@ -49,11 +49,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "HomeAdmin");
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "HomeAdmin");
             }
         }
 
@@ -74,11 +74,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "HomeAdmin");
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "HomeAdmin");
             }
         }
 
@@ -88,16 +88,6 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Login", "Login");
-        }
-
-        [HttpGet]
-        [Route("revenueStatisticsDetail")]
-        public IActionResult RevenueStatisticsDetail()
-        {
-            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
-            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            ViewData["UsernameAccount"] = usernameAccount;
-            return View();
         }
 
         [HttpGet]

@@ -14,5 +14,6 @@ namespace VietTravelClient.Models
         public long EvaId { get; set; } // Id của Thành phố/ Tour/ Khách sạn/ Nhà hàng được đánh giá
         public long UserId { get; set; }
         public User User { get; set; }
+        public int IsDelete { get; set; } // 1 là đã xóa, 0 là chưa xóa
     }
 }

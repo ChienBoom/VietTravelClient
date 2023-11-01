@@ -48,13 +48,20 @@
                         </div>
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
-                                <input type="text" id="TitleIntroduct" name="TitleIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                <label for="PriceDefault" class="font-italic text-info col-12 col-sm-12 col-md-12">Gía Nhà hàng(VND/ngày)<span style="color: red;">*</span></label>
+                                <input type="number" id="PriceDefault" name="PriceDefault" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
                                        style="height:60px;" value="">
                             </div>
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Số điện thoại<span style="color: red;">*</span></label>
                                 <input type="text" id="PhoneNumber" name="PhoneNumber" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
+                                <input type="text" id="TitleIntroduct" name="TitleIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
                                        style="height:60px;" value="">
                             </div>
                         </div>
@@ -103,6 +110,7 @@
         var titleIntroduct = $('#TitleIntroduct').val();
         var phoneNumber = $('#PhoneNumber').val();
         var contentIntroduct = $('#ContentIntroduct').val();
+        var priceDefault = $('#PriceDefault').val();
         if (!ValidationField(name, "Vui lòng nhập Tên khách sạn")) return false;
         if (!ValidationField(address, "Vui lòng nhập Địa chỉ khách sạn")) return false;
         if (!ValidationField(cityId, "Vui lòng chọn Thành phố trực thuộc")) return false;
@@ -110,6 +118,7 @@
         if (!ValidationField(titleIntroduct, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
         if (!ValidationField(phoneNumber, "Vui lòng nhập Số điện thoại")) return false;
         if (!ValidationField(contentIntroduct, "Vui lòng nhập Nội dung giới thiệu")) return false;
+        if (!ValidationField(priceDefault, "Vui lòng nhập Gía cho Nhà hàng(VND/ngày)")) return false;
         return true;
     }
     function ValidationField(value, message) {

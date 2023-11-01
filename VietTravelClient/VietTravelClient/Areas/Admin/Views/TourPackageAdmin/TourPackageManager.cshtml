@@ -7,6 +7,7 @@
     List<TourPackage> tourPackages = (List<TourPackage>)ViewData["TourPackages"];
     List<TimePackage> timePackages = (List<TimePackage>)ViewData["TimePackages"];
     List<Hotel> hotels = (List<Hotel>)ViewData["Hotels"];
+    List<Restaurant> restaurants = (List<Restaurant>)ViewData["Restaurants"];
     List<Schedule> schedules = (List<Schedule>)ViewData["Schedules"];
 }
 <style>
@@ -70,15 +71,26 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 row">
-                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                    <div class="col-4 col-sm-4 col-md-4 row" style="padding-right: 20px;">
                                         <label for="DiscountCre" class="text-info font-italic">Giảm giá(%)<span style="color: red;">*</span></label>
                                         <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="DiscountCre" name="Discount" value="0">
                                     </div>
-                                    <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                    <div class="col-4 col-sm-4 col-md-4 row" style="padding-left: 20px;">
                                         <label for="HotelIdCre" class="text-info font-italic">Lựa chọn Khách sạn<span style="color: red;">*</span></label>
                                         <select name="HotelId" id="HotelIdCre" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
                                             @{
                                                 foreach (Hotel item in hotels)
+                                                {
+                                                    <option value="@item.Id">@item.Name</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-4 col-sm-4 col-md-4 row" style="padding-left: 20px;">
+                                        <label for="RestaurantIdCre" class="text-info font-italic">Lựa chọn Nhà hàng<span style="color: red;">*</span></label>
+                                        <select name="RestaurantId" id="RestaurantIdCre" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
+                                            @{
+                                                foreach (Restaurant item in restaurants)
                                                 {
                                                     <option value="@item.Id">@item.Name</option>
                                                 }

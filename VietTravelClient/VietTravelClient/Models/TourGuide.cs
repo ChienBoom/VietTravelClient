@@ -13,6 +13,6 @@ namespace VietTravelClient.Models
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public long CityId { get; set; }
-
+        public int IsDelete { get; set; } // 1 là đã xóa, 0 là chưa xóa
     }
 }

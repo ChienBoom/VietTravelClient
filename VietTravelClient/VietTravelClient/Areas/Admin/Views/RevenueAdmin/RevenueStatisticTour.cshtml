@@ -1,0 +1,157 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Thống kê";
+    Revenue revenue = (Revenue)ViewData["Revenue"];
+    List<string> labels = revenue.Labels;
+    List<List<Ticket>> data = revenue.Data;
+    int Count = labels.Count;
+    List<decimal> decimals = new List<decimal>();
+    foreach (List<Ticket> tickets in data)
+    {
+        decimal sumdecimal = 0;
+        if (tickets.Count < 1) decimals.Add(sumdecimal);
+        else
+        {
+            foreach (Ticket t in tickets)
+            {
+                sumdecimal += t.TourPackage.LastPrice;
+            }
+            decimals.Add(sumdecimal);
+        }
+    }
+}
+<body>
+    <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+        <div class="col-10">
+            <div class="text-info font-italic" style="font-size:30px; margin-left: 100px;">QUẢN LÝ THỐNG KÊ</div>
+        </div>
+    </div>
+    <div class="row">
+        <div hidden>
+            <input type="text" id="revenueCount" value="@Count" />
+            <input type="text" id="revenueLabel" value="@revenue.Label" />
+            <select id="revenueLabels" multiple>
+                @{
+                    for (int i = 1; i <= Count; i++)
+                    {
+                        string item = labels[i - 1];
+                        <option value="@item" selected>@item</option>
+                    }
+                }
+            </select>
+            <select id="revenueDecimals" multiple>
+                @{
+                    for (int i = 1; i <= Count; i++)
+                    {
+                        decimal item = decimals[i - 1];
+                        <option value="@item" selected>@item</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4 row" style="margin-top: 100px;">
+            <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticMonth" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Tháng</a>
+                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+            </div>
+            <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticCity" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Thành phố</a>
+                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+            </div>
+            <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticTour" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Tour</a>
+                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+            </div>
+            <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticMonth" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Tháng</a>
+                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+            </div>
+            <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticCity" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Thành phố</a>
+                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+            </div>
+            <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticTour" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Tour</a>
+                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+            </div>
+        </div>
+        <canvas id="myChart" class="col-8"></canvas>
+    </div>
+</body>
+<script>
+    debugger
+    $(document).ready(function () {
+        var label = $('#revenueLabel').val();
+        var labels = $('#revenueLabels').val();
+        var data = $('#revenueDecimals').val();
+        var intData = [];
+        for (var i = 0; i < data.length; i++) {
+            var intI = parseInt(data[i], 10);
+            intData.push(intI);
+        }
+        let myChart = document.getElementById('myChart').getContext('2d');
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        let massPopChart = new Chart(myChart, {
+            type: 'horizontalBar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: intData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    //backgroundColor: [
+                    //    'rgba(255, 99, 132, 0.6)',
+                    //    'rgba(54, 162, 235, 0.6)',
+                    //    'rgba(255, 206, 86, 0.6)',
+                    //    'rgba(75, 192, 192, 0.6)',
+                    //    'rgba(153, 102, 255, 0.6)',
+                    //    'rgba(255, 159, 64, 0.6)',
+                    //    'rgba(255, 99, 132, 0.6)'
+                    //],
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000'
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Thống kê doanh thu các Tour',
+                    //   fontColor: 'blue',
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+    })
+</script>

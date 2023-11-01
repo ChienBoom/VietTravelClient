@@ -85,15 +85,18 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     Tour tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
+                    string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
                     try
                     {
                         ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                        if (responseDataHotel.Success)
+                        ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
+                        if (responseDataHotel.Success && responseDataRestaurant.Success)
                         {
                             ViewData["TourPackages"] = JsonConvert.DeserializeObject<List<TourPackage>>(responseData.Data);
                             ViewData["TourId"] = TourId;
                             ViewData["TimePackages"] = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                             ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
+                            ViewData["Restaurants"] = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
                             ViewData["Schedules"] = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
                             ViewData["UsernameAccount"] = usernameAccount;
                             return View();

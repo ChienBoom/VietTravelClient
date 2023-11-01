@@ -18,5 +18,6 @@ namespace VietTravelClient.Models
         public string Pictures { get; set; }
         public string UniCodeName { get; set; }
 		public decimal PriceHour { get; set; }
-    }
+		public int IsDelete { get; set; } // 1 là đã xóa, 0 là chưa xóa
+	}
 }

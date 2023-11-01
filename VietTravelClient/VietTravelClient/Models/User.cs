@@ -17,5 +17,6 @@ namespace VietTravelClient.Models
 		public string Address { get; set; }
 		public string Role { get; set; }
 		public List<Ticket> Tickets { get; set; }
+		public int IsDelete { get; set; } // 1 là đã xóa, 0 là chưa xóa
 	}
 }

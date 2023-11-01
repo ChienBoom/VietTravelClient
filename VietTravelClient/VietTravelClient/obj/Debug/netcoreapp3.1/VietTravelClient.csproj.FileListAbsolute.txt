@@ -313,7 +313,6 @@ D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\net
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\EventAdmin\EventTourManager.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HomeAdmin\AccountManager.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HomeAdmin\Home.cshtml.g.cs
-D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HomeAdmin\RevenueStatisticsDetail.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HotelAdmin\AddHotel.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HotelAdmin\HotelInfo.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HotelAdmin\HotelManager.cshtml.g.cs
@@ -386,3 +385,10 @@ D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\net
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Home\Error.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\staticwebassets\VietTravelClient.StaticWebAssets.xml
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RevenueAdmin\RevenueStatisticCity.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RevenueAdmin\RevenueStatisticMonth.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RevenueAdmin\RevenueStatisticsDetail.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RevenueAdmin\RevenueStatisticTour.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RevenueAdmin\VisitorStatisticCity.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RevenueAdmin\VisitorStatisticMonth.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RevenueAdmin\VisitorStatisticTour.cshtml.g.cs
