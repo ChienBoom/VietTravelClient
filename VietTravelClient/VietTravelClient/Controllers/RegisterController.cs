@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -78,6 +79,7 @@ namespace VietTravelClient.Controllers
                 {
                     if (responseData.Message.Equals("Success"))
                     {
+                        HttpContext.Session.SetString("UsernameAccount", value.Username);
                         return RedirectToAction("Home", "HomeCustomer", new { area = "Customer", usernameAccount = value.Username});
                     }
                     return RedirectToAction("Error", "HomeCustomer", new { area = "Customer" });

@@ -33,8 +33,8 @@ namespace VietTravelClient.Controllers
             return View();
         }
 
-        [HttpGet]
-        [Route("recoverPassword")]
+        [HttpPost]
+        [Route("/recoverPassword")]
         public async Task<IActionResult> RecoverPassword(string EmailAccount)
         {
             string url = domainServer + "recoverPassword";

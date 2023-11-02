@@ -39,8 +39,15 @@ namespace VietTravelClient.Controllers
                 ResponseData responseDataTour = await _callApi.GetApi(urlTour);
                 if(responseDataCity.Success && responseDataTour.Success)
                 {
-                    ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCity.Data);
-                    ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseDataTour.Data);
+
+                    List<City> cities = JsonConvert.DeserializeObject<List<City>>(responseDataCity.Data);
+                    List<Tour> tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTour.Data);
+                    ViewData["Cities"] = cities.OrderByDescending(o => o.Name).ToList();
+                    ViewData["Tours"] = tours.OrderByDescending(o => o.NumberOfEvaluate).ToList();
+                    List <City> hotCity = cities.OrderBy(o => o.Name).Take(4).ToList();
+                    List<Tour> hotTour = tours.OrderBy(o => o.Name).Take(3).ToList();
+                    ViewData["HotCities"] = hotCity;
+                    ViewData["HotTours"] = hotTour;
                     return View()
 ;                }
                 return RedirectToAction("Error", "Home");

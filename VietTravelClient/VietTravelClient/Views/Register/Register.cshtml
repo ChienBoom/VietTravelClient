@@ -15,7 +15,7 @@
             <form asp-controller="Register" asp-action="RegisterForm" method="post" class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; " onsubmit="return Validation()">
                 @Html.AntiForgeryToken()
                 <div class="" style="padding-top: 20px;">
-                    <input type="email" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" name="username" id="username" placeholder="NHẬP TÀI KHOẢN EMAIL" value="@ViewData["Username"]">
+                    <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" name="username" id="username" placeholder="NHẬP TÀI KHOẢN EMAIL" value="@ViewData["Username"]">
                 </div>
                 <div class="" style="padding-top: 10px;">
                     <input type="password" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" name="password" id="password" placeholder="NHẬP MẬT KHẨU" value="@ViewData["Password"]">
@@ -103,26 +103,40 @@
     function ValidateEmail(value){
         const pattern = /[^\x00-\x7F]/g;
         if (pattern.test(value)) {
-            MessageAlert("Thông báo", `Vui lòng không nhập dữ liệu tiếng Việt có dấu.`);
+            ShowMessage("Vui lòng không nhập dữ liệu tiếng Việt có dấu.");
+            return false
+        }
+        else if (value == "") {
+            ShowMessage("Vui lòng nhập Email");
             return false
         }
         else {
             if (/^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
                 return true
             }
-            alert("Thông báo! Yêu cầu nhập email")
+            ShowMessage("Vui lòng nhập đúng định dạng email")
             return false
         }
+    }
+    function ValidatePassword(value) {
+        const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@@$%^&*-]).{8,}$/;
+        if (!pattern.test(value)) {
+            ShowMessage("Vui lòng nhập mật khẩu ít nhất 8 kí tự, có chữ hoa, chữ thường và kí tự đặc biệt");
+            return false;
+        }
+        if (value == "") {
+            ShowMessage("Vui lòng nhập mật khẩu ít nhất 8 kí tự, có chữ hoa, chữ thường và kí tự đặc biệt");
+            return false;
+        }
+        return true;
     }
     function Validation() {
         var username = $('#username').val();
         var password = $('#password').val();
-        if (username == "") {
-            ShowMessage("Vui lòng nhập Tài khoản")
+        if (!ValidateEmail(username)) {
             return false;
         }
-        if (password == "") {
-            ShowMessage("Vui lòng nhập Mật khẩu")
+        if (!ValidatePassword(password)) {
             return false;
         }
         return true;

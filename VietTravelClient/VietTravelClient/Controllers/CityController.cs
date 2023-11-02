@@ -32,7 +32,7 @@ namespace VietTravelClient.Controllers
             string urlEva = domainServer + "evaluate/evaCity/" + itemId; 
             string urlCity = domainServer + "city/" + itemId;
             string urlTour = domainServer + "tour/searchByCityId/" + itemId + "/" + page.ToString();
-            string urlTotalPage = domainServer + "city/totalPage";
+            string urlTotalPage = domainServer + "tour/searchByCityId/totalPage/" + itemId;
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
@@ -77,7 +77,7 @@ namespace VietTravelClient.Controllers
             string urlEva = domainServer + "evaluate/evaCity/" + itemId;
             string urlCity = domainServer + "city/" + itemId;
             string urlTour = domainServer + "tour/searchByCityId/" + itemId + "/" + page.ToString();
-            string urlTotalPage = domainServer + "city/totalPage";
+            string urlTotalPage = domainServer + "tour/searchByCityId/totalPage/" + itemId;
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();

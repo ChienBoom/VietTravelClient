@@ -4,6 +4,8 @@
     ViewData["Title"] = "Trang chủ";
     List<City> cities = (List<City>)ViewData["Cities"];
     List<Tour> tours = (List<Tour>)ViewData["Tours"];
+    List<City> hotCities = (List<City>)ViewData["HotCities"];
+    List<Tour> hotTours = (List<Tour>)ViewData["HotTours"];
 }
 
 <body>
@@ -97,33 +99,20 @@
                     DU LỊCH MỚI NHẤT
                 </div>
                 <div class="card-deck">
-                    <div class="card col-4 col-sm-4 col-md-4 text-info">
-                        <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                             src="~/UploadImage/hagiangcity.jpg" alt="">
-                        <div class="card-body">
-                            <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                            <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div class="card col-4 col-sm-4 col-md-4 text-info">
-                        <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                             src="~/UploadImage/haiphongcity.jpg" alt="">
-                        <div class="card-body">
-                            <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                            <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div class="card col-4 col-sm-4 col-md-4 text-info">
-                        <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                             src="~/UploadImage/hanoicity.jpg" alt="">
-                        <div class="card-body">
-                            <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                            <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
+                    @{
+                        foreach (Tour item in hotTours)
+                        {
+                            <div class="card col-4 col-sm-4 col-md-4 text-info">
+                                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
+                                     src="~/UploadImage/@(item.Pictures)" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-subtitle">@item.Name</h5>
+                                    <p class="card-text">@item.TitleIntroduct</p>
+                                    <a href="#" class="btn btn-primary">Xem Tour</a>
+                                </div>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>
