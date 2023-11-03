@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnidecodeSharpCore;
 using VietTravelClient.Common;
 using VietTravelClient.Models;
 
@@ -145,9 +146,8 @@ namespace VietTravelClient.Controllers
         [Route("searchCity")]
         public async Task<IActionResult> SearchCity(string searchValue, int page)
         {
-            if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
             string url = domainServer + "city/search/" + searchValue + "/" + page.ToString();
-            string urlTotalPage = domainServer + "city/search/totalPage/" + searchValue;
+            string urlTotalPage = domainServer + "city/search/totalPage/" + searchValue.Unidecode();
             List<City> cities = new List<City>();
             try
             {
@@ -167,7 +167,7 @@ namespace VietTravelClient.Controllers
             }
             catch (Exception e)
             {
-                return View();
+                return RedirectToAction("Error", "Home");
             }
         }
 

@@ -9,6 +9,7 @@ using VietTravelClient.Common;
 using VietTravelClient.Controllers;
 using VietTravelClient.Models;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace VietTravelClient.Areas.Admin.Controllers
 {
@@ -43,17 +44,23 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 ResponseData responseDataTour = await _callApi.GetApi(urlTour);
                 if (responseDataCity.Success && responseDataTour.Success)
                 {
-                    ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCity.Data);
-                    ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseDataTour.Data);
+                    List<City> cities = JsonConvert.DeserializeObject<List<City>>(responseDataCity.Data);
+                    List<Tour> tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTour.Data);
+                    ViewData["Cities"] = cities.OrderByDescending(o => o.Name).ToList();
+                    ViewData["Tours"] = tours.OrderByDescending(o => o.NumberOfEvaluate).ToList();
+                    List<City> hotCity = cities.OrderBy(o => o.Name).Take(4).ToList();
+                    List<Tour> hotTour = tours.OrderBy(o => o.Name).Take(3).ToList();
+                    ViewData["HotCities"] = hotCity;
+                    ViewData["HotTours"] = hotTour;
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -74,11 +81,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     return View()
 ;
                 }
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 

@@ -138,7 +138,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form asp-area="Admin" asp-controller="EventAdmin" asp-action="UpdateEvent" method="post" onsubmit="return ValidationUpd()">
+                                    <form asp-area="Admin" asp-controller="EventAdmin" asp-action="UpdateEvent" method="post" onsubmit="return ValidationUpd()" enctype="multipart/form-data">
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <label for="TitleUpd" class="text-info font-italic">Tiêu đề<span style="color: red;">*</span></label>

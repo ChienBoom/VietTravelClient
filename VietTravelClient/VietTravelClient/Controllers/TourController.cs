@@ -8,6 +8,7 @@ using System;
 using VietTravelClient.Common;
 using VietTravelClient.Models;
 using UnidecodeSharpCore;
+using System.Linq;
 
 namespace VietTravelClient.Controllers
 {
@@ -31,25 +32,32 @@ namespace VietTravelClient.Controllers
         public async Task<IActionResult> TourDetail(string itemId)
         {
             string urlTour = domainServer + "tour/" + itemId;
+            string urlRelateTour = domainServer + "tour/searchRelatedTour/" + itemId;
             string urlTourPackage = domainServer + "tourpackage/searchByTourId/" + itemId;
             string urlTimePackage = domainServer + "timepackage";
             string urlEva = domainServer + "evaluate/evaTour/" + itemId;
+            string urlEvent = domainServer + "event/searchEventByTourId/" + itemId;
             Tour tour = new Tour();
             List<TourPackage> tourPackages = new List<TourPackage>();
             List<TimePackage> timePackages = new List<TimePackage>();
             List<Evaluate> evaluates = new List<Evaluate>();
+            List<Event> events = new List<Event>();
             try
             {
                 ResponseData responseDataTour = await _callApi.GetApi(urlTour);
+                ResponseData responseDataRelateTour = await _callApi.GetApi(urlRelateTour);
                 ResponseData responseDataTourPackage = await _callApi.GetApi(urlTourPackage);
                 ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
                 ResponseData responseDataEva = await _callApi.GetApi(urlEva);
-                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success)
+                ResponseData responseDataEvent = await _callApi.GetApi(urlEvent);
+                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success && responseDataEvent.Success && responseDataRelateTour.Success)
                 {
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
+                    List<Tour> relateTours = JsonConvert.DeserializeObject<List<Tour>>(responseDataRelateTour.Data);
                     tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseDataTourPackage.Data);
                     timePackages = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
+                    events = JsonConvert.DeserializeObject<List<Event>>(responseDataEvent.Data);
                     string urlTourGuide = domainServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
@@ -69,6 +77,7 @@ namespace VietTravelClient.Controllers
                         restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
                         schedules = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
                         ViewData["Tour"] = tour;
+                        ViewData["RelateTours"] = relateTours.Take(4).ToList();
                         ViewData["TourGuides"] = tourGuides;
                         ViewData["TourPackages"] = tourPackages;
                         ViewData["Hotels"] = hotels;
@@ -76,6 +85,7 @@ namespace VietTravelClient.Controllers
                         ViewData["TimePackages"] = timePackages;
                         ViewData["Evaluates"] = evaluates;
                         ViewData["Schedules"] = schedules;
+                        ViewData["Events"] = events;
                         return View();
                     }
                 }
@@ -93,25 +103,32 @@ namespace VietTravelClient.Controllers
         public async Task<IActionResult> SearchTourDetail(string itemId)
         {
             string urlTour = domainServer + "tour/" + itemId;
+            string urlRelateTour = domainServer + "tour/searchRelatedTour/" + itemId;
             string urlTourPackage = domainServer + "tourpackage/searchByTourId/" + itemId;
             string urlTimePackage = domainServer + "timepackage";
             string urlEva = domainServer + "evaluate/evaTour/" + itemId;
+            string urlEvent = domainServer + "event/searchEventByTourId/" + itemId;
             Tour tour = new Tour();
             List<TourPackage> tourPackages = new List<TourPackage>();
             List<TimePackage> timePackages = new List<TimePackage>();
             List<Evaluate> evaluates = new List<Evaluate>();
+            List<Event> events = new List<Event>();
             try
             {
                 ResponseData responseDataTour = await _callApi.GetApi(urlTour);
+                ResponseData responseDataRelateTour = await _callApi.GetApi(urlRelateTour);
                 ResponseData responseDataTourPackage = await _callApi.GetApi(urlTourPackage);
                 ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
                 ResponseData responseDataEva = await _callApi.GetApi(urlEva);
-                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success)
+                ResponseData responseDataEvent = await _callApi.GetApi(urlEvent);
+                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success && responseDataEvent.Success)
                 {
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
+                    List<Tour> relateTours = JsonConvert.DeserializeObject<List<Tour>>(responseDataRelateTour.Data);
                     tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseDataTourPackage.Data);
                     timePackages = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
+                    events = JsonConvert.DeserializeObject<List<Event>>(responseDataEvent.Data);
                     string urlTourGuide = domainServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
@@ -131,6 +148,13 @@ namespace VietTravelClient.Controllers
                         restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
                         schedules = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
                         ViewData["Tour"] = tour;
+                        if(relateTours.Count>=4){
+                            ViewData["RelateTours"] = relateTours.Take(4).ToList();
+                        }
+                        else
+                        {
+                            ViewData["RelateTours"] = relateTours.Take(2).ToList();
+                        }
                         ViewData["TourGuides"] = tourGuides;
                         ViewData["TourPackages"] = tourPackages;
                         ViewData["Hotels"] = hotels;
@@ -138,6 +162,7 @@ namespace VietTravelClient.Controllers
                         ViewData["TimePackages"] = timePackages;
                         ViewData["Evaluates"] = evaluates;
                         ViewData["Schedules"] = schedules;
+                        ViewData["Events"] = events;
                         return View();
                     }
                 }

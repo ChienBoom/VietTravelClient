@@ -1,0 +1,111 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnidecodeSharpCore;
+using VietTravelClient.Common;
+using VietTravelClient.Models;
+
+namespace VietTravelClient.Controllers
+{
+    public class HotelController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+        private readonly CallApi _callApi;
+        private readonly IConfiguration _configuration;
+        private readonly string domainServer;
+
+        public HotelController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
+        {
+            _logger = logger;
+            _callApi = callApi;
+            _configuration = configuration;
+            domainServer = _configuration["DomainServer"];
+        }
+
+        [HttpGet]
+        [Route("hotelManager")]
+        public async Task<IActionResult> HotelManager(int page)
+        {
+            string url = domainServer + "hotel/page/" + page.ToString();
+            string urlTotalPage = domainServer + "hotel/totalPage";
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
+                {
+                    List<Hotel> hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseData.Data);
+                    ViewData["Hotels"] = hotels;
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    return View();
+                }
+                return RedirectToAction("Error", "Home");
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        [HttpGet]
+        [Route("hotelDetail")]
+        public async Task<IActionResult> HotelDetail(string itemId, int page)
+        {
+            string url = domainServer + "hotel/" + itemId;
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    ViewData["Hotel"] = JsonConvert.DeserializeObject<Hotel>(responseData.Data);
+                    return View();
+                }
+                return RedirectToAction("Error", "Home");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        //Search với từ khóa là tên của City
+        [HttpPost]
+        [Route("searchHotelPost")]
+        public async Task<IActionResult> SearchHotelPost(string searchValue, int page)
+        {
+            return RedirectToAction("SearchHotel", new { controller = "Hotel", searchValue = searchValue, page = page });
+        }
+
+        [HttpGet]
+        [Route("searchHotel")]
+        public async Task<IActionResult> SearchHotel(string searchValue, int page)
+        {
+            string url = domainServer + "hotel/search/" + searchValue + "/" + page.ToString();
+            string urlTotalPage = domainServer + "hotel/search/totalPage/" + searchValue.Unidecode();
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                if (responseData.Success && responseDataTotalPage.Success)
+                {
+                    ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseData.Data);
+                    ViewData["CurrentPage"] = page;
+                    ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    ViewData["SearchValue"] = searchValue;
+                    return View();
+                }
+                return RedirectToAction("Error", "Home");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+    }
+}

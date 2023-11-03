@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Trang chủ";
+    List<City> hotCities = (List<City>)ViewData["HotCities"];
+    List<Tour> hotTours = (List<Tour>)ViewData["HotTours"];
 }
 
 <body>
@@ -24,14 +26,12 @@
                     
                 </div>
                 <div class="row">
-                    <a asp-area="Admin" asp-controller="TourPackageAdmin" asp-action="TourPackageManager" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý gói Tour</a>
+                    <a asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="TourGuideManager" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý Hướng dẫn viên</a>
                     <div class="col-2 col-sm-2 col-md-2"></div>
                     <a asp-area="Admin" asp-controller="TimePackageAdmin" asp-action="TimePackageManager" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý gói Thời gian</a>
                 </div>
                 <div class="row">
-                    <a asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="TourGuideManager" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Quản lý Hướng dẫn viên</a>
-                    <div class="col-2 col-sm-2 col-md-2"></div>
-                    <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticsDetail" class="btn btn-outline-info col-5 col-sm-5 col-md-5" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê</a>
+                    <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticsDetail" class="btn btn-outline-info col-12 col-sm-12 col-md-12" style="margin-top: 20px; height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê</a>
                 </div>
             </div>
         </div>
@@ -83,33 +83,20 @@
                     DU LỊCH MỚI NHẤT
                 </div>
                 <div class="card-deck">
-                    <div class="card col-4 col-sm-4 col-md-4 text-info">
-                        <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                             src="~/UploadImage/hagiangcity.jpg" alt="">
-                        <div class="card-body">
-                            <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                            <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div class="card col-4 col-sm-4 col-md-4 text-info">
-                        <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                             src="~/UploadImage/haiphongcity.jpg" alt="">
-                        <div class="card-body">
-                            <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                            <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div class="card col-4 col-sm-4 col-md-4 text-info">
-                        <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                             src="~/UploadImage/hanoicity.jpg" alt="">
-                        <div class="card-body">
-                            <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                            <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
+                    @{
+                        foreach (Tour item in hotTours)
+                        {
+                            <div class="card col-4 col-sm-4 col-md-4 text-info">
+                                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
+                                     src="~/UploadImage/@(item.Pictures)" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-subtitle">@item.Name</h5>
+                                    <p class="card-text">@item.TitleIntroduct</p>
+                                    <a href="#" class="btn btn-primary">Xem Tour</a>
+                                </div>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>

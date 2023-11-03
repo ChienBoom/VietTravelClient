@@ -10,6 +10,7 @@ using VietTravelClient.Controllers;
 using VietTravelClient.Models;
 using Microsoft.AspNetCore.Http;
 using VietTravelClient.ModelsDto;
+using System.Linq;
 
 namespace VietTravelClient.Areas.Admin.Controllers
 {
@@ -92,7 +93,9 @@ namespace VietTravelClient.Areas.Admin.Controllers
                         ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
                         if (responseDataHotel.Success && responseDataRestaurant.Success)
                         {
-                            ViewData["TourPackages"] = JsonConvert.DeserializeObject<List<TourPackage>>(responseData.Data);
+                            List<TourPackage> tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseData.Data);
+                            //ViewData["TourPackages"] = tourPackages.Where(o => o.CreateBy.Equals("Admin")).ToList();
+                            ViewData["TourPackages"] = tourPackages;
                             ViewData["TourId"] = TourId;
                             ViewData["TimePackages"] = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                             ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);

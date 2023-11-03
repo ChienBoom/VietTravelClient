@@ -392,3 +392,15 @@ D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\net
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RevenueAdmin\VisitorStatisticCity.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RevenueAdmin\VisitorStatisticMonth.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\RevenueAdmin\VisitorStatisticTour.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Hotel\HotelManager.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Restaurant\RestaurantManager.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Hotel\HotelDetail.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Hotel\SearchHotel.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Restaurant\RestaurantDetail.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Views\Restaurant\SearchRestaurant.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\HotelCustomer\HotelDetail.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\HotelCustomer\HotelManager.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\HotelCustomer\SearchHotel.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\RestaurantCustomer\RestaurantDetail.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\RestaurantCustomer\RestaurantManager.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\RestaurantCustomer\SearchRestaurant.cshtml.g.cs

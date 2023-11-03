@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Chi tiết Tour";
     Tour tour = (Tour)ViewData["Tour"];
+    List<Tour> relateTours = (List<Tour>)ViewData["RelateTours"];
     List<TourPackage> tourPackages = (List<TourPackage>)ViewData["TourPackages"];
     List<Hotel> hotels = (List<Hotel>)ViewData["Hotels"];
     List<Restaurant> restaurants = (List<Restaurant>)ViewData["Restaurants"];
@@ -11,6 +12,7 @@
     List<TourGuide> tourGuides = (List<TourGuide>)ViewData["TourGuides"];
     List<Evaluate> evaluates = (List<Evaluate>)ViewData["Evaluates"];
     List<Schedule> schedules = (List<Schedule>)ViewData["Schedules"];
+    List<Event> events = (List<Event>)ViewData["Events"];
 }
 <style>
     .modal-dialog {
@@ -80,7 +82,7 @@
                             <input type="text" id="NumberOfChildrenTourPackage@(tourPackage.Id)" name="NumberOfChildrenTourPackage" value="@tourPackage.NumberOfChildren" hidden>
                             <input type="text" id="BasePriceTourPackage@(tourPackage.Id)" name="BasePriceTourPackage" value="@tourPackage.BasePrice" hidden>
                             <input type="text" id="DiscountTourPackage@(tourPackage.Id)" name="DiscountTourPackage" value="@tourPackage.Discount" hidden>
-                            <input type="text" id="LastPriceTourPackage@(tourPackage.Id)" name="LastPriceTourPackage" value="@tourPackage.LastPrice" hidden>
+                            <input type="text" id="LastPriceTourPackage@(tourPackage.Id)" name="LastPriceTourPackage" value="@tourPackage.LastPrice.ToString("N2")" hidden>
                             <input type="text" id="HotelIdTourPackage@(tourPackage.Id)" name="HotelIdTourPackage" value="@tourPackage.HotelId" hidden>
                             <input type="text" id="TimePackageIdTourPackage@(tourPackage.Id)" name="TimePackageIdTourPackage" value="@tourPackage.TimePackageId" hidden>
                             <input type="text" id="ScheduleTourPackages@(tourPackage.Id)" name="ScheduleTourPackages" value="@tourPackage.ScheduleTourPackages" hidden>
@@ -284,7 +286,64 @@
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 text-info font-italic text-center"
              style="margin-bottom: 20px; font-size: 30px; margin-top: 40px;">
-            CÁC DỊCH VỤ ĐI KÈM
+            CÁC SỰ KIỆN + DỊCH VỤ
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 row">
+            <div class="col-1 col-sm-1 col-md-1"></div>
+            <div class="col-10 col-sm-10 col-md-10 row">
+                @{
+                    foreach (Event item in events)
+                    {
+                                <div aria-expanded="false" class="btn btn-outline-danger col-3 text-info font-weight-bold" data-toggle="collapse"
+                                     data-target="#boxnoidung@(item.Id)">@item.Title</div>
+                        <div class="collapse col-12" id="boxnoidung@(item.Id)">
+                            <p class="mr-3 col-12 col-sm-12 col-md-12" style="font-size: 25px;">@item.StartTime - @item.EndTime</p>
+                            <div class="col-12 col-sm-12 col-md-12 row">
+                                <div class="mr-3 col-6 col-sm-6 col-md-6" style="font-size: 20px;">@item.Content</div>
+                                <div class="mr-3 col-6 col-sm-6 col-md-6">
+                                    <img src="~/UploadImage/@(item.Pictures)" style="height: 400px;">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                @{
+                    foreach (Event item in events)
+                    {
+                        <p class="mr-3 col-12 col-sm-12 col-md-12 text-info font-weight-bold" style="font-size: 30px;">@item.Title</p>
+                        <p class="mr-3 col-12 col-sm-12 col-md-12" style="font-size: 25px;">@item.StartTime - @item.EndTime</p>
+                        <div class="col-12 col-sm-12 col-md-12 row">
+                            <div class="mr-3 col-6 col-sm-6 col-md-6" style="font-size: 20px;">@item.Content</div>
+                            <div class="mr-3 col-6 col-sm-6 col-md-6">
+                                <img src="~/UploadImage/@(item.Pictures)" style="height: 400px;">
+                            </div>
+                        </div>
+
+                    }
+                }
+
+                @{
+                    foreach (Schedule item in schedules)
+                    {
+                        <p class="mr-3 col-12 col-sm-12 col-md-12 text-info font-weight-bold" style="font-size: 30px;">@item.Title</p>
+                        if (@item.TicketEnable == 1)
+                        {
+                            <p class="mr-3 col-12 col-sm-12 col-md-12" style="font-size: 25px;">Gía vé: @item.PriceTicketAdult.ToString("N2") VND/người lớn  - @item.PriceTicketKid.ToString("N2") VND/trẻ em</p>
+                        }
+                        else
+                        {
+                            <p class="mr-3 col-12 col-sm-12 col-md-12" style="font-size: 25px;">Gía vé: Không mất vé</p>
+                        }
+                        <div class="col-12 col-sm-12 col-md-12 row">
+                            <div class="mr-3 col-6 col-sm-6 col-md-6" style="font-size: 20px;">@item.Content</div>
+                            <div class="mr-3 col-6 col-sm-6 col-md-6">
+                                <img src="~/UploadImage/@(item.Pictures)" style="height: 400px;">
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
         </div>
     </div>
 
@@ -295,42 +354,20 @@
             DU LỊCH LIÊN QUAN
         </div>
         <div class="card-deck col-12 col-sm-12 col-md-12">
-            <div class="card col-3 col-sm-3 col-md-3 text-info">
-                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                     src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                    <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card col-3 col-sm-3 col-md-3 text-info">
-                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                     src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                    <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card col-3 col-sm-3 col-md-3 text-info">
-                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                     src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                    <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card col-3 col-sm-3 col-md-3 text-info">
-                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                     src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                    <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
+            @{
+                foreach (Tour item in relateTours)
+                {
+                    <div class="card col-3 col-sm-3 col-md-3 text-info">
+                        <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
+                             src="~/UploadImage/@(item.Pictures)" alt="">
+                        <div class="card-body">
+                            <h5 class="card-subtitle">@item.Name</h5>
+                            <p class="card-text">@item.TitleIntroduct</p>
+                            <a href="#" class="btn btn-primary">Xem Tour</a>
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
 

@@ -8,6 +8,7 @@ using System;
 using VietTravelClient.Common;
 using VietTravelClient.Models;
 using Microsoft.AspNetCore.Http;
+using UnidecodeSharpCore;
 
 namespace VietTravelClient.Areas.Customer.Controllers
 {
@@ -206,7 +207,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("TourManager");
             string url = domainServer + "tour/search/" + searchValue + "/" + page.ToString();
-            string urlTotalPage = domainServer + "tour/search/totalPage/" + searchValue;
+            string urlTotalPage = domainServer + "tour/search/totalPage/" + searchValue.Unidecode();
             List<Tour> tours = new List<Tour>();
             try
             {

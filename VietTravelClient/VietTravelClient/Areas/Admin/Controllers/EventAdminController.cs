@@ -58,7 +58,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domainServer + "event/searchEvent/" + TourId;
+            string url = domainServer + "event/searchEventByTourId/" + TourId;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
