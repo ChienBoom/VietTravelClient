@@ -10,6 +10,7 @@ using VietTravelClient.Controllers;
 using VietTravelClient.Models;
 using Microsoft.AspNetCore.Http;
 using UnidecodeSharpCore;
+using VietTravelClient.Models.WeatherModel;
 
 namespace VietTravelClient.Areas.Customer.Controllers
 {
@@ -21,6 +22,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private readonly string keyWeather;
 
         public CityCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
@@ -28,6 +30,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            keyWeather = _configuration["KeyWeatherApi"];
         }
 
         [HttpGet]
@@ -54,10 +57,14 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
+                    string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + city.CoordLat + "&lon=" + city.CoordLon + "&appid=" + keyWeather;
+                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
                     ViewData["Evaluates"] = evaluates;
                     ViewData["CurrentPage"] = page;
+                    if (responseDataWeather.Data != null) ViewData["Weather"] = JsonConvert.DeserializeObject<WeatherOpen>(responseDataWeather.Data);
+                    else ViewData["Weather"] = new List<WeatherOpen>();
                     ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
@@ -102,11 +109,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
+                    string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + city.CoordLat + "&lon=" + city.CoordLon + "&appid=" + keyWeather;
+                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
                     ViewData["Evaluates"] = evaluates;
                     ViewData["UsernameAccount"] = usernameAccount;
                     ViewData["CurrentPage"] = page;
+                    if (responseDataWeather.Data != null) ViewData["Weather"] = JsonConvert.DeserializeObject<WeatherOpen>(responseDataWeather.Data);
+                    else ViewData["Weather"] = new List<WeatherOpen>();
                     ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View();
                 }
@@ -166,16 +177,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
             //if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
             string url = domainServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
             string urlTotalPage = domainServer + "city/search/totalPage/" + searchValue.Unidecode();
-            List<City> cities = new List<City>();
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
                 ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
-                    string result = responseData.Data;
-                    cities = JsonConvert.DeserializeObject<List<City>>(result);
-                    ViewData["cities"] = cities;
+                    ViewData["cities"] = JsonConvert.DeserializeObject<List<City>>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
                     ViewData["SearchValue"] = searchValue;
                     ViewData["CurrentPage"] = page;

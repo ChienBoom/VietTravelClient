@@ -9,6 +9,7 @@ using VietTravelClient.Common;
 using VietTravelClient.Models;
 using UnidecodeSharpCore;
 using System.Linq;
+using VietTravelClient.Models.WeatherModel;
 
 namespace VietTravelClient.Controllers
 {
@@ -18,6 +19,7 @@ namespace VietTravelClient.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private readonly string keyWeather;
 
         public TourController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
@@ -25,6 +27,7 @@ namespace VietTravelClient.Controllers
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            keyWeather = _configuration["KeyWeatherApi"];
         }
 
         [HttpGet]
@@ -62,30 +65,26 @@ namespace VietTravelClient.Controllers
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
                     string urlSchedule = domainServer + "schedule/getByTourId/" + itemId;
-                    List<TourGuide> tourGuides = new List<TourGuide>();
-                    List<Hotel> hotels = new List<Hotel>();
-                    List<Restaurant> restaurants = new List<Restaurant>();
-                    List<Schedule> schedules = new List<Schedule>();
+                    string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + tour.CoordLat + "&lon=" + tour.CoordLon + "&appid=" + keyWeather;
                     ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
                     ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
                     ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
                     ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
+                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
                     if (responseDataTourGuide.Success && responseDataHotel.Success && responseDataRestaurant.Success && responseDataSchedule.Success)
                     {
-                        tourGuides = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
-                        hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
-                        restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
-                        schedules = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
                         ViewData["Tour"] = tour;
                         ViewData["RelateTours"] = relateTours.Take(4).ToList();
-                        ViewData["TourGuides"] = tourGuides;
-                        ViewData["TourPackages"] = tourPackages;
-                        ViewData["Hotels"] = hotels;
-                        ViewData["Restaurants"] = restaurants;
+                        ViewData["TourGuides"] = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
+                        ViewData["TourPackages"] = tourPackages.Where(o => o.CreateBy == "Admin").ToList();
+                        ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
+                        ViewData["Restaurants"] = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
                         ViewData["TimePackages"] = timePackages;
                         ViewData["Evaluates"] = evaluates;
-                        ViewData["Schedules"] = schedules;
+                        ViewData["Schedules"] = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
                         ViewData["Events"] = events;
+                        if (responseDataWeather.Data != null) ViewData["Weather"] = JsonConvert.DeserializeObject<WeatherOpen>(responseDataWeather.Data);
+                        else ViewData["Weather"] = new List<WeatherOpen>();
                         return View();
                     }
                 }
@@ -121,7 +120,7 @@ namespace VietTravelClient.Controllers
                 ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
                 ResponseData responseDataEva = await _callApi.GetApi(urlEva);
                 ResponseData responseDataEvent = await _callApi.GetApi(urlEvent);
-                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success && responseDataEvent.Success)
+                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success)
                 {
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
                     List<Tour> relateTours = JsonConvert.DeserializeObject<List<Tour>>(responseDataRelateTour.Data);
@@ -133,36 +132,32 @@ namespace VietTravelClient.Controllers
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
                     string urlSchedule = domainServer + "schedule/getByTourId/" + itemId;
-                    List<TourGuide> tourGuides = new List<TourGuide>();
-                    List<Hotel> hotels = new List<Hotel>();
-                    List<Restaurant> restaurants = new List<Restaurant>();
-                    List<Schedule> schedules = new List<Schedule>();
+                    string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + tour.CoordLat + "&lon=" + tour.CoordLon + "&appid=" + keyWeather;
                     ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
                     ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
                     ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
                     ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
+                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
                     if (responseDataTourGuide.Success && responseDataHotel.Success && responseDataRestaurant.Success && responseDataSchedule.Success)
                     {
-                        tourGuides = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
-                        hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
-                        restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
-                        schedules = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
                         ViewData["Tour"] = tour;
                         if(relateTours.Count>=4){
                             ViewData["RelateTours"] = relateTours.Take(4).ToList();
                         }
                         else
                         {
-                            ViewData["RelateTours"] = relateTours.Take(2).ToList();
+                            ViewData["RelateTours"] = relateTours.Take(relateTours.Count).ToList();
                         }
-                        ViewData["TourGuides"] = tourGuides;
-                        ViewData["TourPackages"] = tourPackages;
-                        ViewData["Hotels"] = hotels;
-                        ViewData["Restaurants"] = restaurants;
+                        ViewData["TourGuides"] = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
+                        ViewData["TourPackages"] = tourPackages.Where(o => o.CreateBy == "Admin").ToList();
+                        ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
+                        ViewData["Restaurants"] = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
                         ViewData["TimePackages"] = timePackages;
                         ViewData["Evaluates"] = evaluates;
-                        ViewData["Schedules"] = schedules;
+                        ViewData["Schedules"] = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
                         ViewData["Events"] = events;
+                        if(responseDataWeather.Data != null) ViewData["Weather"] = JsonConvert.DeserializeObject<WeatherOpen>(responseDataWeather.Data);
+                        else ViewData["Weather"] = new List<WeatherOpen>();
                         return View();
                     }
                 }

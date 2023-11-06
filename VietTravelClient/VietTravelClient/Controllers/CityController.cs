@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using UnidecodeSharpCore;
 using VietTravelClient.Common;
 using VietTravelClient.Models;
+using VietTravelClient.Models.WeatherModel;
 
 namespace VietTravelClient.Controllers
 {
@@ -17,6 +18,7 @@ namespace VietTravelClient.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private readonly string keyWeather;
 
         public CityController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
@@ -24,6 +26,7 @@ namespace VietTravelClient.Controllers
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            keyWeather = _configuration["KeyWeatherApi"];
         }
 
         [HttpGet]
@@ -48,10 +51,14 @@ namespace VietTravelClient.Controllers
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
+                    string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + city.CoordLat + "&lon=" + city.CoordLon + "&appid=" + keyWeather;
+                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
                     ViewData["Evaluates"] = evaluates;
                     ViewData["CurrentPage"] = page;
+                    if (responseDataWeather.Data != null) ViewData["Weather"] = JsonConvert.DeserializeObject<WeatherOpen>(responseDataWeather.Data);
+                    else ViewData["Weather"] = new List<WeatherOpen>();
                     ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View();
                 }
@@ -93,10 +100,14 @@ namespace VietTravelClient.Controllers
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
+                    string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + city.CoordLat + "&lon=" + city.CoordLon + "&appid=" + keyWeather;
+                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
                     ViewData["Evaluates"] = evaluates;
                     ViewData["CurrentPage"] = page;
+                    if (responseDataWeather.Data != null) ViewData["Weather"] = JsonConvert.DeserializeObject<WeatherOpen>(responseDataWeather.Data);
+                    else ViewData["Weather"] = new List<WeatherOpen>();
                     ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
                     return View();
                 }

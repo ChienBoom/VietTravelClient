@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    @using VietTravelClient.Models.WeatherModel;
     ViewData["Title"] = "Chi tiết Thành phố";
     City city = (City)ViewData["City"];
     List<Tour> tours = (List<Tour>)ViewData["Tours"];
@@ -9,6 +10,7 @@
     string usernameAccount = (string)ViewData["UsernameAccount"];
     int currentPage = (int)ViewData["CurrentPage"];
     int totalPage = (int)ViewData["TotalPage"];
+    WeatherOpen weatherOpen = (WeatherOpen)ViewData["Weather"];
 }
 <body>
     <div class="row" style="margin-top: 20px;">
@@ -26,6 +28,19 @@
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 font-italic" style="padding-left: 50px; margin-top: 20px;">
                     @city.ContentIntroduct
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 font-italic" style="padding-left: 50px; margin-top: 20px;">
+                    Nhiệt độ hiện tại: @weatherOpen.Main.Temp
+                    Nhiệt độ cảm nhận được: @weatherOpen.Main.Feels_like
+                    Độ ẩm: @weatherOpen.Main.Humidity
+                    Nhiệt độ tối đa: @weatherOpen.Main.Temp_max
+                    Nhiệt độ tối thiểu: @weatherOpen.Main.Temp_min
+                    Tầm nhìn: @weatherOpen.Visibility
+                    Tốc độ gió: @weatherOpen.Wind.Speed
+                    Hướng gió:@weatherOpen.Wind.Deg
+                    Gios mạnh nhất: @weatherOpen.Wind.Gust
+                    Măt trời mọc: @weatherOpen.Sys.Sunrise
+                    Mặt trời lặn: @weatherOpen.Sys.Sunset
                 </div>
             </div>
         </div>

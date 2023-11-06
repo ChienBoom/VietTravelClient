@@ -10,8 +10,6 @@ namespace VietTravelClient.Models
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }
-		public string Address { get; set; }
-		public string Description { get; set; }
         public string Pictures { get; set; }
         public string TitleIntroduct { get; set; }
         public string ContentIntroduct { get; set; }
@@ -23,5 +21,7 @@ namespace VietTravelClient.Models
         public decimal PriceBase { get; set; }
         public decimal TotalPrice { get; set; }
         public int IsDelete { get; set; } // 1 là đã xóa, 0 là chưa xóa
+        public string CoordLat { get; set; } //vĩ độ
+        public string CoordLon { get; set; } //kinh độ
     }
 }

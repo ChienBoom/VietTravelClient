@@ -295,7 +295,6 @@ D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\net
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.csproj.AssemblyReference.cache
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.AssemblyInfoInputs.cache
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.AssemblyInfo.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.csproj.CoreCompileInputs.cache
@@ -404,3 +403,4 @@ D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\net
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\RestaurantCustomer\RestaurantDetail.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\RestaurantCustomer\RestaurantManager.cshtml.g.cs
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Customer\Views\RestaurantCustomer\SearchRestaurant.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\VietTravelClient.csproj.AssemblyReference.cache

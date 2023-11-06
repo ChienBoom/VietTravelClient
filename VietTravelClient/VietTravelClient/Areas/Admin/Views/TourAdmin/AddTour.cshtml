@@ -23,9 +23,14 @@
                                 <input type="text" id="Name" name="Name" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
                                        style="height:60px;">
                             </div>
-                            <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Vị trí cụ thể<span style="color: red;">*</span></label>
-                                <input type="text" id="Address" name="Address" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                            <div class="col-3 col-sm-3 col-md-3">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Vĩ độ địa lý<span style="color: red;">*</span></label>
+                                <input type="text" id="CoordLat" name="CoordLat" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
+                                       style="height:60px;">
+                            </div>
+                            <div class="col-3 col-sm-3 col-md-3">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Kinh độ địa lý<span style="color: red;">*</span></label>
+                                <input type="text" id="CoordLon" name="CoordLon" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
                                        style="height:60px;">
                             </div>
                         </div>
@@ -47,26 +52,21 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6 col-sm-6 col-md-6">
+                            <div class="col-12 col-sm-12 col-md-12">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
                                 <input type="text" id="TitleIntroduct" name="TitleIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
-                                       style="height:60px;">
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Nội dung giới thiệu<span style="color: red;">*</span></label>
-                                <input type="text" id="ContentIntroduct" name="ContentIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12"
                                        style="height:60px;">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Ghi chú chi tiết</label>
-                                <textarea name="Description" id="Description" style="width: 100%;" rows="6" class="border-info rounded"></textarea>
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Nội dung giới thiệu</label>
+                                <textarea name="ContentIntroduct" id="ContentIntroduct" style="width: 100%;" rows="6" class="border-info rounded"></textarea>
                             </div>
                         </div>
                         <div class="row" style="margin-top: 40px;">
                             <div class="col-3 col-sm-3 col-md-3"></div>
-                            <button type="submit" style="height:60px;" class="btn-outline-info rounded col-6 col-sm-6 col-md-6 justify-content-center align-items-center">Thêm Tour du lịch</button>
+                            <button type="submit" style="height:60px;" class="btn-outline-info rounded col-6 col-sm-6 col-md-6 justify-content-center align-items-center">Thêm mới</button>
                         </div>
                     </form>
                 </div>
@@ -102,12 +102,16 @@
         var pictures = $('#Pictures').val();
         var titleIntroduct = $('#TitleIntroduct').val();
         var contentIntroduct = $('#ContentIntroduct').val();
+        var coordLat = $('#CoordLat').val();
+        var coordLon = $('#CoordLon').val();
         if (!ValidationField(name, "Vui lòng nhập Tên khách sạn")) return false;
         if (!ValidationField(address, "Vui lòng nhập Địa chỉ khách sạn")) return false;
         if (!ValidationField(cityId, "Vui lòng chọn Thành phố trực thuộc")) return false;
         if (!ValidationField(pictures, "Vui lòng tải ảnh")) return false;
         if (!ValidationField(titleIntroduct, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
         if (!ValidationField(contentIntroduct, "Vui lòng nhập Nội dung giới thiệu")) return false;
+        if (!ValidationField(coordLat, "Vui lòng nhập Vĩ độ địa lý")) return false;
+        if (!ValidationField(coordLon, "Vui lòng nhập Kinh độ địa lý")) return false;
         return true;
     }
     function ValidationField(value, message) {

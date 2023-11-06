@@ -95,7 +95,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                         {
                             List<TourPackage> tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseData.Data);
                             //ViewData["TourPackages"] = tourPackages.Where(o => o.CreateBy.Equals("Admin")).ToList();
-                            ViewData["TourPackages"] = tourPackages;
+                            ViewData["TourPackages"] = tourPackages.Where(O => O.CreateBy.Equals("Admin")).ToList();
                             ViewData["TourId"] = TourId;
                             ViewData["TimePackages"] = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                             ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);

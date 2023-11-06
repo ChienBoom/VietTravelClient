@@ -37,16 +37,20 @@
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Tiêu đề giới thiệu<span style="color: red;">*</span></label>
                                 <input type="text" id="TitleIntroduct" name="TitleIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12" style="height:60px;" value="@city.TitleIntroduct">
                             </div>
-                            <div class="col-6 col-sm-6 col-md-6">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Nội dung giới thiệu<span style="color: red;">*</span></label>
-                                <input type="text" id="ContentIntroduct" name="ContentIntroduct" class="rounded border-info text-info col-12 col-sm-12 col-md-12" style="height:60px;" value="@city.ContentIntroduct">
+                            <div class="col-3 col-sm-3 col-md-3">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Vĩ độ địa lý<span style="color: red;">*</span></label>
+                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12" id="CoordLat" name="CoordLat" style="height:60px;" value="@city.CoordLat">
+                            </div>
+                            <div class="col-3 col-sm-3 col-md-3">
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Kinh độ địa lý<span style="color: red;">*</span></label>
+                                <input type="text" class="rounded border-info text-info col-12 col-sm-12 col-md-12" id="CoordLon" name="CoordLon" style="height:60px;" value="@city.CoordLon">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12">
-                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Ghi chú chi tiết</label>
-                                <textarea name="Description" id="Description" style="width: 100%;" rows="6"
-                                          class="border-info rounded">@city.Description</textarea>
+                                <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Nội dung giới thiệu</label>
+                                <textarea name="ContentIntroduct" id="ContentIntroduct" style="width: 100%;" rows="6"
+                                          class="border-info rounded">@city.ContentIntroduct</textarea>
                             </div>
                         </div>
                         <div class="row" style="margin-top: 40px;">
@@ -87,9 +91,13 @@
         var name = $('#Name').val();
         var titleIntroduct = $('#TitleIntroduct').val();
         var contentIntroduct = $('#ContentIntroduct').val();
+        var coordLat = $('#CoordLat').val();
+        var coordLon = $('#CoordLon').val();
         if (!ValidationField(name, "Vui lòng nhập Tên thành phố")) return false;
         if (!ValidationField(titleIntroduct, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
         if (!ValidationField(contentIntroduct, "Vui lòng nhập Nội dung giới thiệu")) return false;
+        if (!ValidationField(coordLat, "Vui lòng nhập Vĩ độ địa lý")) return false;
+        if (!ValidationField(coordLon, "Vui lòng nhập Kinh độ địa lý")) return false;
         return true;
     }
     function ValidationField(value, message) {
