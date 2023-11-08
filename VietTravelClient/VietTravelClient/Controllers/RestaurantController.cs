@@ -57,12 +57,15 @@ namespace VietTravelClient.Controllers
         public async Task<IActionResult> RestaurantDetail(string itemId, int page)
         {
             string url = domainServer + "restaurant/" + itemId;
+            string urlEva = domainServer + "evaluate/evaRestaurant/" + itemId;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                if (responseData.Success)
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
+                if (responseData.Success && responseDataEva.Success)
                 {
                     ViewData["Restaurant"] = JsonConvert.DeserializeObject<Restaurant>(responseData.Data);
+                    ViewData["Evaluates"] = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     return View();
                 }
                 return RedirectToAction("Error", "Home");

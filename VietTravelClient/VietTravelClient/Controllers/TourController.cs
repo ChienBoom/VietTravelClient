@@ -58,6 +58,8 @@ namespace VietTravelClient.Controllers
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
                     List<Tour> relateTours = JsonConvert.DeserializeObject<List<Tour>>(responseDataRelateTour.Data);
                     tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseDataTourPackage.Data);
+                    tourPackages = await SetParamTourPackage(tourPackages);
+                    if (tourPackages == null) return RedirectToAction("Error");
                     timePackages = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     events = JsonConvert.DeserializeObject<List<Event>>(responseDataEvent.Data);
@@ -74,7 +76,14 @@ namespace VietTravelClient.Controllers
                     if (responseDataTourGuide.Success && responseDataHotel.Success && responseDataRestaurant.Success && responseDataSchedule.Success)
                     {
                         ViewData["Tour"] = tour;
-                        ViewData["RelateTours"] = relateTours.Take(4).ToList();
+                        if (relateTours.Count >= 4)
+                        {
+                            ViewData["RelateTours"] = relateTours.Take(4).ToList();
+                        }
+                        else
+                        {
+                            ViewData["RelateTours"] = relateTours.Take(relateTours.Count).ToList();
+                        }
                         ViewData["TourGuides"] = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
                         ViewData["TourPackages"] = tourPackages.Where(o => o.CreateBy == "Admin").ToList();
                         ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
@@ -125,6 +134,8 @@ namespace VietTravelClient.Controllers
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
                     List<Tour> relateTours = JsonConvert.DeserializeObject<List<Tour>>(responseDataRelateTour.Data);
                     tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseDataTourPackage.Data);
+                    tourPackages = await SetParamTourPackage(tourPackages);
+                    if(tourPackages == null) return RedirectToAction("Error");
                     timePackages = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     events = JsonConvert.DeserializeObject<List<Event>>(responseDataEvent.Data);
@@ -275,6 +286,35 @@ namespace VietTravelClient.Controllers
             {
                 return RedirectToAction("Error");
             }
+        }
+
+        public async Task<List<TourPackage>> SetParamTourPackage(List<TourPackage> values)
+        {
+            foreach(TourPackage item in values)
+            {
+                if(item.ListScheduleTourPackage != null)
+                {
+                    item.ScheduleTourPackages = JsonConvert.DeserializeObject<List<Schedule>>(item.ListScheduleTourPackage);
+                } 
+                string urlHotel = domainServer + "hotel/" + item.HotelId.ToString();
+                string urlRes = domainServer + "restaurant/" + item.RestaurantId.ToString();
+                try
+                {
+                    ResponseData resHotel = await _callApi.GetApi(urlHotel);
+                    ResponseData resRes = await _callApi.GetApi(urlRes);
+                    if (resHotel.Success && resRes.Success)
+                    {
+                        item.Hotel = JsonConvert.DeserializeObject<Hotel>(resHotel.Data);
+                        item.Restaurant = JsonConvert.DeserializeObject<Restaurant>(resRes.Data);
+                    }
+                    else return null;
+                }
+                catch(Exception ex)
+                {
+                    return null;
+                }
+            }
+            return values;
         }
 
     }

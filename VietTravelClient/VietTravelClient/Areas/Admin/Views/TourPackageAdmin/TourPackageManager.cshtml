@@ -9,6 +9,7 @@
     List<Hotel> hotels = (List<Hotel>)ViewData["Hotels"];
     List<Restaurant> restaurants = (List<Restaurant>)ViewData["Restaurants"];
     List<Schedule> schedules = (List<Schedule>)ViewData["Schedules"];
+    string status = (string)ViewData["Status"];
 }
 <style>
     .modal-dialog {
@@ -22,6 +23,9 @@
         </div>
     </div>
     <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+        <div hidden>
+            <input type="text" id="Status" value="@status" />
+        </div>
         <div class="col-10"></div>
         <div class="col-2">
             <button class="btn btn-info" data-toggle="modal" data-target="#createTourGuide">Thêm mới </button>
@@ -150,132 +154,193 @@
                         <td class="text-center border">@tourPackage.StartTime</td>
                         <td class="text-center border">@tourPackage.EndTime</td>
                         <td class="text-center border">@tourPackage.LastPrice.ToString("N2")</td>
-                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#readTourGuide">Xem</button> <button class="btn btn-info" data-toggle="modal" data-target="#updateTourGuide">Sửa</button> <button class="btn btn-info" data-toggle="modal" data-target="#deleteTourGuide">Xóa</button> </td>
+                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#readTourPackage@(tourPackage.Id)">Xem</button> <button class="btn btn-info" data-toggle="modal" data-target="#updateTourPackage@(tourPackage.Id)">Sửa</button> <button class="btn btn-info" data-toggle="modal" data-target="#deleteTourPackage@(tourPackage.Id)">Xóa</button> </td>
 
-                        <div id="readTourGuide" class="modal fade" tabindex="-1" role="dialog">
+                        <div id="readTourPackage@(tourPackage.Id)" class="modal fade" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content" style="padding-left: 40px;">
                                     <div class="modal-header">
-                                        <h4 class="modal-title text-info">CHI TIẾT THÔNG TIN ĐỊA ĐIỂM THAM QUAN</h4>
+                                        <h4 class="modal-title text-info">CHI TIẾT THÔNG TIN ĐỊA GÓI TOUR</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form>
+                                    <form asp-area="Admin" asp-controller="TourPackageAdmin" asp-action="TourPackageDetail" method="post" onsubmit="return ValidationDet()">
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
                                                     <label for="NameDet" class="text-info font-italic">Tên gói<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameDet" name="Name">
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameDet" name="Name" value="@tourPackage.Name" readonly>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourIdDet" name="TourId" value="@tourId" hidden>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
                                                     <label for="NumberOfAdultDet" class="text-info font-italic">Số lượng người lớn(trên 12 tuổi)<span style="color: red;">*</span></label>
-                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfAdultDet" name="NumberOfAdult" value="0">
+                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfAdultDet" name="NumberOfAdult" value="@tourPackage.NumberOfAdult" readonly>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
                                                     <label for="NumberOfChildrenDet" class="text-info font-italic">Số lượng trẻ em(nhỏ hơn 12 tuổi)<span style="color: red;">*</span></label>
-                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfChildrenDet" name="NumberOfChildren" value="0">
+                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfChildrenDet" name="NumberOfChildren" value="@tourPackage.NumberOfChildren" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                                    <label for="StartTimeDet" class="text-info font-italic">Ngày khởi hành<span style="color: red;">*</span></label>
-                                                    <input type="date" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="StartTimeDet" name="StartTime">
+                                                    <label for="StartTimeCre" class="text-info font-italic">Ngày khởi hành<span style="color: red;">*</span></label>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="StartTimeDet" name="StartTime" value="@tourPackage.StartTime" readonly>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
                                                     <label for="TimePackageIdDet" class="text-info font-italic">Gói thời gian<span style="color: red;">*</span></label>
-                                                    <select name="TimePackageId" id="TimePackageIdDet" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
-                                                        <option value="">3N2D</option>
-                                                    </select>
+                                                    @{
+                                                        foreach (TimePackage item in timePackages)
+                                                        {
+                                                            if (item.Id == tourPackage.TimePackageId)
+                                                            {
+                                                                <input name="TimePackageId" id="TimePackageIdDet" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" value="@item.Name" readonly />
+                                                            }
+
+                                                        }
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                <div class="col-4 col-sm-4 col-md-4 row" style="padding-right: 20px;">
                                                     <label for="DiscountDet" class="text-info font-italic">Giảm giá(%)<span style="color: red;">*</span></label>
-                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="DiscountDet" name="Discount" value="0">
+                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="DiscountDet" name="Discount" value="@tourPackage.Discount" readonly>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                                    <label for="HotelIdDet" class="text-info font-italic">Lựa chọn Khách sạn<span style="color: red;">*</span></label>
-                                                    <select name="HotelId" id="HotelIdDet" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
-                                                        <option value="1">Khách sạn Mường Thanh</option>
-                                                    </select>
+                                                <div class="col-4 col-sm-4 col-md-4 row" style="padding-left: 20px;">
+                                                    <label for="HotelIdCre" class="text-info font-italic">Lựa chọn Khách sạn<span style="color: red;">*</span></label>
+                                                    @{
+                                                        foreach (Hotel item in hotels)
+                                                        {
+                                                            if (item.Id == tourPackage.HotelId)
+                                                            {
+                                                                <input name="HotelId" id="HotelIdCre" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" value="@item.Name" readonly />
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                                <div class="col-4 col-sm-4 col-md-4 row" style="padding-left: 20px;">
+                                                    <label for="RestaurantIdDet" class="text-info font-italic">Lựa chọn Nhà hàng<span style="color: red;">*</span></label>
+                                                    @{
+                                                        foreach (Restaurant item in restaurants)
+                                                        {
+                                                            if (item.Id == tourPackage.RestaurantId)
+                                                            {
+                                                                <input name="RestaurantId" id="RestaurantIdDet" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" value="@item.Name" readonly />
+                                                            }
+                                                        }
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
                                                     <label for="ScheduleListDet" class="text-info font-italic">Lựa chọn lịch trình<span style="color: red;">*</span></label>
                                                     <select name="ScheduleList" id="ScheduleListDet" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" multiple>
-                                                        <option value="1"> Điểm DL 1</option>
-                                                        <option value="2"> Điểm DL 2</option>
-                                                        <option value="3"> Điểm DL 3</option>
+                                                        @{
+                                                            foreach (Schedule item in schedules)
+                                                            {
+                                                                <option value="@item.Id">@item.Title</option>
+                                                            }
+                                                        }
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
                                                     <label for="DescriptionDet" class="col-12 col-sm-12 col-md-12 text-info font-italic">Ghi chú</label>
-                                                    <textarea name="Description" id="DescriptionDet" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info"></textarea>
+                                                    <textarea name="Description" id="DescriptionDet" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info" readonly>@tourPackage.Description</textarea>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="updateTourGuide" class="modal fade" tabindex="-1" role="dialog">
+                        <div id="updateTourPackage@(tourPackage.Id)" class="modal fade" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content" style="padding-left: 40px;">
                                     <div class="modal-header">
-                                        <h4 class="modal-title text-info">CẬP NHẬT THÔNG TIN DỊA ĐIỂM THAM QUAN</h4>
+                                        <h4 class="modal-title text-info">CẬP NHẬT THÔNG GÓI TOUR</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="UpdateTourGuide" method="post" onsubmit="return ValidationUpd()">
+                                    <form asp-area="Admin" asp-controller="TourPackageAdmin" asp-action="UpdateTourPackage" method="post" onsubmit="return ValidationUpd()">
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
                                                     <label for="NameUpd" class="text-info font-italic">Tên gói<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameUpd" name="Name">
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameUpd" name="Name" value="@tourPackage.Name">
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourIdUpd" name="TourId" value="@tourId" hidden>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="IdUpd" name="Id" value="@tourPackage.Id" hidden>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
                                                     <label for="NumberOfAdultUpd" class="text-info font-italic">Số lượng người lớn(trên 12 tuổi)<span style="color: red;">*</span></label>
-                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfAdultUpd" name="NumberOfAdult" value="0">
+                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfAdultUpd" name="NumberOfAdult" value="@tourPackage.NumberOfAdult">
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
                                                     <label for="NumberOfChildrenUpd" class="text-info font-italic">Số lượng trẻ em(nhỏ hơn 12 tuổi)<span style="color: red;">*</span></label>
-                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfChildrenUpd" name="NumberOfChildren" value="0">
+                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfChildrenUpd" name="NumberOfChildren" value="@tourPackage.NumberOfChildren">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
                                                     <label for="StartTimeUpd" class="text-info font-italic">Ngày khởi hành<span style="color: red;">*</span></label>
-                                                    <input type="date" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="StartTimeUpd" name="StartTime">
+                                                    <input type="date" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="StartTimeUpd" name="StartTime" value="@tourPackage.StartTime">
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
                                                     <label for="TimePackageIdUpd" class="text-info font-italic">Gói thời gian<span style="color: red;">*</span></label>
                                                     <select name="TimePackageId" id="TimePackageIdUpd" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
-                                                        <option value="">3N2D</option>
+                                                        @{
+                                                            foreach (TimePackage item in timePackages)
+                                                            {
+                                                                if (item.Id == tourPackage.TimePackageId)
+                                                                {
+                                                                    <option value="@item.Id" selected>@item.Name</option>
+                                                                }
+                                                            }
+                                                        }
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                <div class="col-4 col-sm-4 col-md-4 row" style="padding-right: 20px;">
                                                     <label for="DiscountUpd" class="text-info font-italic">Giảm giá(%)<span style="color: red;">*</span></label>
-                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="DiscountUpd" name="Discount" value="0">
+                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="DiscountUpd" name="Discount" value="@tourPackage.Discount">
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                <div class="col-4 col-sm-4 col-md-4 row" style="padding-left: 20px;">
                                                     <label for="HotelIdUpd" class="text-info font-italic">Lựa chọn Khách sạn<span style="color: red;">*</span></label>
                                                     <select name="HotelId" id="HotelIdUpd" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
-                                                        <option value="1">Khách sạn Mường Thanh</option>
+                                                        @{
+                                                            foreach (Hotel item in hotels)
+                                                            {
+                                                                if (item.Id == tourPackage.HotelId)
+                                                                {
+                                                                    <option value="@item.Id" selected>@item.Name</option>
+                                                                }
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-4 col-sm-4 col-md-4 row" style="padding-left: 20px;">
+                                                    <label for="RestaurantIdUpd" class="text-info font-italic">Lựa chọn Nhà hàng<span style="color: red;">*</span></label>
+                                                    <select name="RestaurantId" id="RestaurantIdUpd" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
+                                                        @{
+                                                            foreach (Restaurant item in restaurants)
+                                                            {
+                                                                if (item.Id == tourPackage.RestaurantId)
+                                                                {
+                                                                    <option value="@item.Id" selected>@item.Name</option>
+                                                                }
+                                                            }
+                                                        }
                                                     </select>
                                                 </div>
                                             </div>
@@ -283,16 +348,19 @@
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
                                                     <label for="ScheduleListUpd" class="text-info font-italic">Lựa chọn lịch trình<span style="color: red;">*</span></label>
                                                     <select name="ScheduleList" id="ScheduleListUpd" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" multiple>
-                                                        <option value="1"> Điểm DL 1</option>
-                                                        <option value="2"> Điểm DL 2</option>
-                                                        <option value="3"> Điểm DL 3</option>
+                                                        @{
+                                                            foreach (Schedule item in schedules)
+                                                            {
+                                                                <option value="@item.Id">@item.Title</option>
+                                                            }
+                                                        }
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
                                                     <label for="DescriptionUpd" class="col-12 col-sm-12 col-md-12 text-info font-italic">Ghi chú</label>
-                                                    <textarea name="Description" id="DescriptionUpd" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info"></textarea>
+                                                    <textarea name="Description" id="DescriptionUpd" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info">@tourPackage.Description</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -305,71 +373,100 @@
                             </div>
                         </div>
 
-                        <div id="deleteTourGuide" class="modal fade" tabindex="-1" role="dialog">
+                        <div id="deleteTourPackage@(tourPackage.Id)" class="modal fade" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content" style="padding-left: 40px;">
                                     <div class="modal-header">
-                                        <h4 class="modal-title text-info">BẠN CHẮC CHẮN MUỐN XÓA ĐỊA ĐIỂM THAM QUAN NÀY?</h4>
+                                        <h4 class="modal-title text-info">BẠN CHẮC CHẮN MUỐN XÓA GÓI TOUR NÀY?</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form asp-area="Admin" asp-controller="TourGuideAdmin" asp-action="DeleteTourGuide" method="post">
+                                    <form asp-area="Admin" asp-controller="TourPackageAdmin" asp-action="DeleteTourPackage" method="post" onsubmit="return ValidationDel()">
                                         <div class="modal-body row">
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
                                                     <label for="NameDel" class="text-info font-italic">Tên gói<span style="color: red;">*</span></label>
-                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameDel" name="Name">
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameDel" name="Name" value="@tourPackage.Name" readonly>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="TourIdDel" name="TourId" value="@tourId" hidden>
+                                                    <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="IdDel" name="Id" value="@tourPackage.Id" hidden>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
                                                     <label for="NumberOfAdultDel" class="text-info font-italic">Số lượng người lớn(trên 12 tuổi)<span style="color: red;">*</span></label>
-                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfAdultDel" name="NumberOfAdult" value="0">
+                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfAdultDel" name="NumberOfAdult" value="@tourPackage.NumberOfAdult" readonly>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
                                                     <label for="NumberOfChildrenDel" class="text-info font-italic">Số lượng trẻ em(nhỏ hơn 12 tuổi)<span style="color: red;">*</span></label>
-                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfChildrenDel" name="NumberOfChildren" value="0">
+                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfChildrenDel" name="NumberOfChildren" value="@tourPackage.NumberOfChildren" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
                                                     <label for="StartTimeDel" class="text-info font-italic">Ngày khởi hành<span style="color: red;">*</span></label>
-                                                    <input type="date" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="StartTimeDel" name="StartTime">
+                                                    <input type="date" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="StartTimeDel" name="StartTime" value="@tourPackage.StartTime" readonly>
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
                                                     <label for="TimePackageIdDel" class="text-info font-italic">Gói thời gian<span style="color: red;">*</span></label>
-                                                    <select name="TimePackageId" id="TimePackageIdDel" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
-                                                        <option value="">3N2D</option>
-                                                    </select>
+                                                    @{
+                                                        foreach (TimePackage item in timePackages)
+                                                        {
+                                                            if (item.Id == tourPackage.TimePackageId)
+                                                            {
+                                                                <input name="TimePackageId" id="TimePackageIdDel" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" value="@item.Name" readonly />
+                                                            }
+                                                        }
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
-                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                <div class="col-4 col-sm-4 col-md-4 row" style="padding-right: 20px;">
                                                     <label for="DiscountDel" class="text-info font-italic">Giảm giá(%)<span style="color: red;">*</span></label>
-                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="DiscountDel" name="Discount" value="0">
+                                                    <input type="number" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="DiscountDel" name="Discount" value="@tourPackage.Discount" readonly>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                <div class="col-4 col-sm-4 col-md-4 row" style="padding-left: 20px;">
                                                     <label for="HotelIdDel" class="text-info font-italic">Lựa chọn Khách sạn<span style="color: red;">*</span></label>
-                                                    <select name="HotelId" id="HotelIdDel" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;">
-                                                        <option value="1">Khách sạn Mường Thanh</option>
-                                                    </select>
+                                                    @{
+                                                        foreach (Hotel item in hotels)
+                                                        {
+                                                            if (item.Id == tourPackage.HotelId)
+                                                            {
+                                                                <input name="HotelId" id="HotelIdDel" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" value="@item.Name" readonly />
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                                <div class="col-4 col-sm-4 col-md-4 row" style="padding-left: 20px;">
+                                                    <label for="RestaurantIdDel" class="text-info font-italic">Lựa chọn Nhà hàng<span style="color: red;">*</span></label>
+                                                    @{
+                                                        foreach (Restaurant item in restaurants)
+                                                        {
+                                                            if (item.Id == tourPackage.RestaurantId)
+                                                            {
+                                                                <input name="RestaurantId" id="RestaurantIdDel" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" value="@item.Name" readonly />
+                                                            }
+                                                        }
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
                                                     <label for="ScheduleListDel" class="text-info font-italic">Lựa chọn lịch trình<span style="color: red;">*</span></label>
                                                     <select name="ScheduleList" id="ScheduleListDel" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" multiple>
-                                                        <option value="1"> Điểm DL 1</option>
-                                                        <option value="2"> Điểm DL 2</option>
-                                                        <option value="3"> Điểm DL 3</option>
+                                                        @{
+                                                            foreach (Schedule item in schedules)
+                                                            {
+                                                                <option value="@item.Id">@item.Title</option>
+                                                            }
+                                                        }
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
                                                     <label for="DescriptionDel" class="col-12 col-sm-12 col-md-12 text-info font-italic">Ghi chú</label>
-                                                    <textarea name="Description" id="DescriptionDel" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info"></textarea>
+                                                    <textarea name="Description" id="DescriptionDel" rows="6" class="col-12 col-sm-12 col-md-12 rounded border-info text-info" readonly>@tourPackage.Description</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -406,6 +503,27 @@
             </div>
         </div>
     </div>
+
+    @*Modal Status bootstrap*@
+    <div class="modal" id="StatusModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="StatusMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 <script>
     debugger
@@ -430,6 +548,33 @@
             size: 5,
             actionsBox: true,
         });
+        var status = $("#Status").val();
+        switch (status) {
+            case "CreateSuccess":
+                $('#StatusMessage').text("THÊM MỚI GÓI TOUR THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "CreateFaild":
+                $('#StatusMessage').text("THÊM MỚI GÓI TOUR THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+            case "UpdateSuccess":
+                $('#StatusMessage').text("CẬP NHẬT GÓI TOUR THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "UpdateFaild":
+                $('#StatusMessage').text("CẬP NHẬT GÓI TOUR THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+            case "DeleteSuccess":
+                $('#StatusMessage').text("XÓA GÓI TOUR THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "DeleteFaild":
+                $('#StatusMessage').text("XÓA GÓI TOUR THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+        }
     });
     function ValidationCre() {
         var name = $('#NameCre').val();
@@ -439,40 +584,57 @@
         var timePackageId = $('#TimePackageIdCre').val();
         var discount = $('#DiscountCre').val();
         var hotelId = $('#HotelIdCre').val();
+        var restaurantId = $('#RestaurantIdCre').val()
         var scheduleList = $('#ScheduleListCre').val();
         var description = $('#DescriptionCre').val();
         if (!ValidationField(name, "Vui lòng nhập Tên gói Tour")) return false;
         if (!ValidationField(numberOfAdult, "Vui lòng nhập Số lượng người lớn")) return false;
         if (!ValidationField(numberOfChildren, "Vui lòng nhập Số lượng trẻ em")) return false;
+        if (!ValidationFieldNumber(numberOfAdult, "Vui lòng nhập Số lượng người lớn (>0)", 1)) return false;
+        if (!ValidationFieldNumber(numberOfChildren, "Vui lòng nhập Số lượng trẻ em(>=0)", 0)) return false;
         if (!ValidationField(startTime, "Vui lòng nhập Thời gian khởi hành")) return false;
         if (!ValidationField(timePackageId, "Vui lòng chọn Gói thời gian")) return false;
         if (!ValidationField(discount, "Vui lòng nhập Giảm giá")) return false;
+        if (!ValidationFieldNumber(discount, "Vui lòng nhập Giảm giá(>=0)", 0)) return false;
         if (!ValidationField(hotelId, "Vui lòng chọn Khách sạn")) return false;
+        if (!ValidationField(restaurantId, "Vui lòng chọn Nhà hàng")) return false;
         if (!ValidationField(scheduleList, "Vui lòng chọn Lịch trình cho Tour")) return false;
         return true;
     }
     function ValidationUpd() {
-        var name = $('#NameCre').val();
-        var numberOfAdult = $('#NumberOfAdultCre').val();
-        var numberOfChildren = $('#NumberOfChildrenCre').val();
-        var startTime = $('#StartTimeCre').val();
-        var timePackageId = $('#TimePackageIdCre').val();
-        var discount = $('#DiscountCre').val();
-        var hotelId = $('#HotelIdCre').val();
-        var scheduleList = $('#ScheduleListCre').val();
-        var description = $('#DescriptionCre').val();
+        var name = $('#NameUpd').val();
+        var numberOfAdult = $('#NumberOfAdultUpd').val();
+        var numberOfChildren = $('#NumberOfChildrenUpd').val();
+        var startTime = $('#StartTimeUpd').val();
+        var timePackageId = $('#TimePackageIdUpd').val();
+        var discount = $('#DiscountUpd').val();
+        var hotelId = $('#HotelIdUpd').val();
+        var restaurantId = $('#RestaurantIdCre').val()
+        var scheduleList = $('#ScheduleListUpd').val();
+        var description = $('#DescriptionUpd').val();
         if (!ValidationField(name, "Vui lòng nhập Tên gói Tour")) return false;
         if (!ValidationField(numberOfAdult, "Vui lòng nhập Số lượng người lớn")) return false;
         if (!ValidationField(numberOfChildren, "Vui lòng nhập Số lượng trẻ em")) return false;
+        if (!ValidationFieldNumber(numberOfAdult, "Vui lòng nhập Số lượng người lớn (>0)", 1)) return false;
+        if (!ValidationFieldNumber(numberOfChildren, "Vui lòng nhập Số lượng trẻ em(>=0)", 0)) return false;
         if (!ValidationField(startTime, "Vui lòng nhập Thời gian khởi hành")) return false;
         if (!ValidationField(timePackageId, "Vui lòng chọn Gói thời gian")) return false;
         if (!ValidationField(discount, "Vui lòng nhập Giảm giá")) return false;
+        if (!ValidationFieldNumber(discount, "Vui lòng nhập Giảm giá(>=0)", 0)) return false;
         if (!ValidationField(hotelId, "Vui lòng chọn Khách sạn")) return false;
+        if (!ValidationField(restaurantId, "Vui lòng chọn Nhà hàng")) return false;
         if (!ValidationField(scheduleList, "Vui lòng chọn Lịch trình cho Tour")) return false;
         return true;
     }
     function ValidationField(value, message) {
         if (value == "") {
+            ShowMessage(message);
+            return false;
+        }
+        return true;
+    }
+    function ValidationFieldNumber(value, message, number) {
+        if (value < number) {
             ShowMessage(message);
             return false;
         }

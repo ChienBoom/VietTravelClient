@@ -7,6 +7,13 @@
     int currentPage = (int)ViewData["CurrentPage"];
     int totalPage = (int)ViewData["TotalPage"];
 }
+<style>
+    .d-flex-icon {
+        display: flex;
+        align-items: center;
+        column-gap: 0.3rem;
+    }
+</style>
 <body>
     <div class="row" style="padding-top: 20px;">
         <div class="col-4 col-sm-4 col-md-4">
@@ -76,7 +83,7 @@
                                             <p class="card-text col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@item.ContentIntroduct" data-placement="top" style="width:50px;">@item.ContentIntroduct</p>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <a asp-controller="Tour" asp-action="TourDetail" asp-route-itemId="@item.Id" class="btn btn-primary col-8 col-sm-8 col-md-8">Xem Tour</a>
-                                                <div class="col-4 col-sm-4 col-md-4">@item.NumberOfEvaluate<i class="fa fa-comment" style="color: deepskyblue"></i> @item.MediumStar<i class="fa fa-star" style="color: deepskyblue"></i></div>
+                                                <div class="col-4 col-sm-4 col-md-4 d-flex-icon">@item.NumberOfEvaluate<i class="fa fa-comment" style="color: deepskyblue"></i> @item.MediumStar<i class="fa fa-star" style="color: deepskyblue"></i></div>
                                             </div>
                                         </div>
                                     </div>

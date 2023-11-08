@@ -68,12 +68,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "restaurant/" + itemId;
+            string urlEva = domainServer + "evaluate/evaRestaurant/" + itemId;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url);
-                if (responseData.Success)
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
+                if (responseData.Success && responseDataEva.Success)
                 {
                     ViewData["Restaurant"] = JsonConvert.DeserializeObject<Restaurant>(responseData.Data);
+                    ViewData["Evaluates"] = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }

@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Chi tiết Tour";
     Tour tour = (Tour)ViewData["Tour"];
+    List<Tour> relateTours = (List<Tour>)ViewData["RelateTours"];
     List<TourPackage> tourPackages = (List<TourPackage>)ViewData["TourPackages"];
     List<Hotel> hotels = (List<Hotel>)ViewData["Hotels"];
     List<Restaurant> restaurants = (List<Restaurant>)ViewData["Restaurants"];
@@ -13,10 +14,17 @@
     List<Schedule> schedules = (List<Schedule>)ViewData["Schedules"];
     string usernameAccount = (string)ViewData["UsernameAccount"];
     string status = (string)ViewData["Status"];
+    List<Event> events = (List<Event>)ViewData["Events"];
 }
 <style>
     .modal-dialog {
         max-width: 800px;
+    }
+
+    .d-flex-icon {
+        display: flex;
+        align-items: center;
+        column-gap: 0.3rem;
     }
 </style>
 <body>
@@ -254,10 +262,52 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 text-info font-italic text-center"
              style="margin-bottom: 20px; font-size: 30px; margin-top: 40px;">
-            CÁC DỊCH VỤ ĐI KÈM
+            CÁC SỰ KIỆN + DỊCH VỤ
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 row">
+            <div class="col-1 col-sm-1 col-md-1"></div>
+            <div class="col-10 col-sm-10 col-md-10 row">
+                @{
+                    foreach (Event item in events)
+                    {
+                        <p class="mr-3 col-12 col-sm-12 col-md-12 text-info font-weight-bold" style="font-size: 30px;">@item.Title</p>
+                        <p class="mr-3 col-12 col-sm-12 col-md-12" style="font-size: 25px;">@item.StartTime - @item.EndTime</p>
+                        <div class="col-12 col-sm-12 col-md-12 row">
+                            <div class="mr-3 col-6 col-sm-6 col-md-6" style="font-size: 20px;">@item.Content</div>
+                            <div class="mr-3 col-6 col-sm-6 col-md-6">
+                                <img src="~/UploadImage/@(item.Pictures)" style="height: 400px;">
+                            </div>
+                        </div>
+
+                    }
+                }
+
+                @{
+                    foreach (Schedule item in schedules)
+                    {
+                        <p class="mr-3 col-12 col-sm-12 col-md-12 text-info font-weight-bold" style="font-size: 30px;">@item.Title</p>
+                        if (@item.TicketEnable == 1)
+                        {
+                            <p class="mr-3 col-12 col-sm-12 col-md-12" style="font-size: 25px;">Gía vé: @item.PriceTicketAdult.ToString("N2") VND/người lớn  - @item.PriceTicketKid.ToString("N2") VND/trẻ em</p>
+                        }
+                        else
+                        {
+                            <p class="mr-3 col-12 col-sm-12 col-md-12" style="font-size: 25px;">Gía vé: Không mất vé</p>
+                        }
+                        <div class="col-12 col-sm-12 col-md-12 row">
+                            <div class="mr-3 col-6 col-sm-6 col-md-6" style="font-size: 20px;">@item.Content</div>
+                            <div class="mr-3 col-6 col-sm-6 col-md-6">
+                                <img src="~/UploadImage/@(item.Pictures)" style="height: 400px;">
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
         </div>
     </div>
 
@@ -268,42 +318,20 @@
             DU LỊCH LIÊN QUAN
         </div>
         <div class="card-deck col-12 col-sm-12 col-md-12">
-            <div class="card col-3 col-sm-3 col-md-3 text-info">
-                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                     src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                    <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card col-3 col-sm-3 col-md-3 text-info">
-                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                     src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                    <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card col-3 col-sm-3 col-md-3 text-info">
-                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                     src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                    <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card col-3 col-sm-3 col-md-3 text-info">
-                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
-                     src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-subtitle">Ảnh 4K - Đây là sử dụng tiêu đề phụ</h5>
-                    <p class="card-text">Đây là phần nội dung của Card - Thiết lập màu chữ cho card</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
+            @{
+                foreach (Tour item in relateTours)
+                {
+                    <div class="card col-3 col-sm-3 col-md-3 text-info">
+                        <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
+                             src="~/UploadImage/@(item.Pictures)" alt="">
+                        <div class="card-body">
+                            <h5 class="card-subtitle">@item.Name</h5>
+                            <p class="card-text">@item.TitleIntroduct</p>
+                            <a href="#" class="btn btn-primary">Xem Tour</a>
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
 
@@ -329,6 +357,33 @@
                 }
             }
         </ul>
+        <button class="btn btn-info" style="margin-left: 50px; width: 90%; margin-top: 10px; width: 100px;" data-toggle="modal" data-target="#commentForm">Bình luận</button>
+        <div id="commentForm" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form asp-area="Customer" asp-controller="EvaluateCustomer" asp-action="SaveEvaluate" method="post" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Để lại bình luận tại đây</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" name="Eva" id="Eva" value="2" hidden />
+                            <input type="text" name="EvaId" id="EvaId" value="@tour.Id" hidden />
+                            <input type="text" name="controllerName" id="controllerName" value="TourCustomer" hidden />
+                            <input type="text" name="actionName" id="actionName" value="TourDetail" hidden />
+                            <input type="text" name="UsernameAccount" id="UsernameAccount" value="@usernameAccount" hidden />
+                            <textarea class="form-control border-info" id="Content" name="Content" rows="3"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                            <button type="submit" class="btn btn-primary">Bình luận</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     @*Modal confirm Booking Tour Package*@

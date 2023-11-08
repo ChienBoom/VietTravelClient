@@ -110,9 +110,9 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("deleteTourGuide")]
-        public async Task<IActionResult> DeleteTourGuide(string tourGuideId)
+        public async Task<IActionResult> DeleteTourGuide(string Id)
         {
-            string url = domainServer + "tourGuide/" + tourGuideId;
+            string url = domainServer + "tourGuide/" + Id;
             try
             {
                 ResponseData responseData = await _callApi.DeleteApi(url);

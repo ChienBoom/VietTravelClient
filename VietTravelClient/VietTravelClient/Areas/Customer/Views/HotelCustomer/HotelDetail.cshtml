@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Chi tiết Khách sạn";
     Hotel hotel = (Hotel)ViewData["Hotel"];
+    List<Evaluate> evaluates = (List<Evaluate>)ViewData["Evaluates"];
     string usernameAccount = (string)ViewData["UsernameAccount"];
 }
 <body>
@@ -55,6 +56,55 @@
                     <a class="carousel-control-next" href="#mycarousel" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span>
                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 50px;">
+        <div class="text-center col-12 col-sm-12 col-md-12 text-info font-italic font-weight-bold" style="font-size: 20px; margin-bottom: 20px;">CÁC BÌNH LUẬN NỔI BẬT</div>
+        <ul class="list-unstyled col-12 col-sm-12 col-md-12">
+            @{
+                foreach (Evaluate item in evaluates)
+                {
+                    <li class="media" style="margin-left: 40px; margin-bottom: 20px; width: 90%;">
+                        <img class="mx-3 rounded order-0" src="https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-010.jpg" alt=""
+                             style="width: 100px; max-height: 200px;">
+                        <div class="media-body">
+                            <h5 class="mt-0 text-info">@item.User.Name</h5>
+                            <!-- <h6 class="mt-0 text-info">(linhnh@gmail.com)</h6> -->
+                            <p>
+                                @item.Content
+                            </p>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+        <button class="btn btn-info" style="margin-left: 50px; width: 90%; margin-top: 10px; width: 100px;" data-toggle="modal" data-target="#commentForm">Bình luận</button>
+        <div id="commentForm" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form asp-area="Customer" asp-controller="EvaluateCustomer" asp-action="SaveEvaluate" method="post" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Để lại bình luận tại đây</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" name="Eva" id="Eva" value="3" hidden />
+                            <input type="text" name="EvaId" id="EvaId" value="@hotel.Id" hidden />
+                            <input type="text" name="controllerName" id="controllerName" value="HotelCustomer" hidden />
+                            <input type="text" name="actionName" id="actionName" value="HotelDetail" hidden />
+                            <input type="text" name="UsernameAccount" id="UsernameAccount" value="@usernameAccount" hidden />
+                            <textarea class="form-control border-info" id="Content" name="Content" rows="3"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                            <button type="submit" class="btn btn-primary">Bình luận</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

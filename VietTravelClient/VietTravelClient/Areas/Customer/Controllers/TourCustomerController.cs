@@ -40,25 +40,32 @@ namespace VietTravelClient.Areas.Customer.Controllers
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlTour = domainServer + "tour/" + itemId;
+            string urlRelateTour = domainServer + "tour/searchRelatedTour/" + itemId;
             string urlTourPackage = domainServer + "tourpackage/searchByTourId/" + itemId;
             string urlTimePackage = domainServer + "timepackage";
             string urlEva = domainServer + "evaluate/evaTour/" + itemId;
+            string urlEvent = domainServer + "event/searchEventByTourId/" + itemId;
             Tour tour = new Tour();
             List<TourPackage> tourPackages = new List<TourPackage>();
             List<TimePackage> timePackages = new List<TimePackage>();
             List<Evaluate> evaluates = new List<Evaluate>();
+            List<Event> events = new List<Event>();
             try
             {
                 ResponseData responseDataTour = await _callApi.GetApi(urlTour);
+                ResponseData responseDataRelateTour = await _callApi.GetApi(urlRelateTour);
                 ResponseData responseDataTourPackage = await _callApi.GetApi(urlTourPackage);
                 ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
                 ResponseData responseDataEva = await _callApi.GetApi(urlEva);
-                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success)
+                ResponseData responseDataEvent = await _callApi.GetApi(urlEvent);
+                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success && responseDataEvent.Success && responseDataRelateTour.Success)
                 {
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
+                    List<Tour> relateTours = JsonConvert.DeserializeObject<List<Tour>>(responseDataRelateTour.Data);
                     tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseDataTourPackage.Data);
                     timePackages = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
+                    events = JsonConvert.DeserializeObject<List<Event>>(responseDataEvent.Data);
                     string urlTourGuide = domainServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
@@ -80,6 +87,14 @@ namespace VietTravelClient.Areas.Customer.Controllers
                         restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
                         schedules = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
                         ViewData["Tour"] = tour;
+                        if (relateTours.Count >= 4)
+                        {
+                            ViewData["RelateTours"] = relateTours.Take(4).ToList();
+                        }
+                        else
+                        {
+                            ViewData["RelateTours"] = relateTours.Take(relateTours.Count).ToList();
+                        }
                         ViewData["TourGuides"] = tourGuides;
                         ViewData["TourPackages"] = tourPackages.Where(o => o.CreateBy == "Admin").ToList();
                         ViewData["Hotels"] = hotels;
@@ -87,6 +102,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                         ViewData["TimePackages"] = timePackages;
                         ViewData["Evaluates"] = evaluates;
                         ViewData["Schedules"] = schedules;
+                        ViewData["Events"] = events;
                         if (responseDataWeather.Data != null) ViewData["Weather"] = JsonConvert.DeserializeObject<WeatherOpen>(responseDataWeather.Data);
                         else ViewData["Weather"] = new List<WeatherOpen>();
                         ViewData["UsernameAccount"] = usernameAccount;
@@ -110,25 +126,32 @@ namespace VietTravelClient.Areas.Customer.Controllers
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlTour = domainServer + "tour/" + itemId;
+            string urlRelateTour = domainServer + "tour/searchRelatedTour/" + itemId;
             string urlTourPackage = domainServer + "tourpackage/searchByTourId/" + itemId;
             string urlTimePackage = domainServer + "timepackage";
             string urlEva = domainServer + "evaluate/evaTour/" + itemId;
+            string urlEvent = domainServer + "event/searchEventByTourId/" + itemId;
             Tour tour = new Tour();
             List<TourPackage> tourPackages = new List<TourPackage>();
             List<TimePackage> timePackages = new List<TimePackage>();
             List<Evaluate> evaluates = new List<Evaluate>();
+            List<Event> events = new List<Event>();
             try
             {
                 ResponseData responseDataTour = await _callApi.GetApi(urlTour);
+                ResponseData responseDataRelateTour = await _callApi.GetApi(urlRelateTour);
                 ResponseData responseDataTourPackage = await _callApi.GetApi(urlTourPackage);
                 ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
                 ResponseData responseDataEva = await _callApi.GetApi(urlEva);
-                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success)
+                ResponseData responseDataEvent = await _callApi.GetApi(urlEvent);
+                if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success && responseDataRelateTour.Success && responseDataEvent.Success)
                 {
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
+                    List<Tour> relateTours = JsonConvert.DeserializeObject<List<Tour>>(responseDataRelateTour.Data);
                     tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseDataTourPackage.Data);
                     timePackages = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
+                    events = JsonConvert.DeserializeObject<List<Event>>(responseDataEvent.Data);
                     string urlTourGuide = domainServer + "tourguide/searchByCityId/" + tour.CityId.ToString();
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
@@ -142,12 +165,21 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     if (responseDataTourGuide.Success && responseDataHotel.Success && responseDataRestaurant.Success && responseDataSchedule.Success)
                     {
                         ViewData["Tour"] = tour;
+                        if (relateTours.Count >= 4)
+                        {
+                            ViewData["RelateTours"] = relateTours.Take(4).ToList();
+                        }
+                        else
+                        {
+                            ViewData["RelateTours"] = relateTours.Take(relateTours.Count).ToList();
+                        }
                         ViewData["TourGuides"] = JsonConvert.DeserializeObject<List<TourGuide>>(responseDataTourGuide.Data);
                         ViewData["TourPackages"] = tourPackages.Where(o => o.CreateBy == "Admin").ToList();
                         ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
                         ViewData["Restaurants"] = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
                         ViewData["TimePackages"] = timePackages;
                         ViewData["Evaluates"] = evaluates;
+                        ViewData["Events"] = events;
                         ViewData["Schedules"] = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
                         if (responseDataWeather.Data != null) ViewData["Weather"] = JsonConvert.DeserializeObject<WeatherOpen>(responseDataWeather.Data);
                         else ViewData["Weather"] = new List<WeatherOpen>();

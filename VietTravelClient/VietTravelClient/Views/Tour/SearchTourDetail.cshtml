@@ -15,6 +15,11 @@
     List<Event> events = (List<Event>)ViewData["Events"];
 }
 <style>
+    .d-flex-icon {
+        display: flex;
+        align-items: center;
+        column-gap: 0.3rem;
+    }
     .modal-dialog {
         max-width: 800px;
     }
@@ -87,7 +92,7 @@
                             <input type="text" id="TimePackageIdTourPackage@(tourPackage.Id)" name="TimePackageIdTourPackage" value="@tourPackage.TimePackageId" hidden>
                             <input type="text" id="ScheduleTourPackages@(tourPackage.Id)" name="ScheduleTourPackages" value="@tourPackage.ScheduleTourPackages" hidden>
 
-                //Modal tourPackage Detail
+                            //Modal tourPackage Detail
                             <div id="TourPackageDetail@(tourPackage.Id)" class="modal fade" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -142,11 +147,24 @@
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-6 col-sm-6 col-md-6 row">
                                                     <label class="col-12 col-sm-12 col-md-12">Khách sạn</label>
-                                                    <input class="col-12 col-sm-12 col-md-12 rounded border-info" type="text" style="height: 60px; margin-right: 10px;" value="@tourPackage.HotelId">
+                                                    <input class="col-12 col-sm-12 col-md-12 rounded border-info" type="text" style="height: 60px; margin-right: 10px;" value="@tourPackage.Hotel.Name">
                                                 </div>
                                                 <div class="col-6 col-sm-6 col-md-6 row">
-                                                    <label class="col-12 col-sm-12 col-md-12">Hướng dẫn viên</label>
-                                                    <input class="col-12 col-sm-12 col-md-12 rounded border-info" type="text" style="height: 60px; margin-left: 10px;" value="@tourPackage.HotelId">
+                                                    <label class="col-12 col-sm-12 col-md-12">Nhà hàng</label>
+                                                    <input class="col-12 col-sm-12 col-md-12 rounded border-info" type="text" style="height: 60px; margin-left: 10px;" value="@tourPackage.Restaurant.Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-12 col-sm-12 col-md-12 row">
+                                                    <label class="col-12 col-sm-12 col-md-12">Lịch trình</label>
+                                                    @{
+                                                        string lstSchedule = "";
+                                                        foreach (Schedule item in tourPackage.ScheduleTourPackages)
+                                                        {
+                                                            lstSchedule += item.Title + " ";
+                                                        }
+                                                    }
+                                                    <input class="col-12 col-sm-12 col-md-12 rounded border-info" type="text" style="height: 60px; margin-right: 10px;" value="@tourPackage.ListScheduleTourPackage">
                                                 </div>
                                             </div>
                                         </div>
@@ -270,10 +288,7 @@
                                         Hủy
                                         bỏ
                                     </button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">
-                                        Xác
-                                        nhận
-                                    </button>
+                                    <a class="btn btn-primary" asp-controller="Login" asp-action="Login">Xác nhận</a>
                                 </div>
                             </div>
                         </div>
