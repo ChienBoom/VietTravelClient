@@ -33,7 +33,7 @@
                 <th style="width : 20%" class="text-center bg-info text-light border"></th>
             </tr>
             @{
-                for(int i =0; i<tickets.Count; i++)
+                for (int i = 0; i < tickets.Count; i++)
                 {
                     Ticket item = tickets[i];
                     <tr>
@@ -41,65 +41,78 @@
                         <td class="text-center border">@item.TourPackage.Tour.Name</td>
                         <td class="text-center border">@item.BookingDate</td>
                         <td class="text-center border">@item.TourPackage.LastPrice.ToString("N2")</td>
-                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#readTourGuide@(item.Id)">Xem</button></td>
-
+                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#TicketDetail@(item.Id)">Xem</button></td>
                     </tr>
+
+                    <div id="TicketDetail@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content" style="padding-left: 40px;">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-info">CHI TIẾT THÔNG TIN TOUR</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form>
+                                    <div class="modal-body row">
+                                        <div class="col-12 col-sm-12 col-md-12 row">
+                                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                <label for="NumberOfAdult" class="text-info font-italic">Số lượng người lớn</label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfAdult" name="NumberOfAdult" value="@item.TourPackage.NumberOfAdult" disabled>
+                                            </div>
+                                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                <label for="NumberOfChildren" class="text-info font-italic">Số lượng trẻ em</label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="NumberOfChildren" name="NumberOfChildren" value="@item.TourPackage.NumberOfChildren" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 row">
+                                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                <label for="StartTime" class="text-info font-italic">Thời gian khởi hành</label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="StartTime" name="StartTime" value="@item.TourPackage.StartTime" disabled>
+                                            </div>
+                                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                <label for="EndTime" class="text-info font-italic">Thời gian kết thúc</label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTime" name="EndTime" value="@item.TourPackage.EndTime" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 row">
+                                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
+                                                <label for="Hotel" class="text-info font-italic">Khách sạn</label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Hotel" name="Hotel" value="@item.TourPackage.Hotel.Name" disabled>
+                                            </div>
+                                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                <label for="Restaurant" class="text-info font-italic">Nhà hàng</label>
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Restaurant" name="Restaurant" value="@item.TourPackage.Restaurant.Name" disabled>
+                                            </div>
+                                        </div>
+                                        @{
+                                                string lstScheduleName = "";
+                                                foreach (Schedule schedule in item.TourPackage.ScheduleTourPackages)
+                                                {
+                                                    lstScheduleName += schedule.Title + " - ";
+                                                }
+                                                lstScheduleName = lstScheduleName.Substring(0, lstScheduleName.Length - 3);
+                                            <div class="col-12 col-sm-12 col-md-12 row">
+                                                <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
+                                                    <label for="Hotel" class="text-info font-italic">Lịch trình</label>
+                                                    <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="LstSchedule" name="LstSchedule" value="@lstScheduleName" disabled>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">Thoát</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 }
             }
         </table>
     </div>
 
-    @*<div id="readTourGuide@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="padding-left: 40px;">
-                <div class="modal-header">
-                    <h4 class="modal-title text-info">CHI TIẾT THÔNG TIN HƯỚNG DẪN VIÊN</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form>
-                    <div class="modal-body row">
-                        <div class="col-12 col-sm-12 col-md-12 row">
-                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                <label for="NameDet" class="text-info font-italic">Tên HDV</label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="NameDet" name="Name" value="@item.Name" disabled>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                <label for="SexDet" class="text-info font-italic">Giới tính</label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="SexDet" name="Sex" value="@item.Sex" disabled>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 row">
-                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                <label for="EmailDet" class="text-info font-italic">Email</label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="EmailDet" name="Email" value="@item.Email" disabled>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                <label for="PhoneNumberDet" class="text-info font-italic">Số điện thoại</label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="PhoneNumberDet" name="PhoneNumber" value="@item.PhoneNumber" disabled>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 row">
-                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
-                                <label for="CityIdDet" class="text-info font-italic">Thành phố hướng dẫn</label>
-                                <select class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="CityIdDet" name="CityId" disabled>
-                                    
-                                </select>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
-                                <label for="AddressDet" class="text-info font-italic">Địa chỉ</label>
-                                <input type="text" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" id="AddressDet" name="Address" value="@item.Address" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>*@
+    
 
     @*Modal bootstrap*@
     <div class="modal" id="Warning">

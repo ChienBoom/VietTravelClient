@@ -93,6 +93,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                         if (ticket.TourPackage.Restaurant == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
                         if (ticket.TourPackage.Tour == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
                         if (ticket.TourPackage.TimePackage == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+                        ticket.TourPackage.ScheduleTourPackages = JsonConvert.DeserializeObject<List<Schedule>>(ticket.TourPackage.ListScheduleTourPackage);
                     }
                     ViewData["Tickets"] = tickets;
                     ViewData["Status"] = status;
