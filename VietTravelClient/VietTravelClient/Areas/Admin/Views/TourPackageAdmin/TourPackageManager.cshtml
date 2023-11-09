@@ -238,9 +238,9 @@
                                                     <label for="ScheduleListDet" class="text-info font-italic">Lựa chọn lịch trình<span style="color: red;">*</span></label>
                                                     <select name="ScheduleList" id="ScheduleListDet" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" multiple>
                                                         @{
-                                                            foreach (Schedule item in schedules)
+                                                            foreach (Schedule item in tourPackage.ScheduleTourPackages)
                                                             {
-                                                                <option value="@item.Id">@item.Title</option>
+                                                                <option value="@item.Id" selected>@item.Title</option>
                                                             }
                                                         }
                                                     </select>
@@ -351,7 +351,19 @@
                                                         @{
                                                             foreach (Schedule item in schedules)
                                                             {
-                                                                <option value="@item.Id">@item.Title</option>
+                                                                foreach (Schedule it in tourPackage.ScheduleTourPackages)
+                                                                {
+                                                                    if (item.Id == it.Id)
+                                                                    {
+                                                                        <option value="@item.Id" selected>@item.Title</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@item.Id">@item.Title</option>
+                                                                    }
+
+                                                                }
+
                                                             }
                                                         }
                                                     </select>
@@ -455,9 +467,9 @@
                                                     <label for="ScheduleListDel" class="text-info font-italic">Lựa chọn lịch trình<span style="color: red;">*</span></label>
                                                     <select name="ScheduleList" id="ScheduleListDel" class="col-12 rounded border-info text-info" style="height: 60px; margin-bottom: 20px;" multiple>
                                                         @{
-                                                            foreach (Schedule item in schedules)
+                                                            foreach (Schedule item in tourPackage.ScheduleTourPackages)
                                                             {
-                                                                <option value="@item.Id">@item.Title</option>
+                                                                <option value="@item.Id" selected>@item.Title</option>
                                                             }
                                                         }
                                                     </select>

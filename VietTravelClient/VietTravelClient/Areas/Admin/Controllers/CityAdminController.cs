@@ -148,7 +148,6 @@ namespace VietTravelClient.Areas.Admin.Controllers
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
             value.UniCodeName = value.Name.Unidecode();
             value.Pictures = _uploadFile.SaveFile(file).Message;
-            if (value.Description.Equals("") || value.Description == null) value.Description = value.TitleIntroduct;
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);

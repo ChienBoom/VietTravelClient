@@ -87,30 +87,31 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     Tour tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
-                    try
+                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
+                    ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
+                    if (responseDataHotel.Success && responseDataRestaurant.Success)
                     {
-                        ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                        ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
-                        if (responseDataHotel.Success && responseDataRestaurant.Success)
+                        List<TourPackage> tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseData.Data);
+                        //ViewData["TourPackages"] = tourPackages.Where(o => o.CreateBy.Equals("Admin")).ToList();
+                        List<TourPackage> lstTourPackage = tourPackages.Where(O => O.CreateBy == "Admin").ToList();
+                        if(lstTourPackage != null && lstTourPackage.Count > 0)
                         {
-                            List<TourPackage> tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseData.Data);
-                            //ViewData["TourPackages"] = tourPackages.Where(o => o.CreateBy.Equals("Admin")).ToList();
-                            ViewData["TourPackages"] = tourPackages.Where(O => O.CreateBy == "Admin").ToList();
-                            ViewData["TourId"] = TourId;
-                            ViewData["TimePackages"] = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
-                            ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
-                            ViewData["Restaurants"] = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
-                            ViewData["Schedules"] = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
-                            ViewData["Status"] = status;
-                            ViewData["UsernameAccount"] = usernameAccount;
-                            return View();
+                            foreach(TourPackage item in lstTourPackage)
+                            {
+                                item.ScheduleTourPackages = JsonConvert.DeserializeObject<List<Schedule>>(item.ListScheduleTourPackage);
+                            }
                         }
-                        return RedirectToAction("Error", "Home");
+                        ViewData["TourPackages"] = tourPackages.Where(O => O.CreateBy == "Admin").ToList();
+                        ViewData["TourId"] = TourId;
+                        ViewData["TimePackages"] = JsonConvert.DeserializeObject<List<TimePackage>>(responseDataTimePackage.Data);
+                        ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseDataHotel.Data);
+                        ViewData["Restaurants"] = JsonConvert.DeserializeObject<List<Restaurant>>(responseDataRestaurant.Data);
+                        ViewData["Schedules"] = JsonConvert.DeserializeObject<List<Schedule>>(responseDataSchedule.Data);
+                        ViewData["Status"] = status;
+                        ViewData["UsernameAccount"] = usernameAccount;
+                        return View();
                     }
-                    catch (Exception ex)
-                    {
-                        return RedirectToAction("Error", "Home");
-                    }
+                    return RedirectToAction("Error", "Home");
                 }
                 return RedirectToAction("Error","Home");
             }
