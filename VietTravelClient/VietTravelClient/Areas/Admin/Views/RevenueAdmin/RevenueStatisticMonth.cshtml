@@ -22,6 +22,11 @@
         }
     }
 }
+<style>
+    .modal-dialog {
+        max-width: 1000px;
+    }
+</style>
 <body>
     <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
         <div class="col-10">
@@ -51,39 +56,88 @@
                 }
             </select>
         </div>
-        <div class="col-4 col-sm-4 col-md-4 row" style="margin-top: 100px;">
+        <div class="col-3 col-sm-3 col-md-3 row" style="margin-top: 100px;">
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticMonth" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Tháng</a>
-                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
-                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticMonth" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Tháng</a>
+                @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                    <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticCity" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Thành phố</a>
-                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
-                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticCity" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Thành phố</a>
+                @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                    <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticTour" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Tour</a>
-                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
-                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticTour" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Tour</a>
+                @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                    <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticMonth" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Tháng</a>
-                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
-                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticMonth" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Tháng</a>
+                @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                    <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticCity" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Thành phố</a>
-                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
-                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticCity" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Thành phố</a>
+                @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                    <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticTour" class="col-8 col-sm-8 col-md-8 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Tour</a>
-                <div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
-                <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticTour" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Tour</a>
+                @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
+                    <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
         </div>
-        <canvas id="myChart" class="col-8"></canvas>
+        <div class="col-9 col-sm-9 col-md-9 row">
+            <div class="col-12 col-sm-12 col-md-12 row">
+                <div class="col-10 col-sm-10 col-md-10"></div>
+                <div class="col-2 col-sm-2 col-md-2 row">
+                    <div class="col-2 col-sm-2 col-md-2"></div>
+                    <a class="col-10 col-sm-10 col-md-10 btn btn-info rounded border-info" data-toggle="modal" data-target="#ReportDetail" style="height: 60px; display: flex; align-items: center; justify-content: center;">Xem chi tiết</a>
+                </div>
+            </div>
+            <canvas id="myChart" class="col-12 col-sm-12 col-md-12"></canvas>
+        </div>
+    </div>
+
+    @*Modal ReportDetail*@
+    <div id="ReportDetail" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="padding-left: 40px;">
+                <div class="modal-header">
+                    <h4 class="modal-title text-info">CHI TIẾT THỐNG KÊ DOANH THU THEO THÁNG</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body row">
+                        <table class="col-10 col-sm-10 col-md-10 border" style="border: 1px; border-color: black;">
+                            <tr class="">
+                                <th style="width : 10%" class="text-center bg-info text-light border">STT</th>
+                                <th style="width : 40%" class="text-center bg-info text-light border">Tháng</th>
+                                <th style="width : 50%" class="text-center bg-info text-light border">Doanh thu(VNĐ)</th>
+                            </tr>
+                            @{
+                                for (int i = 1; i <= Count; i++)
+                                {
+                                    string label = labels[i - 1];
+                                    decimal sumRevenue = decimals[i - 1];
+                                    <tr>
+                                        <td class="text-center border">@i</td>
+                                        <td class="text-center border">@label</td>
+                                        <td class="text-center border">@sumRevenue.ToString("N2")</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Thoát</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 <script>
