@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="6.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.31" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.31">
@@ -33,7 +34,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Customer\Data\" />
     <Folder Include="Areas\Customer\Models\" />
-    <Folder Include="wwwroot\ReportExcel\" />
+    <Folder Include="wwwroot\ReportExcelOutput\" />
   </ItemGroup>
 
 </Project>

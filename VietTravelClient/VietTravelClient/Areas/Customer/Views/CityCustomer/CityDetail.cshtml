@@ -143,10 +143,39 @@
             }
         </ul>
         <button class="btn btn-info" style="margin-left: 50px; width: 90%; margin-top: 10px; width: 100px;" data-toggle="modal" data-target="#commentForm">Bình luận</button>
+        <button class="btn btn-info" style="margin-left: 50px; width: 90%; margin-top: 10px; width: 100px;" data-toggle="modal" data-target="#evaluateStarForm">Đánh giá</button>
+
         <div id="commentForm" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <form asp-area="Customer" asp-controller="EvaluateCustomer" asp-action="SaveEvaluate" method="post" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Để lại bình luận tại đây</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" name="Eva" id="Eva" value="1" hidden />
+                            <input type="text" name="EvaId" id="EvaId" value="@city.Id" hidden />
+                            <input type="text" name="controllerName" id="controllerName" value="CityCustomer" hidden />
+                            <input type="text" name="actionName" id="actionName" value="CityDetail" hidden />
+                            <input type="text" name="UsernameAccount" id="UsernameAccount" value="@usernameAccount" hidden />
+                            <textarea class="form-control border-info" id="Content" name="Content" rows="3"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                            <button type="submit" class="btn btn-primary">Bình luận</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="evaluateStarForm" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form asp-area="Customer" asp-controller="EvaluateCustomer" asp-action="SaveEvaluateStar" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
                             <h4 class="modal-title">Để lại bình luận tại đây</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

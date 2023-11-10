@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace VietTravelClient
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
 
         public IConfiguration Configuration { get; }
