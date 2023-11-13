@@ -5,6 +5,17 @@
     ViewData["Title"] = "Quản lý thông tin Admin";
     User user = (User)ViewData["User"];
 }
+<style>
+    .modal-dialog {
+        max-width: 800px;
+    }
+
+    .d-flex-icon {
+        display: flex;
+        align-items: center;
+        column-gap: 0.3rem;
+    }
+</style>
 <body>
     <div class="row" style="margin-top: 20px;">
         <div class="media col-12 col-sm-12 col-md-12 border" style="margin-left: 10px; margin-right: 10px;">
@@ -52,11 +63,18 @@
                             </div>
                         </div>
                         <div class="row" style="margin-top: 40px;">
-                            <div class="col-3 col-sm-3 col-md-3"></div>
-                            <button type="submit" style="height:60px;"
-                                    class="btn-outline-info rounded col-6 col-sm-6 col-md-6 justify-content-center align-items-center">
-                                Cập nhật thông tin tài khoản
-                            </button>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <button type="button" style="height:60px;"
+                                        class="btn-info rounded col-12 col-sm-12 col-md-12 justify-content-center align-items-center" data-toggle="modal" data-target="#updatePassword">
+                                    Cập nhật mật khẩu
+                                </button>
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <button type="button" style="height:60px;"
+                                        class="btn-info rounded col-12 col-sm-12 col-md-12 justify-content-center align-items-center" data-toggle="modal" data-target="#updateInfo">
+                                    Cập nhật thông tin
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -69,7 +87,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title text-info">THÔNG BÁO</h4>
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -83,28 +101,193 @@
             </div>
         </div>
     </div>
+
+    @*Modal Status bootstrap*@
+    <div class="modal" id="StatusModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="StatusMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="updatePassword" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form asp-area="Admin" asp-controller="HomeAdmin" asp-action="UpdatePassword" method="post" enctype="multipart/form-data" onsubmit="return ValidateUpdatePassword()">
+                    <div class="modal-header">
+                        <h4 class="modal-title">CẬP NHẬT MẬT KHẨU</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12">
+                                <label for="" class="font-italic text-info col-12">Mật khẩu cũ</label>
+                                <input type="text" class="rounded border-info text-info col-12" style="height:60px;" id="oldPassword" name="oldPassword">
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12">
+                                <label for="" class="font-italic text-info col-12">Mật khẩu mới</label>
+                                <input type="text" class="rounded border-info text-info col-12" style="height:60px;" id="newPassword" name="newPassword">
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12">
+                                <label for="" class="font-italic text-info col-12">Xác nhận mật khẩu mới</label>
+                                <input type="text" class="rounded border-info text-info col-12" style="height:60px;" id="confirmNewPassword" name="confirmNewPassword">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="updateInfo" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form asp-area="Admin" asp-controller="HomeAdmin" asp-action="UpdateInfo" method="post" enctype="multipart/form-data" onsubmit="return ValidateUpdateInfo()">
+                    <div class="modal-header">
+                        <h4 class="modal-title">CẬP NHẬT THÔNG TIN TÀI KHOẢN</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" hidden>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12">Họ và tên</label>
+                                <input type="text" class="rounded border-info text-info col-12" style="height:60px;" value="@user.Id" id="Id" name="Id">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12">Họ và tên</label>
+                                <input type="text" class="rounded border-info text-info col-12" style="height:60px;" value="@user.Name" id="Name" name="Name">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12">Ngày sinh</label>
+                                <input type="datetime" class="rounded border-info text-info col-12" style="height:60px;" value="@user.DateOfBirth" id="DateOfBirth" name="DateOfBirth">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12">Giới tính</label>
+                                <input type="text" class="rounded border-info text-info col-12" style="height:60px;" value="@user.Sex" id="Sex" name="Sex">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12">Email</label>
+                                <input type="text" class="rounded border-info text-info col-12" style="height:60px;" value="@user.Email" id="Email" name="Email">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12">Số điện thoại</label>
+                                <input type="text" class="rounded border-info text-info col-12" style="height:60px;" value="@user.PhoneNumber" id="PhoneNumber" name="PhoneNumber">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="" class="font-italic text-info col-12">Địa chỉ</label>
+                                <input type="text" class="rounded border-info text-info col-12" style="height:60px;" value="@user.Address" id="Address" name="Address">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
-    function Validation() {
-    var name = $('#Name').val();
-    var pictures = $('#Pictures').val();
-    var titleIntroduct = $('#TitleIntroduct').val();
-    var contentIntroduct = $('#ContentIntroduct').val();
-    if (!ValidationField(name, "Vui lòng nhập Tên thành phố")) return false;
-    if (!ValidationField(pictures, "Vui lòng nhập tải ảnh thành phố")) return false;
-    if (!ValidationField(titleIntroduct, "Vui lòng nhập Tiêu đề giới thiệu")) return false;
-    if (!ValidationField(contentIntroduct, "Vui lòng nhập Nội dung giới thiệu")) return false;
-    return true;
+    $(document).ready(function () {
+        var status = $("#Status").val();
+        switch (status) {
+            case "UpdatePasswordSuccess":
+                $('#StatusMessage').text("CẬP NHÂT MẬT KHẨU THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "UpdatePasswordFaild":
+                $('#StatusMessage').text("CẬP NHÂT MẬT KHẨU THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+            case "UpdateInfoSuccess":
+                $('#StatusMessage').text("CẬP NHẬT THÔNG TIN THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "UpdateInfoFaild":
+                $('#StatusMessage').text("CẬP NHẬT THÔNG TIN THẤT THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+        }
+    });
+    function ValidateUpdateInfo() {
+        var name = $('#Name').val();
+        var dateOfBirth = $('#DateOfBirth').val();
+        var sex = $('#Sex').val();
+        var email = $('#Email').val();
+        var phoneNumber = $('#PhoneNumber').val();
+        var address = $('#Address').val();
+        if (!ValidationField(name, "Vui lòng nhập Tên")) return false;
+        if (!ValidationField(dateOfBirth, "Vui lòng nhập Ngày sinh")) return false;
+        if (!ValidationField(sex, "Vui lòng nhập chọn Giới tính")) return false;
+        if (!ValidationField(email, "Vui lòng nhập Email")) return false;
+        if (!ValidationField(phoneNumber, "Vui lòng nhập Số điện thoại")) return false;
+        if (!ValidationField(address, "Vui lòng nhập Địa chỉ")) return false;
+        return true;
     }
+    function ValidateUpdatePassword() {
+        var oldPassword = $('#oldPassword').val();
+        var newPassword = $('#newPassword').val();
+        var confirmNewPassword = $('#confirmNewPassword').val();
+        if (!ValidationField(oldPassword, "Vui lòng nhập Mật khẩu cũ")) return false;
+        if (!ValidationField(newPassword, "Vui lòng nhập Mật khẩu mới")) return false;
+        if (!ValidationField(confirmNewPassword, "Vui lòng nhập Mật khẩu xác nhận")) return false;
+        if (newPassword != confirmNewPassword) {
+            ShowMessage("Mật khẩu mới và mật khẩu xác nhận không trùng khớp")
+            return false;
+        }
+        if (!ValidatePassword(newPassword)) return false;
+        return true;
+    }
+
+    function ValidatePassword(value) {
+        const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@@$%^&*-]).{8,}$/;
+        if (!pattern.test(value)) {
+            ShowMessage("Vui lòng nhập mật khẩu ít nhất 8 kí tự, có chữ hoa, chữ thường và kí tự đặc biệt");
+            return false;
+        }
+        if (value == "") {
+            ShowMessage("Vui lòng nhập mật khẩu ít nhất 8 kí tự, có chữ hoa, chữ thường và kí tự đặc biệt");
+            return false;
+        }
+        return true;
+    }
+
     function ValidationField(value, message) {
-    if (value == "") {
-    ShowMessage(message);
-    return false;
-    }
-    return true;
+        if (value == "") {
+            ShowMessage(message);
+            return false;
+        }
+        return true;
     }
     function ShowMessage(value) {
-    $('#WarningMessage').text(value)
-    $('#Warning').modal('show');
+        $('#WarningMessage').text(value)
+        $('#Warning').modal('show');
     }
 </script>

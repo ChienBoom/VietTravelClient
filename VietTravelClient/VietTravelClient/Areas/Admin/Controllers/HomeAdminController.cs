@@ -66,7 +66,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("accountManager")]
-        public async Task<IActionResult> AccountManager()
+        public async Task<IActionResult> AccountManager(string status)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
@@ -78,7 +78,61 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["Status"] = status;
                     return View()
+;
+                }
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
+            }
+        }
+
+        [HttpPost]
+        [Route("updatePassword")]
+        public async Task<ActionResult> UpdatePassword(string oldPassword, string newPassword)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            string url = domainServer + "user/updatePassword/" + usernameAccount + "/" + oldPassword + "/" + newPassword;
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin" })
+;
+                }
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
+            }
+        }
+
+        [HttpPost]
+        [Route("updateInfo")]
+        public async Task<ActionResult> UpdateInfo(User value)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            string url = domainServer + "user/" + value.Id.ToString();
+            try
+            {
+                value.Username = "notnull";
+                value.Password = "notnull";
+                value.Role = "Admin";
+                ResponseData responseData = await _callApi.PutApi(url, JsonConvert.SerializeObject(value));
+                if (responseData.Success)
+                {
+                    ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin" })
 ;
                 }
                 return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });

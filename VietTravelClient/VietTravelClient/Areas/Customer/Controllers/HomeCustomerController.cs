@@ -56,11 +56,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     return View()
 ;
                 }
-                return RedirectToAction("Error", new {area="Customer", controller="Home"});
+                return RedirectToAction("Error", new {area="Customer", controller= "HomeCustomer" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+                return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
             }
         }
 
@@ -88,11 +88,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                         ticket.TourPackage.Restaurant = await getRestaurant(ticket.TourPackage.RestaurantId.ToString());
                         ticket.TourPackage.Tour = await getTour(ticket.TourPackage.TourId.ToString());
                         ticket.TourPackage.TimePackage = await getTimePackage(ticket.TourPackage.TimePackageId.ToString());
-                        if (ticket.TourPackage == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
-                        if (ticket.TourPackage.Hotel == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
-                        if (ticket.TourPackage.Restaurant == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
-                        if (ticket.TourPackage.Tour == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
-                        if (ticket.TourPackage.TimePackage == null) return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+                        if (ticket.TourPackage == null) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
+                        if (ticket.TourPackage.Hotel == null) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
+                        if (ticket.TourPackage.Restaurant == null) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
+                        if (ticket.TourPackage.Tour == null) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
+                        if (ticket.TourPackage.TimePackage == null) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
                         ticket.TourPackage.ScheduleTourPackages = JsonConvert.DeserializeObject<List<Schedule>>(ticket.TourPackage.ListScheduleTourPackage);
                     }
                     ViewData["Tickets"] = tickets;
@@ -100,11 +100,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+                return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+                return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
             }
             
             
@@ -112,7 +112,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         [HttpGet]
         [Route("accountManager")]
-        public async Task<IActionResult> AccountManager()
+        public async Task<IActionResult> AccountManager(string status)
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
@@ -124,6 +124,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 {
                     ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["Status"] = status;
                     return View()
 ;
                 }
@@ -132,6 +133,59 @@ namespace VietTravelClient.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 return RedirectToAction("Error", new { area = "Customer", controller = "Home" });
+            }
+        }
+
+        [HttpPost]
+        [Route("updatePassword")]
+        public async Task<ActionResult> UpdatePassword(string oldPassword, string newPassword)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            string url = domainServer + "user/updatePassword/" + usernameAccount + "/" + oldPassword + "/" + newPassword;
+            try
+            {
+                ResponseData responseData = await _callApi.GetApi(url);
+                if (responseData.Success)
+                {
+                    ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    return RedirectToAction("AccountManager", new { area = "Customer", controller="HomeCustomer", status = "UpdatePasswordSuccess" })
+;
+                }
+                return RedirectToAction("AccountManager", new { area = "Customer", controller = "HomeCustomer" , status = "UpdatePasswordFaild"});
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("AccountManager", new { area = "Customer", controller = "HomeCustomer", status = "UpdatePasswordFaild" });
+            }
+        }
+
+        [HttpPost]
+        [Route("updateInfo")]
+        public async Task<ActionResult> UpdateInfo(User value)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            string url = domainServer + "user/" + value.Id.ToString();
+            try
+            {
+                value.Username = "notnull";
+                value.Password = "notnull";
+                value.Role = "Customer";
+                ResponseData responseData = await _callApi.PutApi(url, JsonConvert.SerializeObject(value));
+                if (responseData.Success)
+                {
+                    ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    return RedirectToAction("AccountManager", new { area = "Customer", controller = "HomeCustomer", status = "UpdateInfoSuccess" })
+;
+                }
+                return RedirectToAction("AccountManager", new { area = "Customer", controller = "HomeCustomer", status = "UpdateInfoFaild" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("AccountManager", new { area = "Customer", controller = "HomeCustomer", status = "UpdateInfoFaild" });
             }
         }
 

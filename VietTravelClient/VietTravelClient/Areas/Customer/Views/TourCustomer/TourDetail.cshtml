@@ -396,7 +396,7 @@
                 <div class="modal-content">
                     <form asp-area="Customer" asp-controller="EvaluateCustomer" asp-action="SaveEvaluateStar" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
-                            <h4 class="modal-title">Để lại bình luận tại đây</h4>
+                            <h4 class="modal-title">Để lại đánh giá tại đây</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -404,22 +404,23 @@
                         <div class="modal-body">
                             <input type="text" name="Eva" id="Eva" value="2" hidden />
                             <input type="text" name="EvaId" id="EvaId" value="@tour.Id" hidden />
-                            <div class="rating">
-                                <input type="radio" name="star" class="star" id="star1" />
-                                <label for="star1">1s</label><br>
-                                <input type="radio" name="star" class="star" id="star2" />
-                                <label for="star2">2s</label><br>
-                                <input type="radio" name="star" class="star" id="star3" />
-                                <label for="star3">3s</label><br>
-                                <input type="radio" name="star" class="star" id="star4" />
-                                <label for="star4">4s</label><br>
-                                <input type="radio" name="star" class="star" id="star5" />
-                                <label for="star5">5s</label><br>
-                            </div>
+                            <input type="text" name="controllerName" id="controllerName" value="TourCustomer" hidden />
+                            <input type="text" name="actionName" id="actionName" value="TourDetail" hidden />
+                            <input type="text" name="UsernameAccount" id="UsernameAccount" value="@usernameAccount" hidden />
+                            <input type="radio" name="NumberStar" value="1" id="star1" />
+                            <label for="star1">1</label><i class="fa fa-star" style="color: yellow"></i><br>
+                            <input type="radio" name="NumberStar" value="2" id="star2" />
+                            <label for="star2">2</label><i class="fa fa-star" style="color: yellow"></i><br>
+                            <input type="radio" name="NumberStar" value="3" id="star3" />
+                            <label for="star3">3</label><i class="fa fa-star" style="color: yellow"></i><br>
+                            <input type="radio" name="NumberStar" value="4" id="star4" />
+                            <label for="star4">4</label><i class="fa fa-star" style="color: yellow"></i><br>
+                            <input type="radio" name="NumberStar" value="5" id="star5" />
+                            <label for="star5">5</label><i class="fa fa-star" style="color: yellow"></i><br>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                            <button type="submit" class="btn btn-primary">Bình luận</button>
+                            <button type="submit" class="btn btn-primary">Đánh giá</button>
                         </div>
                     </form>
                 </div>

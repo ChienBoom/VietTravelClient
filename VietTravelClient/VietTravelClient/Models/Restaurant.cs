@@ -15,6 +15,7 @@
         public decimal PriceDefault { get; set; }
         public int IsDelete { get; set; } // 1 là đã xóa, 0 là chưa xóa
         public int NumberOfEvaluate { get; set; }
+        public int NumberOfEvaluateStar { get; set; }
         public float MediumStar { get; set; }
     }
 }
