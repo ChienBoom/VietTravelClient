@@ -11,6 +11,7 @@
     int currentPage = (int)ViewData["CurrentPage"];
     int totalPage = (int)ViewData["TotalPage"];
     WeatherOpen weatherOpen = (WeatherOpen)ViewData["Weather"];
+    EvaluateStar evaluateStar = (EvaluateStar)ViewData["EvaluateStar"];
 }
 <style>
     .d-flex-icon {
@@ -172,41 +173,92 @@
             </div>
         </div>
 
-        <div id="evaluateStarForm" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form asp-area="Customer" asp-controller="EvaluateCustomer" asp-action="SaveEvaluateStar" method="post" enctype="multipart/form-data">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Để lại đnahs giá tại đây</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+        @{
+            if (evaluateStar == null)
+            {
+                <div id="evaluateStarForm" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form asp-area="Customer" asp-controller="EvaluateCustomer" asp-action="SaveEvaluateStar" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Để lại đánh giá tại đây</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" name="Eva" id="Eva" value="1" hidden />
+                                    <input type="text" name="EvaId" id="EvaId" value="@city.Id" hidden />
+                                    <input type="text" name="controllerName" id="controllerName" value="CityCustomer" hidden />
+                                    <input type="text" name="actionName" id="actionName" value="CityDetail" hidden />
+                                    <input type="text" name="UsernameAccount" id="UsernameAccount" value="@usernameAccount" hidden />
+                                    <input type="radio" name="NumberStar" value="1" id="star1" />
+                                    <label for="star1">1</label><i class="fa fa-star" style="color: yellow"></i><br>
+                                    <input type="radio" name="NumberStar" value="2" id="star2" />
+                                    <label for="star2">2</label><i class="fa fa-star" style="color: yellow"></i><br>
+                                    <input type="radio" name="NumberStar" value="3" id="star3" />
+                                    <label for="star3">3</label><i class="fa fa-star" style="color: yellow"></i><br>
+                                    <input type="radio" name="NumberStar" value="4" id="star4" />
+                                    <label for="star4">4</label><i class="fa fa-star" style="color: yellow"></i><br>
+                                    <input type="radio" name="NumberStar" value="5" id="star5" />
+                                    <label for="star5">5</label><i class="fa fa-star" style="color: yellow"></i><br>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                    <button type="submit" class="btn btn-primary">Đánh giá</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="modal-body">
-                            <input type="text" name="Eva" id="Eva" value="1" hidden />
-                            <input type="text" name="EvaId" id="EvaId" value="@city.Id" hidden />
-                            <input type="text" name="controllerName" id="controllerName" value="CityCustomer" hidden />
-                            <input type="text" name="actionName" id="actionName" value="CityDetail" hidden />
-                            <input type="text" name="UsernameAccount" id="UsernameAccount" value="@usernameAccount" hidden />
-                            <input type="radio" name="NumberStar" value="1" id="star1" />
-                            <label for="star1">1</label><i class="fa fa-star" style="color: yellow"></i><br>
-                            <input type="radio" name="NumberStar" value="2" id="star2" />
-                            <label for="star2">2</label><i class="fa fa-star" style="color: yellow"></i><br>
-                            <input type="radio" name="NumberStar" value="3" id="star3" />
-                            <label for="star3">3</label><i class="fa fa-star" style="color: yellow"></i><br>
-                            <input type="radio" name="NumberStar" value="4" id="star4" />
-                            <label for="star4">4</label><i class="fa fa-star" style="color: yellow"></i><br>
-                            <input type="radio" name="NumberStar" value="5" id="star5" />
-                            <label for="star5">5</label><i class="fa fa-star" style="color: yellow"></i><br>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                            <button type="submit" class="btn btn-primary">Đánh giá</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-        </div>
+            }
+            else
+            {
+                <div id="evaluateStarForm" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form asp-area="Customer" asp-controller="EvaluateCustomer" asp-action="UpdateEvaluateStar" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Chỉnh sửa đánh giá của bạn</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" name="Eva" id="Eva" value="1" hidden />
+                                    <input type="text" name="EvaId" id="EvaId" value="@city.Id" hidden />
+                                    <input type="text" name="controllerName" id="controllerName" value="CityCustomer" hidden />
+                                    <input type="text" name="actionName" id="actionName" value="CityDetail" hidden />
+                                    <input type="text" name="UsernameAccount" id="UsernameAccount" value="@usernameAccount" hidden />
+                                    <input type="text" name="Id" id="Id" value="@evaluateStar.Id" hidden />
+                                    <input type="text" name="UserId" id="UserId" value="@evaluateStar.UserId" hidden />
+                                    @{
+                                        for (int i = 1; i <= 5; i++)
+                                        {
+                                            if (i == evaluateStar.NumberStar)
+                                            {
+                                                <input type="radio" name="NumberStar" value="@i" id="star@(i)" checked />
+                                                <label for="star@(i)">@i</label><i class="fa fa-star" style="color: yellow"></i><br>
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" name="NumberStar" value="@i" id="star@(i)" />
+                                                <label for="star@(i)">@i</label><i class="fa fa-star" style="color: yellow"></i><br>
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                    <button type="submit" class="btn btn-primary">Đánh giá</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
     </div>
 
     <div class="row" style="margin-top: 80px;">

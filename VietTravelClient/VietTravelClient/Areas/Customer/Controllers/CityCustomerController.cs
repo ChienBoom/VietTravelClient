@@ -43,20 +43,25 @@ namespace VietTravelClient.Areas.Customer.Controllers
             string urlEva = domainServer + "evaluate/evaCity/" + itemId;
             string urlTour = domainServer + "tour/searchByCityId/" + itemId +"/" + page.ToString();
             string urlTotalPage = domainServer + "tour/searchByCityId/totalPage/" + itemId;
+            //evaStar
+            string urlEvaStar = domainServer + "evaluateStar/evaStar/1/" + itemId + "/" + usernameAccount;
             City city = new City();
             List<Tour> tours = new List<Tour>();
             List<Evaluate> evaluates = new List<Evaluate>();
+            EvaluateStar evaluateStar = new EvaluateStar();
             try
             {
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
                 ResponseData responseDataTours = await _callApi.GetApi(urlTour);
                 ResponseData responseDataEva = await _callApi.GetApi(urlEva);
                 ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
-                if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success && responseDataTotalPage.Success)
+                ResponseData responseDataEvaStar = await _callApi.GetApi(urlEvaStar);
+                if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success && responseDataTotalPage.Success && responseDataEvaStar.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
+                    evaluateStar = JsonConvert.DeserializeObject<EvaluateStar>(responseDataEvaStar.Data);
                     string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + city.CoordLat + "&lon=" + city.CoordLon + "&appid=" + keyWeather;
                     ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
                     ViewData["City"] = city;
@@ -66,6 +71,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     if (responseDataWeather.Data != null) ViewData["Weather"] = JsonConvert.DeserializeObject<WeatherOpen>(responseDataWeather.Data);
                     else ViewData["Weather"] = new List<WeatherOpen>();
                     ViewData["TotalPage"] = JsonConvert.DeserializeObject<int>(responseDataTotalPage.Data);
+                    ViewData["EvaluateStar"] = evaluateStar;
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }

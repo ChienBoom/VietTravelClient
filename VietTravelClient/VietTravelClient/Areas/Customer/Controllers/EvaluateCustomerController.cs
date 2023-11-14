@@ -79,5 +79,24 @@ namespace VietTravelClient.Areas.Customer.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("updateEvaluateStar")]
+        public async Task<IActionResult> UpdateEvaluateStar(EvaluateStar value, string usernameAccount, string controllerName, string actionName)
+        {
+            string url = domainServer + "evaluateStar/" + value.Id.ToString();
+            try
+            {
+                string stringValue = JsonConvert.SerializeObject(value);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                if (!responseData.Success) return RedirectToAction("Error", "Home");
+                Evaluate evaluate = JsonConvert.DeserializeObject<Evaluate>(responseData.Data);
+                return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = value.EvaId, page = 1 });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = value.EvaId, page = 1 });
+            }
+        }
+
     }
 }
