@@ -417,3 +417,5 @@ D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\net
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Text.Encoding.CodePages.dll
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\TicketAdmin\TicketManager.cshtml.g.cs
+D:\MyProject\VietTravelClientDev\VietTravelClient\VietTravelClient\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\TicketAdmin\SearchTicketCustomer.cshtml.g.cs

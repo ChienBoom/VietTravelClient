@@ -33,19 +33,23 @@ namespace VietTravelClient.Controllers
         {
             string urlCity = domainServer + "city";
             string urlTour = domainServer + "tour";
+            string urlHotCity = domainServer + "city/hotCity";
+            string urlHotTour = domainServer + "tour/hotTour";
             try
             {
                 ResponseData responseDataCity = await _callApi.GetApi(urlCity);
                 ResponseData responseDataTour = await _callApi.GetApi(urlTour);
-                if(responseDataCity.Success && responseDataTour.Success)
+                ResponseData responseHotCity = await _callApi.GetApi(urlHotCity);
+                ResponseData responseHotTour = await _callApi.GetApi(urlHotTour);
+                if(responseDataCity.Success && responseDataTour.Success && responseHotCity.Success && responseHotTour.Success)
                 {
 
                     List<City> cities = JsonConvert.DeserializeObject<List<City>>(responseDataCity.Data);
                     List<Tour> tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTour.Data);
                     ViewData["Cities"] = cities.OrderByDescending(o => o.Name).ToList();
                     ViewData["Tours"] = tours.OrderByDescending(o => o.NumberOfEvaluate).ToList();
-                    List <City> hotCity = cities.OrderBy(o => o.Name).Take(4).ToList();
-                    List<Tour> hotTour = tours.OrderBy(o => o.Name).Take(3).ToList();
+                    List <City> hotCity = JsonConvert.DeserializeObject<List<City>>(responseHotCity.Data);
+                    List<Tour> hotTour = JsonConvert.DeserializeObject<List<Tour>>(responseHotTour.Data);
                     ViewData["HotCities"] = hotCity;
                     ViewData["HotTours"] = hotTour;
                     return View()

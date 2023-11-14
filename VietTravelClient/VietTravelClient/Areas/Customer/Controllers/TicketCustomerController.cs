@@ -46,20 +46,21 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ticket.UserId = user.Id;
                     ticket.TourPackageId = long.Parse(tourPackageId);
                     ticket.BookingDate = DateTime.Now;
+                    ticket.Status = 1;
                     string urlTicket = domainServer + "ticket";
                     string stringTicket = JsonConvert.SerializeObject(ticket);
                     ResponseData responseDataTicket = await _callApi.PostApi(urlTicket, stringTicket);
                     if(responseDataTicket.Success)
                     {
-                        return RedirectToAction("History", new {area = "Customer", controller= "HomeCustomer", status = 1 });
+                        return RedirectToAction("History", new {area = "Customer", controller= "HomeCustomer", status = 1, ticketStatus = 1});
                     }
-                    return RedirectToAction("TourDetail", new {area = "Customer", controller="TourCustomer", status = 2});
+                    return RedirectToAction("TourDetail", new {area = "Customer", controller="TourCustomer", status = 2, ticketStatus = 1});
                 }
-                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2 });
+                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2, ticketStatus = 1});
             }
             catch (Exception ex)
             {
-                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 3 });
+                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 3, ticketStatus = 1});
             }
         }
 
@@ -111,15 +112,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ResponseData responseDataTicket = await _callApi.PostApi(urlTicket, stringTicket);
                     if (responseDataTicket.Success)
                     {
-                        return RedirectToAction("History", new { area = "Customer", controller = "HomeCustomer", status = 1 });
+                        return RedirectToAction("History", new { area = "Customer", controller = "HomeCustomer", status = 1, ticketStatus =1});
                     }
-                    return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2 });
+                    return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2, ticketStatus = 1 });
                 }
-                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2 });
+                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2, ticketStatus = 1 });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 3 });
+                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 3, ticketStatus = 1 });
             }
         }
 

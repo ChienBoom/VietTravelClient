@@ -7,7 +7,13 @@
     List<City> hotCities = (List<City>)ViewData["HotCities"];
     List<Tour> hotTours = (List<Tour>)ViewData["HotTours"];
 }
-
+<style>
+    .d-flex-icon {
+        display: flex;
+        align-items: center;
+        column-gap: 0.3rem;
+    }
+</style>
 <body>
     <div class="row" style="padding-top: 20px;">
         <div class="col-4 col-sm-4 col-md-4">
@@ -105,10 +111,13 @@
                             <div class="card col-4 col-sm-4 col-md-4 text-info">
                                 <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
                                      src="~/UploadImage/@(item.Pictures)" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-subtitle">@item.Name</h5>
-                                    <p class="card-text">@item.TitleIntroduct</p>
-                                    <a href="#" class="btn btn-primary">Xem Tour</a>
+                                <div class="card-body row">
+                                    <h5 class="card-title col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@item.Name" data-placement="top" style="width:50px;">@item.Name</h5>
+                                    <p class="card-text col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@item.TitleIntroduct" data-placement="top" style="width:50px;">@item.ContentIntroduct</p>
+                                    <div class="col-12 col-sm-12 col-md-12 row">
+                                        <a asp-area="Customer" asp-controller="TourCustomer" asp-action="TourDetail" asp-route-itemId="@item.Id" asp-route-page="1" class="btn btn-primary">Xem Tour</a>
+                                        <div class="col-6 col-sm-6 col-md-6 d-flex-icon">@item.NumberOfEvaluate<i class="fa fa-comment" style="color: deepskyblue"></i> @item.MediumStar.ToString("N2")<i class="fa fa-star" style="color: deepskyblue"></i></div>
+                                    </div>
                                 </div>
                             </div>
                         }
@@ -131,51 +140,36 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 text-center font-italic text-info font-weight-bold"
-             style="font-size: 30px; margin-top: 40px; margin-bottom: 30px;">
-            LỰA CHỌN ĐIỂM ĐẾN PHÙ HỢP
-        </div>
-        <div class="col-1 col-sm-1 col-md-1">
-        </div>
+        <div class="col-1 col-sm-1 col-md-1"></div>
         <div class="col-10 col-sm-10 col-md-10">
-            <div class="row">
-                <div class="col-1 col-sm-1 col-md-1"></div>
-                <div class="media col-5 col-sm-5 col-md-5 border" style="margin-left: 10px; margin-right: 10px;">
-                    <img class="mr-3 rounded order-0 col-6 col-sm-6 col-md-6" style="width: 100%; height: 100%;"
-                         src="~/UploadImage/ngheancity.jpg">
-                    <div class="media-body col-4 col-sm-4 col-md-4">
-                        <h5 class="mt-0 text-info font-italic">NHA TRANG</h5>
-                    </div>
-                </div>
-
-                <div class="media col-5 col-sm-5 col-md-5 border" style="margin-left: 10px; margin-right: 10px;">
-                    <img class="mr-3 rounded order-0 col-6 col-sm-6 col-md-6" style="width: 100%; height: 100%;"
-                         src="~/UploadImage/nhatrangcity.jpg">
-                    <div class="media-body col-4 col-sm-4 col-md-4">
-                        <h5 class="mt-0 text-info font-italic">ĐÀ NẴNG</h5>
-                    </div>
-                </div>
-            </div>
             <div class="row" style="margin-top: 20px;">
-                <div class="col-1 col-sm-1 col-md-1"></div>
-                <div class="media col-5 col-sm-5 col-md-5 border" style="margin-left: 10px; margin-right: 10px;">
-                    <img class="mr-3 rounded order-0 col-6 col-sm-6 col-md-6" style="width: 100%; height: 100%;"
-                         src="~/UploadImage/quangninhcity.jpg">
-                    <div class="media-body col-4 col-sm-4 col-md-4">
-                        <h5 class="mt-0 text-info font-italic">HÀ NỘI</h5>
-                    </div>
+                <div class="col-12 col-sm-12 col-md-12 text-info font-weight-bold font-italic text-center"
+                     style="margin-bottom: 20px; font-size: 30px; margin-top: 40px;">
+                    LỰA CHỌN ĐIỂM ĐẾN PHÙ HỢP
                 </div>
-
-                <div class="media col-5 col-sm-5 col-md-5 border" style="margin-left: 10px; margin-right: 10px;">
-                    <img class="mr-3 rounded order-0 col-6 col-sm-6 col-md-6" style="width: 100%; height: 100%;"
-                         src="~/UploadImage/quangbinhcity.jpg">
-                    <div class="media-body col-4 col-sm-4 col-md-4">
-                        <h5 class="mt-0 text-info font-italic">TP. HỒ CHÍ MINH</h5>
-                    </div>
+                <div class="card-deck">
+                    @{
+                        foreach (City item in hotCities)
+                        {
+                            <div class="card col-4 col-sm-4 col-md-4 text-info">
+                                <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
+                                     src="~/UploadImage/@(item.Pictures)" alt="">
+                                <div class="card-body row">
+                                    <h5 class="card-title col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@item.Name" data-placement="top" style="width:50px;">@item.Name</h5>
+                                    <p class="card-text col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@item.TitleIntroduct" data-placement="top" style="width:50px;">@item.ContentIntroduct</p>
+                                    <div class="col-12 col-sm-12 col-md-12 row">
+                                        <a asp-area="Customer" asp-controller="CityCustomer" asp-action="CityDetail" asp-route-itemId="@item.Id" asp-route-page="1" class="btn btn-primary">Xem Thành Phố</a>
+                                        <div class="col-6 col-sm-6 col-md-6 d-flex-icon">@item.NumberOfEvaluate<i class="fa fa-comment" style="color: deepskyblue"></i> @item.MediumStar.ToString("N2")<i class="fa fa-star" style="color: deepskyblue"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>
     </div>
+
 </body>
 <script>
     //$(document).ready(function () {

@@ -15,5 +15,6 @@ namespace VietTravelClient.Models
 		public TourPackage TourPackage { get; set; }
 		public User User { get; set; }
 		public int IsDelete { get; set; } // 1 là đã xóa, 0 là chưa xóa
+		public int Status { get; set; } //1 la chua thanh toan, 2 la da thanh toan - chua hoan thanh tour, 3 la da hoan thanh tou
 	}
 }

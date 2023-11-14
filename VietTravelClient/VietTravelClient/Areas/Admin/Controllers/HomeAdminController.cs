@@ -104,14 +104,14 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
-                    return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin" })
+                    return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin", status = "UpdatePasswordSuccess" })
 ;
                 }
-                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
+                return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin", status = "UpdatePasswordFaild" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
+                return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin", status = "UpdatePasswordFaild" });
             }
         }
 
@@ -132,14 +132,14 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
                     ViewData["UsernameAccount"] = usernameAccount;
-                    return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin" })
+                    return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin", status = "UpdateInfoSuccess" })
 ;
                 }
-                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
+                return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin", status = "UpdateInfoFaild" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
+                return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin", status = "UpdateInfoFaild" });
             }
         }
 

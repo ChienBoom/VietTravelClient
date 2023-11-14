@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Lịch sử đặt Tour";
+    ViewData["Title"] = "Quản lý chuyển đổi trạng thái đặt Tour người dùng";
     List<Ticket> tickets = (List<Ticket>)ViewData["Tickets"];
     string status = (string)ViewData["Status"];
 }
@@ -14,14 +14,23 @@
 <body>
     <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
         <div class="col-10">
-            <div class="text-info font-italic" style="font-size:30px; margin-left: 100px;">DANH SÁCH TOUR ĐÃ ĐẶT</div>
+            <div class="text-info font-italic" style="font-size:30px; margin-left: 100px;">DANH SÁCH TOUR ĐƯỢC ĐẶT</div>
         </div>
     </div>
     <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
-        <div class="col-3 col-sm-3 col-md-3"></div>
-            <a asp-area="Customer" asp-controller="HomeCustomer" asp-action="History" asp-route-status="0" asp-route-ticketStatus="1" class="btn-info col-2 col-sm-2 col-md-2 rounded border-info text-center" style="height: 60px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">Chờ thanh toán</a>
-            <a asp-area="Customer" asp-controller="HomeCustomer" asp-action="History" asp-route-status="0" asp-route-ticketStatus="2" class="btn-info col-2 col-sm-2 col-md-2 rounded border-info text-center" style="height: 60px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">Đã thanh toán - Chưa hoàn thành Tour</a>
-            <a asp-area="Customer" asp-controller="HomeCustomer" asp-action="History" asp-route-status="0" asp-route-ticketStatus="3" class="btn-info col-2 col-sm-2 col-md-2 rounded border-info text-center" style="height: 60px; display: flex; align-items: center; justify-content: center;">Đã thanh toán - Hoàn thành Tour</a>
+        <form asp-area="Admin" asp-controller="TicketAdmin" asp-action="SearchTicketCustomer" class="col-12 col-sm-12 col-md-12 row" method="post" enctype="multipart/form-data">
+            <div class="col-1 col-sm-1 col-md-1"></div>
+            <div class="col-3 col-sm-3 col-md-3">
+                <input class="col-10 col-sm-10 col-md-10 rounded border-info text-center" style="height: 50px;" placeholder="Nhập tên khách hàng" id="CusName" name="CusName"/>
+            </div>
+            <div class="col-3 col-sm-3 col-md-3">
+                <input class="col-10 col-sm-10 col-md-10 rounded border-info text-center" style="height: 50px;" placeholder="Nhập email khách hàng" id="CusEmail" name="CusEmail"/>
+            </div>
+            <div class="col-3 col-sm-3 col-md-3">
+                <input class="col-10 col-sm-10 col-md-10 rounded border-info text-center" style="height: 50px;" placeholder="Nhập tour"  id="TourName" name="TourName"/>
+            </div>
+            <button type="submit" class="btn-info rounded border-info" style="height: 50px; width: 150px; ">Tìm kiếm</button>
+        </form>
     </div>
     <div class="row">
         @*Status*@
@@ -33,37 +42,39 @@
         <table class="col-10 col-sm-10 col-md-10 border" style="border: 1px; border-color: black;">
             <tr class="">
                 <th style="width : 5%" class="text-center bg-info text-light border">STT</th>
-                <th style="width : 20%" class="text-center bg-info text-light border">Tên Tour</th>
-                <th style="width : 20%" class="text-center bg-info text-light border">Ngày đặt Tour</th>
-                <th style="width : 20%" class="text-center bg-info text-light border">Giá Tour</th>
-                <th style="width : 30%" class="text-center bg-info text-light border">Trạng thái</th>
-                <th style="width : 10%" class="text-center bg-info text-light border"></th>
+                <th style="width : 14%" class="text-center bg-info text-light border">Tên User đặt Tour</th>
+                <th style="width : 14%" class="text-center bg-info text-light border">Email đặt Tour</th>
+                <th style="width : 18%" class="text-center bg-info text-light border">Ngày đặt Tour</th>
+                <th style="width : 14%" class="text-center bg-info text-light border">Giá Tour</th>
+                <th style="width : 15%" class="text-center bg-info text-light border">Trạng thái</th>
+                <th style="width : 20%" class="text-center bg-info text-light border"></th>
             </tr>
             @{
                 for (int i = 0; i < tickets.Count; i++)
                 {
                     Ticket item = tickets[i];
-                        <tr>
-                            <td class="text-center border">@(i + 1)</td>
-                            <td class="text-center border">@item.TourPackage.Tour.Name</td>
-                            <td class="text-center border">@item.BookingDate</td>
-                            <td class="text-center border">@item.TourPackage.LastPrice.ToString("N2")</td>
-                            @{
-                                switch (item.Status)
-                                {
-                                    case 1:
-                                        <td class="text-center border">Chưa thanh toán</td>
-                                        break;
-                                    case 2:
-                                        <td class="text-center border">Đã thanh toán - chưa hoàn thành Tour</td>
-                                        break;
-                                    case 3:
-                                        <td class="text-center border">Đã thanh toán - Hoàn thành Tour</td>
-                                        break;
-                                }
+                    <tr>
+                        <td class="text-center border">@(i + 1)</td>
+                        <td class="text-center border">@item.User.Name</td>
+                        <td class="text-center border">@item.User.Email</td>
+                        <td class="text-center border">@item.BookingDate</td>
+                        <td class="text-center border">@item.TourPackage.LastPrice.ToString("N2")</td>
+                        @{
+                            switch (item.Status)
+                            {
+                                case 1:
+                                    <td class="text-center border">Chưa thanh toán</td>
+                                    break;
+                                case 2:
+                                    <td class="text-center border">Đã thanh toán - chưa hoàn thành Tour</td>
+                                    break;
+                                case 3:
+                                    <td class="text-center border">Đã thanh toán - Hoàn thành Tour</td>
+                                    break;
                             }
-                            <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#TicketDetail@(item.Id)">Xem</button></td>
-                        </tr>
+                        }
+                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#TicketDetail@(item.Id)">Xem</button><button class="btn btn-info" style="margin-left: 5px;" data-toggle="modal" data-target="#ChangeStatus@(item.Id)">Chuyển trạng thái</button></td>
+                    </tr>
 
                     <div id="TicketDetail@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
@@ -106,23 +117,43 @@
                                                 <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Restaurant" name="Restaurant" value="@item.TourPackage.Restaurant.Name" disabled>
                                             </div>
                                         </div>
-                                        @{
-                                            string lstScheduleName = "";
-                                            foreach (Schedule schedule in item.TourPackage.ScheduleTourPackages)
-                                            {
-                                                lstScheduleName += schedule.Title + " - ";
-                                            }
-                                    lstScheduleName = lstScheduleName.Substring(0, lstScheduleName.Length - 3);
-                                            <div class="col-12 col-sm-12 col-md-12 row">
-                                                <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
-                                                    <label for="Hotel" class="text-info font-italic">Lịch trình</label>
-                                                    <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="LstSchedule" name="LstSchedule" value="@lstScheduleName" disabled>
-                                                </div>
-                                            </div>
-                                        }
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-info" data-dismiss="modal">Thoát</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="ChangeStatus@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content" style="padding-left: 40px;">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-info">THÔNG BÁO</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form asp-area="Admin" asp-controller="TicketAdmin" asp-action="ChangeTicketStatus" method="post">
+                                    <div class="modal-body row">
+                                        <div class="col-12 col-sm-12 col-md-12 row" hidden>
+                                            <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="ticketId" name="ticketId" value="@item.Id">
+                                        </div>
+                                        BẠN CHẮC CHẮN MUỐN CHUYỂN TRẠNG THÁI CHO TOUR NÀY?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">Hủy bỏ</button>
+                                        @{
+                                            if (item.Status != 1)
+                                            {
+                                                <button type="submit" class="btn btn-primary" disabled>Đồng ý</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit" class="btn btn-primary">Đồng ý</button>
+                                            }
+                                        }
                                     </div>
                                 </form>
                             </div>
