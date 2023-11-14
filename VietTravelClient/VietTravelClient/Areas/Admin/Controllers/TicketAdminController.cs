@@ -75,6 +75,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     List<Ticket> tickets = JsonConvert.DeserializeObject<List<Ticket>>(response.Data);
                     ViewData["Tickets"] = tickets;
+                    ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
                 return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });

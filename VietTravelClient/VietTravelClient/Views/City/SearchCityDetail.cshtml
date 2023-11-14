@@ -111,7 +111,7 @@
                                     <p class="card-text col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@tour.ContentIntroduct" data-placement="top">@tour.ContentIntroduct</p>
                                     <div class="col-12 col-sm-12 col-md-12 row">
                                         <a asp-controller="Tour" asp-action="TourDetail" asp-route-itemId="@tour.Id" class="btn btn-primary col-8 col-sm-8 col-md-8">Xem Tour</a>
-                                        <div class="col-4 col-sm-4 col-md-4 d-flex-icon">@tour.NumberOfEvaluate<i class="fa fa-comment" style="color: deepskyblue"></i> @tour.MediumStar<i class="fa fa-star" style="color: deepskyblue"></i></div>
+                                        <div class="col-4 col-sm-4 col-md-4 d-flex-icon">@tour.NumberOfEvaluate<i class="fa fa-comment" style="color: deepskyblue"></i> @tour.MediumStar.ToString("N2")<i class="fa fa-star" style="color: deepskyblue"></i></div>
                                     </div>
                                 </div>
                             </div>

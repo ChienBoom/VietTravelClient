@@ -83,7 +83,7 @@
                                             <p class="card-text col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@item.TitleIntroduct" data-placement="top" style="width:50px;">@item.ContentIntroduct</p>
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <a asp-controller="Hotel" asp-action="HotelDetail" asp-route-itemId="@item.Id" asp-route-page="1" class="btn btn-primary">Xem Khách sạn</a>
-                                                <div class="col-4 col-sm-4 col-md-4 d-flex-icon">@item.NumberOfEvaluate<i class="fa fa-comment" style="color: deepskyblue"></i> @item.MediumStar<i class="fa fa-star" style="color: deepskyblue"></i></div>
+                                                <div class="col-4 col-sm-4 col-md-4 d-flex-icon">@item.NumberOfEvaluate<i class="fa fa-comment" style="color: deepskyblue"></i> @item.MediumStar.ToString("N2")<i class="fa fa-star" style="color: deepskyblue"></i></div>
                                             </div>
                                         </div>
                                     </div>

@@ -160,6 +160,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 value.Pictures = "File null";
             }
             else value.Pictures = _uploadFile.SaveFile(file).Message;
+            value.UniCodeName = value.Name.Unidecode();
             try
             {
                 value.Description = "";

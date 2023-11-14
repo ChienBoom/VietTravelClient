@@ -174,7 +174,6 @@ namespace VietTravelClient.Areas.Customer.Controllers
         {
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            //if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("CityManager");
             string url = domainServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
             string urlTotalPage = domainServer + "city/search/totalPage/" + searchValue.Unidecode();
             try

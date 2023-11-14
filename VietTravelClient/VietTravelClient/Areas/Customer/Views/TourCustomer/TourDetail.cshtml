@@ -329,9 +329,12 @@
                         <img class="card-img" style="width: 80%; height: 60%; margin-left: 10%;"
                              src="~/UploadImage/@(item.Pictures)" alt="">
                         <div class="card-body">
-                            <h5 class="card-subtitle">@item.Name</h5>
-                            <p class="card-text">@item.TitleIntroduct</p>
-                            <a href="#" class="btn btn-primary">Xem Tour</a>
+                            <h5 class="card-title col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@tour.Name" data-placement="top">@tour.Name</h5>
+                            <p class="card-text col-12 col-sm-12 col-md-12 text-truncate" data-toggle="tooltip" title="@tour.ContentIntroduct" data-placement="top">@tour.ContentIntroduct</p>
+                            <div class="col-12 col-sm-12 col-md-12 row">
+                                <a asp-area="Customer" asp-controller="TourCustomer" asp-action="TourDetail" asp-route-itemId="@tour.Id" class="btn btn-primary col-8 col-sm-8 col-md-8">Xem Tour</a>
+                                <div class="col-4 col-sm-4 col-md-4 d-flex-icon">@tour.NumberOfEvaluate<i class="fa fa-comment" style="color: deepskyblue"></i> @tour.MediumStar.ToString("N2")<i class="fa fa-star" style="color: deepskyblue"></i></div>
+                            </div>
                         </div>
                     </div>
                 }
