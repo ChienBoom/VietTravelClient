@@ -20,14 +20,16 @@ namespace VietTravelClient.Areas.Customer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
+        private readonly UploadFile _uploadFile;
         private readonly string domainServer;
 
-        public HomeCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
+        public HomeCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            _uploadFile = uploadFile;
         }
 
         [HttpGet]
@@ -177,6 +179,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 value.Username = "notnull";
                 value.Password = "notnull";
                 value.Role = "Customer";
+                value.Picture = "File null";
                 ResponseData responseData = await _callApi.PutApi(url, JsonConvert.SerializeObject(value));
                 if (responseData.Success)
                 {
@@ -302,6 +305,35 @@ namespace VietTravelClient.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        [HttpPost]
+        [Route("updatePictureUser")]
+        public async Task<IActionResult> UpdatePictureUser(IFormFile file, User value)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
+            value.Picture = _uploadFile.SaveFile(file).Message;
+            string url = domainServer + "user/" + value.Id.ToString();
+            try
+            {
+                value.Username = "notnull";
+                value.Password = "notnull";
+                value.Role = "Customer";
+                ResponseData response = await _callApi.PutApi(url, JsonConvert.SerializeObject(value));
+                if (response.Success)
+                {
+                    ViewData["User"] = JsonConvert.DeserializeObject<User>(response.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    return RedirectToAction("AccountManager", new { area = "Customer", controller = "HomeCustomer", status = "UpdateInfoSuccess" });
+                }
+                else return RedirectToAction("AccountManager", new { area = "Customer", controller = "HomeCustomer", status = "UpdateInfoFaild" });
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("AccountManager", new { area = "Customer", controller = "HomeCustomer", status = "UpdateInfoFaild" });
             }
         }
 

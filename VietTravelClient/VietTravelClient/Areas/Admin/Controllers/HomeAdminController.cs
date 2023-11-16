@@ -19,15 +19,17 @@ namespace VietTravelClient.Areas.Admin.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly CallApi _callApi;
+        private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
 
-        public HomeAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
+        public HomeAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
             _logger = logger;
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            _uploadFile = uploadFile;
         }
 
         [HttpGet]
@@ -156,6 +158,35 @@ namespace VietTravelClient.Areas.Admin.Controllers
         public IActionResult Error()
         {
             return View();
+        }
+
+        [HttpPost]
+        [Route("updatePictureUser")]
+        public async Task<IActionResult> UpdatePictureUser(IFormFile file, User value)
+        {
+            if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
+            string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
+            if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
+            value.Picture = _uploadFile.SaveFile(file).Message;
+            string url = domainServer + "user/" + value.Id.ToString();
+            try
+            {
+                value.Username = "notnull";
+                value.Password = "notnull";
+                value.Role = "Admin";
+                ResponseData response = await _callApi.PutApi(url, JsonConvert.SerializeObject(value));
+                if (response.Success)
+                {
+                    ViewData["User"] = JsonConvert.DeserializeObject<User>(response.Data);
+                    ViewData["UsernameAccount"] = usernameAccount;
+                    return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin", status = "UpdateInfoSuccess" });
+                }
+                else return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin", status = "UpdateInfoFaild" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("AccountManager", new { area = "Admin", controller = "HomeAdmin", status = "UpdateInfoFaild" });
+            }
         }
 
     }

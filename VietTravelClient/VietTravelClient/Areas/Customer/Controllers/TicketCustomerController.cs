@@ -107,6 +107,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ticket.UserId = user.Id;
                     ticket.TourPackageId = tourPackage.Id;
                     ticket.BookingDate = DateTime.Now;
+                    ticket.Status = 1;
                     string urlTicket = domainServer + "ticket";
                     string stringTicket = JsonConvert.SerializeObject(ticket);
                     ResponseData responseDataTicket = await _callApi.PostApi(urlTicket, stringTicket);
