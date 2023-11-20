@@ -52,15 +52,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ResponseData responseDataTicket = await _callApi.PostApi(urlTicket, stringTicket);
                     if(responseDataTicket.Success)
                     {
-                        return RedirectToAction("History", new {area = "Customer", controller= "HomeCustomer", status = 1, ticketStatus = 1});
+                        return RedirectToAction("History", new {area = "Customer", controller= "HomeCustomer", status = "BookingTourSuccess", ticketStatus = 1});
                     }
-                    return RedirectToAction("TourDetail", new {area = "Customer", controller="TourCustomer", status = 2, ticketStatus = 1});
+                    return RedirectToAction("History", new {area = "Customer", controller="TourCustomer", status = "BookingTourFaild", ticketStatus = 1});
                 }
-                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2, ticketStatus = 1});
+                return RedirectToAction("History", new { area = "Customer", controller = "TourCustomer", status = "BookingTourFaild", ticketStatus = 1});
             }
             catch (Exception ex)
             {
-                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 3, ticketStatus = 1});
+                return RedirectToAction("History", new { area = "Customer", controller = "TourCustomer", status = "ServerError", ticketStatus = 1});
             }
         }
 
@@ -78,19 +78,19 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
                     if (!responseDataSchedule.Success)
                     {
-                        return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2 });
+                        return RedirectToAction("History", new { area = "Customer", controller = "TourCustomer", status = "BookingTourFaild", ticketStatus = 1 });
                     }
                     schedules.Add(JsonConvert.DeserializeObject<Schedule>(responseDataSchedule.Data));
                 }
                 catch (Exception e)
                 {
-                    return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 3 });
+                    return RedirectToAction("History", new { area = "Customer", controller = "TourCustomer", status = "ServerError", ticketStatus = 1 });
                 }
             }
             value.ListScheduleTourPackage = JsonConvert.SerializeObject(schedules);
             value = await CreateTourPackageSingle(value);
 
-            if(value == null) return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2 });
+            if(value == null) return RedirectToAction("History", new { area = "Customer", controller = "TourCustomer", status = "BookingTourFaild", ticketStatus = 1 });
 
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlTourPackage = domainServer + "tourpackage/";
@@ -113,15 +113,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ResponseData responseDataTicket = await _callApi.PostApi(urlTicket, stringTicket);
                     if (responseDataTicket.Success)
                     {
-                        return RedirectToAction("History", new { area = "Customer", controller = "HomeCustomer", status = 1, ticketStatus =1});
+                        return RedirectToAction("History", new { area = "Customer", controller = "HomeCustomer", status = "BookingTourSuccess", ticketStatus =1});
                     }
-                    return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2, ticketStatus = 1 });
+                    return RedirectToAction("History", new { area = "Customer", controller = "TourCustomer", status = "BookingTourFaild", ticketStatus = 1 });
                 }
-                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 2, ticketStatus = 1 });
+                return RedirectToAction("History", new { area = "Customer", controller = "TourCustomer", status = "BookingTourFaild", ticketStatus = 1 });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("TourDetail", new { area = "Customer", controller = "TourCustomer", status = 3, ticketStatus = 1 });
+                return RedirectToAction("History", new { area = "Customer", controller = "TourCustomer", status = "ServerError", ticketStatus = 1 });
             }
         }
 
@@ -174,6 +174,26 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 result += chars[index];
             }
             return result;
+        }
+
+        [HttpPost]
+        [Route("deleteTicket")]
+        public async Task<IActionResult> DeleteTicket(string Id)
+        {
+            string url = domainServer + "ticket/" + Id;
+            try
+            {
+                ResponseData response = await _callApi.DeleteApi(url);
+                if (response.Success)
+                {
+                    return RedirectToAction("History", new { area = "Customer", controller = "HomeCustomer", status = "DeleteTourSuccess", ticketStatus = 1 });
+                }
+                else return RedirectToAction("History", new { area = "Customer", controller = "HomeCustomer", status = "DeleteTourFaild", ticketStatus = 1 });
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction("History", new { area = "Customer", controller = "HomeCustomer", status = "ServerError", ticketStatus = 1 });
+            }
         }
 
     }

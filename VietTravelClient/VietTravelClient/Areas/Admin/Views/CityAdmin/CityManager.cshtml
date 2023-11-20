@@ -215,6 +215,10 @@
                 $('#StatusMessage').text("XÓA THÀNH PHỐ THẤT BẠI")
                 $('#StatusModal').modal('show');
                 break;
+            case "ServerError":
+                $('#StatusMessage').text("LỖI SERVER")
+                $('#StatusModal').modal('show');
+                break;
         }
     });
     function Validation() {

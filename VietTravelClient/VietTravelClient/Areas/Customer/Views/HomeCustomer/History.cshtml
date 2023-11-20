@@ -35,35 +35,35 @@
                 <th style="width : 5%" class="text-center bg-info text-light border">STT</th>
                 <th style="width : 20%" class="text-center bg-info text-light border">Tên Tour</th>
                 <th style="width : 20%" class="text-center bg-info text-light border">Ngày đặt Tour</th>
-                <th style="width : 20%" class="text-center bg-info text-light border">Giá Tour</th>
-                <th style="width : 30%" class="text-center bg-info text-light border">Trạng thái</th>
-                <th style="width : 10%" class="text-center bg-info text-light border"></th>
+                <th style="width : 15%" class="text-center bg-info text-light border">Giá Tour</th>
+                <th style="width : 25%" class="text-center bg-info text-light border">Trạng thái</th>
+                <th style="width : 20%" class="text-center bg-info text-light border"></th>
             </tr>
             @{
                 for (int i = 0; i < tickets.Count; i++)
                 {
                     Ticket item = tickets[i];
-                        <tr>
-                            <td class="text-center border">@(i + 1)</td>
-                            <td class="text-center border">@item.TourPackage.Tour.Name</td>
-                            <td class="text-center border">@item.BookingDate</td>
-                            <td class="text-center border">@item.TourPackage.LastPrice.ToString("N2")</td>
-                            @{
-                                switch (item.Status)
-                                {
-                                    case 1:
-                                        <td class="text-center border">Chưa thanh toán</td>
-                                        break;
-                                    case 2:
-                                        <td class="text-center border">Đã thanh toán - chưa hoàn thành Tour</td>
-                                        break;
-                                    case 3:
-                                        <td class="text-center border">Đã thanh toán - Hoàn thành Tour</td>
-                                        break;
-                                }
+                    <tr>
+                        <td class="text-center border">@(i + 1)</td>
+                        <td class="text-center border">@item.TourPackage.Tour.Name</td>
+                        <td class="text-center border">@item.BookingDate</td>
+                        <td class="text-center border">@item.TourPackage.LastPrice.ToString("N2")</td>
+                        @{
+                            switch (item.Status)
+                            {
+                                case 1:
+                                    <td class="text-center border">Chưa thanh toán</td>
+                                    break;
+                                case 2:
+                                    <td class="text-center border">Đã thanh toán - chưa hoàn thành Tour</td>
+                                    break;
+                                case 3:
+                                    <td class="text-center border">Đã thanh toán - Hoàn thành Tour</td>
+                                    break;
                             }
-                            <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#TicketDetail@(item.Id)">Xem</button></td>
-                        </tr>
+                        }
+                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#TicketDetail@(item.Id)">Xem</button><button class="btn btn-info" data-toggle="modal" data-target="#DeleteTicket@(item.Id)">Hủy Tour</button></td>
+                    </tr>
 
                     <div id="TicketDetail@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
@@ -112,7 +112,7 @@
                                             {
                                                 lstScheduleName += schedule.Title + " - ";
                                             }
-                                    lstScheduleName = lstScheduleName.Substring(0, lstScheduleName.Length - 3);
+                                            lstScheduleName = lstScheduleName.Substring(0, lstScheduleName.Length - 3);
                                             <div class="col-12 col-sm-12 col-md-12 row">
                                                 <div class="col-12 col-sm-12 col-md-12 row" style="padding-right: 20px;">
                                                     <label for="Hotel" class="text-info font-italic">Lịch trình</label>
@@ -122,12 +122,40 @@
                                         }
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-info" data-dismiss="modal">Thoát</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
+
+                    <div id="DeleteTicket@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content" style="padding-left: 40px;">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form asp-area="Customer" asp-controller="TicketCustomer" asp-action="DeleteTicket" method="post">
+                                    <div class="modal-body row">
+                                        <div class="col-12 col-sm-12 col-md-12 row">
+                                            <p>BẠN CHẮC CHẮN MUỐN HỦY TOUR NÀY?</p>
+                                            <div class="col-6 col-sm-6 col-md-6 row" style="padding-left: 20px;">
+                                                <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Id" name="Id" value="@item.Id" hidden>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">Hủy</button>
+                                        <button type="submit" class="btn btn-primary">Đồng ý</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 }
             }
         </table>
@@ -177,13 +205,28 @@
 </body>
 <script>
     $(document).ready(function () {
-                                    var status = $("#Status").val();
-                                    if (status == 1) {
-            $('#StatusMessage').text("ĐẶT TOUR THÀNH CÔNG")
-                                        $('#StatusModal').modal('show');
-                                    } else if (messageValue == 2) {
-            $('#StatusMessage').text("ĐẶT TOUR THẤT BẠI")
-                                        $('#StatusModal').modal('show');
-                                    }
-                                });
+        var status = $("#Status").val();
+        switch (status) {
+            case "BookingTourSuccess":
+                $('#StatusMessage').text("ĐẶT TOUR THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "BookingTourFaild":
+                $('#StatusMessage').text("ĐẶT TOUR THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+            case "DeleteTourSuccess":
+                $('#StatusMessage').text("HUỶ TOUR THÀNH CÔNG")
+                $('#StatusModal').modal('show');
+                break;
+            case "DeleteTourFaild":
+                $('#StatusMessage').text("HUỶ TOUR THẤT BẠI")
+                $('#StatusModal').modal('show');
+                break;
+            case "ServerError":
+                $('#StatusMessage').text("LỖI SERVER")
+                $('#StatusModal').modal('show');
+                break;
+        }
+    });
 </script>
