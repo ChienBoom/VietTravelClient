@@ -18,10 +18,11 @@
         </div>
     </div>
     <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
-        <div class="col-3 col-sm-3 col-md-3"></div>
-            <a asp-area="Customer" asp-controller="HomeCustomer" asp-action="History" asp-route-status="0" asp-route-ticketStatus="1" class="btn-info col-2 col-sm-2 col-md-2 rounded border-info text-center" style="height: 60px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">Chờ thanh toán</a>
-            <a asp-area="Customer" asp-controller="HomeCustomer" asp-action="History" asp-route-status="0" asp-route-ticketStatus="2" class="btn-info col-2 col-sm-2 col-md-2 rounded border-info text-center" style="height: 60px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">Đã thanh toán - Chưa hoàn thành Tour</a>
-            <a asp-area="Customer" asp-controller="HomeCustomer" asp-action="History" asp-route-status="0" asp-route-ticketStatus="3" class="btn-info col-2 col-sm-2 col-md-2 rounded border-info text-center" style="height: 60px; display: flex; align-items: center; justify-content: center;">Đã thanh toán - Hoàn thành Tour</a>
+        <div class="col-2 col-sm-2 col-md-2"></div>
+        <a asp-area="Customer" asp-controller="HomeCustomer" asp-action="History" asp-route-status="0" asp-route-ticketStatus="1" class="btn-info col-2 col-sm-2 col-md-2 rounded border-info text-center" style="height: 60px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">Chờ thanh toán</a>
+        <a asp-area="Customer" asp-controller="HomeCustomer" asp-action="History" asp-route-status="0" asp-route-ticketStatus="2" class="btn-info col-2 col-sm-2 col-md-2 rounded border-info text-center" style="height: 60px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">Đã thanh toán - Chưa hoàn thành Tour</a>
+        <a asp-area="Customer" asp-controller="HomeCustomer" asp-action="History" asp-route-status="0" asp-route-ticketStatus="3" class="btn-info col-2 col-sm-2 col-md-2 rounded border-info text-center" style="height: 60px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">Đã thanh toán - Hoàn thành Tour</a>
+        <a asp-area="Customer" asp-controller="HomeCustomer" asp-action="History" asp-route-status="0" asp-route-ticketStatus="4" class="btn-info col-2 col-sm-2 col-md-2 rounded border-info text-center" style="height: 60px; display: flex; align-items: center; justify-content: center;">Chưa thanh toán - Đã quá hạn</a>
     </div>
     <div class="row">
         @*Status*@
@@ -43,27 +44,34 @@
                 for (int i = 0; i < tickets.Count; i++)
                 {
                     Ticket item = tickets[i];
-                    <tr>
-                        <td class="text-center border">@(i + 1)</td>
-                        <td class="text-center border">@item.TourPackage.Tour.Name</td>
-                        <td class="text-center border">@item.BookingDate</td>
-                        <td class="text-center border">@item.TourPackage.LastPrice.ToString("N2")</td>
-                        @{
-                            switch (item.Status)
-                            {
-                                case 1:
-                                    <td class="text-center border">Chưa thanh toán</td>
-                                    break;
-                                case 2:
-                                    <td class="text-center border">Đã thanh toán - chưa hoàn thành Tour</td>
-                                    break;
-                                case 3:
-                                    <td class="text-center border">Đã thanh toán - Hoàn thành Tour</td>
-                                    break;
+                        <tr>
+                            <td class="text-center border">@(i + 1)</td>
+                            <td class="text-center border">@item.TourPackage.Tour.Name</td>
+                            <td class="text-center border">@item.BookingDate</td>
+                            <td class="text-center border">@item.TourPackage.LastPrice.ToString("N2")</td>
+                            @{
+                                switch (item.Status)
+                                {
+                                    case 1:
+                                        <td class="text-center border">Chưa thanh toán</td>
+                                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" style="margin-right: 2px;" data-target="#TicketDetail@(item.Id)">Xem</button><button class="btn btn-info" style="margin-right: 2px;" data-toggle="modal" data-target="#DeleteTicket@(item.Id)">Hủy Tour</button><button class="btn btn-info" data-toggle="modal" data-target="#Pay@(item.Id)">Thanh toán</button></td>
+                                        break;
+                                    case 2:
+                                        <td class="text-center border">Đã thanh toán - chưa hoàn thành Tour</td>
+                                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" style="margin-right: 2px;" data-target="#TicketDetail@(item.Id)">Xem</button><button class="btn btn-info" style="margin-right: 2px;" data-toggle="modal" data-target="#DeleteTicket@(item.Id)" disabled>Hủy Tour</button><button class="btn btn-info" data-toggle="modal" data-target="#Pay@(item.Id)" disabled>Thanh toán</button></td>
+                                        break;
+                                    case 3:
+                                        <td class="text-center border">Đã thanh toán - Hoàn thành Tour</td>
+                                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" style="margin-right: 2px;" data-target="#TicketDetail@(item.Id)">Xem</button><button class="btn btn-info" style="margin-right: 2px;" data-toggle="modal" data-target="#DeleteTicket@(item.Id)" disabled>Hủy Tour</button><button class="btn btn-info" data-toggle="modal" data-target="#Pay@(item.Id)" disabled>Thanh toán</button></td>
+                                        break;
+                                    case 4:
+                                        <td class="text-center border">Chưa thanh toán - Đã quá hạn</td>
+                                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" style="margin-right: 2px;" data-target="#TicketDetail@(item.Id)">Xem</button><button class="btn btn-info" style="margin-right: 2px;" data-toggle="modal" data-target="#DeleteTicket@(item.Id)" disabled>Hủy Tour</button><button class="btn btn-info" data-toggle="modal" data-target="#Pay@(item.Id)" disabled>Thanh toán</button></td>
+                                        break;
+                                }
                             }
-                        }
-                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" style="margin-right: 2px;" data-target="#TicketDetail@(item.Id)">Xem</button><button class="btn btn-info" style="margin-right: 2px;" data-toggle="modal" data-target="#DeleteTicket@(item.Id)">Hủy Tour</button><button class="btn btn-info" data-toggle="modal" data-target="#Pay@(item.Id)">Thanh toán</button></td>
-                    </tr>
+
+                        </tr>
 
                     <div id="TicketDetail@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">

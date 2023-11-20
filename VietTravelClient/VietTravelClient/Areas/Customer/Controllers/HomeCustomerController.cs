@@ -77,11 +77,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlUser = domainServer + "user/searchUserByUsername/" + usernameAccount;
+            string urlTicketOutOfDate = domainServer + "ticket/ticketOutOfDate";
             try
             {
                 ResponseData responseData = new ResponseData();
                 responseData = await _callApi.GetApi(urlUser);
-                if (responseData.Success)
+                ResponseData responseDataTicketOOD = await _callApi.GetApi(urlTicketOutOfDate);
+                if (responseData.Success && responseDataTicketOOD.Success)
                 {
                     User user = JsonConvert.DeserializeObject<User>(responseData.Data);
                     string url = domainServer + "ticket/getTicketByUserId/" + user.Id;
