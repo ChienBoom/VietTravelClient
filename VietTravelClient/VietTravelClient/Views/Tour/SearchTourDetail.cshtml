@@ -301,48 +301,54 @@
 
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 text-info font-italic text-center"
-             style="margin-bottom: 20px; font-size: 30px; margin-top: 40px;">
-            CÁC SỰ KIỆN + DỊCH VỤ
+             style="margin-bottom: 20px; font-size: 40px; margin-top: 40px;">
+            ĐIỂM THAM QUAN VÀ SỰ KIỆN
         </div>
         <div class="col-12 col-sm-12 col-md-12 row">
             <div class="col-1 col-sm-1 col-md-1"></div>
             <div class="col-10 col-sm-10 col-md-10 row">
-                <div class="col-6 col-sm-6 col-md-6 row">
+                <div class="col-12 col-sm-12 col-md-12 row">
+                    <p class=" col-12 col-sm-12 col-md-12 text-info font-weight-bold text-center" style="font-size: 30px; margin-top: 50px;">NHỮNG ĐIỂM THAM QUAN NỔI BẬT</p>
                     @{
                         foreach (Schedule item in schedules)
                         {
-                            <p class="mr-3 col-12 col-sm-12 col-md-12 text-info font-weight-bold" style="font-size: 30px;">@item.Title</p>
-                            if (@item.TicketEnable == 1)
-                            {
-                                <p class="mr-3 col-12 col-sm-12 col-md-12" style="font-size: 20px;">Gía vé: @item.PriceTicketAdult.ToString("N2") VND/người lớn  - @item.PriceTicketKid.ToString("N2") VND/trẻ em</p>
-                            }
-                            else
-                            {
-                                <p class="mr-3 col-12 col-sm-12 col-md-12" style="font-size: 20px;">Gía vé: Không mất vé</p>
-                            }
-                            <div class="col-12 col-sm-12 col-md-12 row">
-                                <div class="mr-3 col-12 col-sm-12 col-md-12 text-truncate font-italic text-info" data-toggle="tooltip" title="@item.Content" data-placement="top" style="font-size: 20px;">Chi tiết</div>
-                                <div class="mr-3 col-12 col-sm-12 col-md-12">
-                                    <img src="~/UploadImage/@(item.Pictures)" style="height: 400px; width: 100%;">
+                            <div class="col-6 col-sm-6 col-md-6 row">
+                                <p class=" col-12 col-sm-12 col-md-12 text-info font-weight-bold" style="font-size: 25px;">@item.Title</p>
+                                @{
+                                    if (@item.TicketEnable == 1)
+                                    {
+                                        <p class="col-12 col-sm-12 col-md-12" style="font-size: 20px;">Gía vé: @item.PriceTicketAdult.ToString("N2") VND/người lớn  - @item.PriceTicketKid.ToString("N2") VND/trẻ em</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="col-12 col-sm-12 col-md-12" style="font-size: 20px;">Gía vé: Không mất vé</p>
+                                    }
+                                }
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <div class="col-12 col-sm-12 col-md-12 text-truncate font-italic text-info" data-toggle="tooltip" title="@item.Content" data-placement="top" style="font-size: 20px;">Chi tiết</div>
+                                    <div class="col-12 col-sm-12 col-md-12">
+                                        <img src="~/UploadImage/@(item.Pictures)" style="height: 400px; width: 100%;">
+                                    </div>
                                 </div>
                             </div>
-
                         }
                     }
                 </div>
-                <div class="col-6 col-sm-6 col-md-6 row">
+                <div class="col-12 col-sm-12 col-md-12 row">
+                    <p class=" col-12 col-sm-12 col-md-12 text-info font-weight-bold text-center" style="font-size: 30px; margin-top: 50px;">NHỮNG SỰ KIỆN ĐÁNG CHÚ Ý</p>
                     @{
                         foreach (Event item in events)
                         {
-                            <p class="mr-3 col-12 col-sm-12 col-md-12 text-info font-weight-bold" style="font-size: 30px;">@item.Title</p>
-                            <p class="mr-3 col-12 col-sm-12 col-md-12" style="font-size: 25px;">@item.StartTime - @item.EndTime</p>
-                            <div class="col-12 col-sm-12 col-md-12 row">
-                                <div class="mr-3 col-12 col-sm-12 col-md-12 text-truncate font-italic text-info" data-toggle="tooltip" title="@item.Content" style="font-size: 20px;">chi tiết</div>
-                                <div class="mr-3 col-12 col-sm-12 col-md-12">
-                                    <img src="~/UploadImage/@(item.Pictures)" style="height: 400px; width: 100%;">
+                            <div class="col-6 col-sm-6 col-md-6 row">
+                                <p class="col-12 col-sm-12 col-md-12 text-info font-weight-bold" style="font-size: 25px;">@item.Title</p>
+                                <p class="col-12 col-sm-12 col-md-12" style="font-size: 25px;">@item.StartTime - @item.EndTime</p>
+                                <div class="col-12 col-sm-12 col-md-12 row">
+                                    <div class="col-12 col-sm-12 col-md-12 text-truncate font-italic text-info" data-toggle="tooltip" title="@item.Content" style="font-size: 20px;">chi tiết</div>
+                                    <div class="col-12 col-sm-12 col-md-12">
+                                        <img src="~/UploadImage/@(item.Pictures)" style="height: 400px; width: 100%;">
+                                    </div>
                                 </div>
                             </div>
-
                         }
                     }
                 </div>
