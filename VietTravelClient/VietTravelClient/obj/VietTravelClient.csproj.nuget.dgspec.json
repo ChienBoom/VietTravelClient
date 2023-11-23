@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MyProject\\VietTravelClientDev\\VietTravelClient\\VietTravelClient\\VietTravelClient.csproj": {}
+    "D:\\MyProject\\VietTravelClientNewDb\\VietTravelClient\\VietTravelClient\\VietTravelClient.csproj": {}
   },
   "projects": {
-    "D:\\MyProject\\VietTravelClientDev\\VietTravelClient\\VietTravelClient\\VietTravelClient.csproj": {
+    "D:\\MyProject\\VietTravelClientNewDb\\VietTravelClient\\VietTravelClient\\VietTravelClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProject\\VietTravelClientDev\\VietTravelClient\\VietTravelClient\\VietTravelClient.csproj",
+        "projectUniqueName": "D:\\MyProject\\VietTravelClientNewDb\\VietTravelClient\\VietTravelClient\\VietTravelClient.csproj",
         "projectName": "VietTravelClient",
-        "projectPath": "D:\\MyProject\\VietTravelClientDev\\VietTravelClient\\VietTravelClient\\VietTravelClient.csproj",
+        "projectPath": "D:\\MyProject\\VietTravelClientNewDb\\VietTravelClient\\VietTravelClient\\VietTravelClient.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProject\\VietTravelClientDev\\VietTravelClient\\VietTravelClient\\obj\\",
+        "outputPath": "D:\\MyProject\\VietTravelClientNewDb\\VietTravelClient\\VietTravelClient\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
