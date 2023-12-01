@@ -287,7 +287,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     Hotel hotel = JsonConvert.DeserializeObject<Hotel>(responseDataHotel.Data);
                     Restaurant restaurant = JsonConvert.DeserializeObject<Restaurant>(responseDataRestaurant.Data);
                     TimePackage timePackage = JsonConvert.DeserializeObject<TimePackage>(responseDataTimePackage.Data);
-                    tourPackage.BasePrice = hotel.PriceHour * timePackage.HourNumber;
+                    tourPackage.BasePrice = hotel.PriceHour * timePackage.HourNumber + restaurant.PriceDefault * timePackage.HourNumber /12;
                     tourPackage.EndTime = tourPackage.StartTime.AddHours(timePackage.HourNumber);
                     foreach (Schedule schedule in schedules)
                     {
