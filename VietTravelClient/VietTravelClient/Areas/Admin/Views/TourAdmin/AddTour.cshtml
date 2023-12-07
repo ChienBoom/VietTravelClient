@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Thêm ảnh<span style="color: red;">*</span></label>
-                                <input type="file" class="btn btn-info col-12 col-sm-12 col-md-12 border-dark rounded" id="Pictures" name="file" style="height:60px;">
+                                <input type="file" class="btn btn-info col-12 col-sm-12 col-md-12 border-dark rounded" id="Pictures" name="file" style="height:38px;">
                             </div>
                         </div>
                         <div class="row">
@@ -95,6 +95,13 @@
     </div>
 </body>
 <script>
+    $(document).ready(function () {
+        $('#CityId').selectpicker({
+            liveSearch: true,
+            size: 5,
+            actionsBox: true,
+        });
+    });
     function Validation() {
         var name = $('#Name').val();
         var address = $('#Address').val();

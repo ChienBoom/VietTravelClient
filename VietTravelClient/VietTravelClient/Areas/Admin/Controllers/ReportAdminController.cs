@@ -55,7 +55,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     var wwwrootPath = _hostingEnvironment.WebRootPath;
-                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_doanh_thu_theo_thang.xlsx", revenue, 1);
+                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_doanh_thu_theo_thang.xlsx", revenue, 1, "Bao_cao_thong_ke_doanh_thu_theo_thang");
                     string excelFilePath = Path.Combine(wwwrootPath,"ReportExcelOutput", excelFileName);
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
@@ -82,7 +82,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     var wwwrootPath = _hostingEnvironment.WebRootPath;
-                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_doanh_thu_theo_thanh_pho.xlsx", revenue, 1);
+                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_doanh_thu_theo_thanh_pho.xlsx", revenue, 1, "Bao_cao_thong_ke_doanh_thu_theo_thanh_pho");
                     string excelFilePath = Path.Combine(wwwrootPath, "ReportExcelOutput", excelFileName);
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
@@ -109,7 +109,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     var wwwrootPath = _hostingEnvironment.WebRootPath;
-                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_doanh_thu_theo_tour.xlsx", revenue, 1);
+                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_doanh_thu_theo_tour.xlsx", revenue, 1, "Bao_cao_thong_ke_doanh_thu_theo_tour");
                     string excelFilePath = Path.Combine(wwwrootPath, "ReportExcelOutput", excelFileName);
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
@@ -136,7 +136,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     var wwwrootPath = _hostingEnvironment.WebRootPath;
-                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_so_luot_khach_theo_thang.xlsx", revenue, 2);
+                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_so_luot_khach_theo_thang.xlsx", revenue, 2, "Bao_cao_thong_ke_so_luot_khach_theo_thang");
                     string excelFilePath = Path.Combine(wwwrootPath, "ReportExcelOutput", excelFileName);
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
@@ -163,7 +163,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     var wwwrootPath = _hostingEnvironment.WebRootPath;
-                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_so_luot_khach_theo_thanh_pho.xlsx", revenue, 2);
+                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_so_luot_khach_theo_thanh_pho.xlsx", revenue, 2, "Bao_cao_thong_ke_so_luot_khach_theo_thanh_pho");
                     string excelFilePath = Path.Combine(wwwrootPath, "ReportExcelOutput", excelFileName);
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
@@ -190,7 +190,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     var wwwrootPath = _hostingEnvironment.WebRootPath;
-                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_so_luot_khach_theo_tour.xlsx", revenue, 2);
+                    string excelFileName = UpdateDataReport("Bao_cao_thong_ke_so_luot_khach_theo_tour.xlsx", revenue, 2, "Bao_cao_thong_ke_so_luot_khach_theo_tour");
                     string excelFilePath = Path.Combine(wwwrootPath, "ReportExcelOutput", excelFileName);
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
@@ -203,7 +203,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             }
         }
 
-        public string UpdateDataReport(string excelNameTemp, Revenue revenue, int status)
+        public string UpdateDataReport(string excelNameTemp, Revenue revenue, int status, string name)
         {
             var wwwrootPath = _hostingEnvironment.WebRootPath;
             var templateFilePath = Path.Combine(wwwrootPath, "ReportExcelTemp", excelNameTemp);
@@ -216,7 +216,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 Directory.CreateDirectory(excelFolderPath);
             }
-            var excelFileName = $"bao_cao_doanh_thu_theo_thang_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx";
+            var excelFileName = $"{name}_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx";
             var excelFilePath = Path.Combine(excelFolderPath, excelFileName);
             using (var templatePackage = new ExcelPackage(new FileInfo(templateFilePath)))
             {
