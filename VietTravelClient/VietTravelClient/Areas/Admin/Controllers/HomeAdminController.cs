@@ -129,6 +129,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 value.Username = "notnull";
                 value.Password = "notnull";
                 value.Role = "Admin";
+                value.Picture = "File null";
                 ResponseData responseData = await _callApi.PutApi(url, JsonConvert.SerializeObject(value));
                 if (responseData.Success)
                 {

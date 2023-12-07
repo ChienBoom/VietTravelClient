@@ -359,7 +359,7 @@
                 {
                     <li class="media" style="margin-left: 40px; margin-bottom: 20px; width: 90%;">
                         <img class="mx-3 rounded order-0" src="~/UploadImage/@(item.User.Picture)" alt=""
-                             style="width: 100px; height: 200px;">
+                             style="width: 100px; height: 100px;">
                         <div class="media-body">
                             <h5 class="mt-0 text-info">@item.User.Name</h5>
                             <p>
@@ -475,13 +475,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div>BẠN CHẮC CHẮN ĐẶT TOUR NÀY</div>
                         <div class="row" hidden>
                             <div class="col-6 col-sm-6 col-md-6">
                                 <input type="text" id="TourIdSingle" name="TourId" class="col-12 col-sm-12 col-md-12 border-info"
                                        style="height: 60px;" value="@tour.Id" readonly>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" hidden>
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="NumberOfAdultSingle" class="col-12 col-sm-12 col-md-12 text-info">
                                     Số lượng
@@ -498,7 +499,7 @@
                                        style="height: 60px;" value="" readonly>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" hidden>
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="StartTimeSingle" class="col-12 col-sm-12 col-md-12 text-info"
                                        style="white-space: nowrap;">
@@ -516,7 +517,7 @@
                                        style="height: 60px;" value="" readonly>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" hidden>
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="HotelIdSingle" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Khách sạn</label>
                                 <input type="text" id="HotelIdSingle" name="HotelId" class="col-12 col-sm-12 col-md-12 border-info"
@@ -528,7 +529,7 @@
                                        style="height: 60px;" value="" readonly>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" hidden>
                             <div class="col-12 col-sm-12 col-md-12">
                                 <label for="ScheduleListSingle" class="col-12 col-sm-12 col-md-12 text-info">Lựa chọn Lịch trình</label>
                                 <input type="text" id="ScheduleListSingle" name="ScheduleList" class="col-12 col-sm-12 col-md-12 border-info"
