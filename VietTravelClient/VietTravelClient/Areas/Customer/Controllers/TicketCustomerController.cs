@@ -144,12 +144,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     Hotel hotel = JsonConvert.DeserializeObject<Hotel>(responseDataHotel.Data);
                     Restaurant restaurant = JsonConvert.DeserializeObject<Restaurant>(responseDataRestaurant.Data);
                     TimePackage timePackage = JsonConvert.DeserializeObject<TimePackage>(responseDataTimePackage.Data);
-                    tourPackage.BasePrice = hotel.PriceHour * timePackage.HourNumber + restaurant.PriceDefault * timePackage.HourNumber/12;
+                    tourPackage.BasePrice = hotel.PriceHour * tourPackage.NumberOfAdult / 2 * timePackage.HourNumber / 24 + restaurant.PriceDefault * tourPackage.NumberOfAdult + restaurant.PriceDefault * tourPackage.NumberOfChildren / 2 * timePackage.HourNumber / 12;
                     tourPackage.EndTime = tourPackage.StartTime.AddHours(timePackage.HourNumber);
                     foreach (Schedule schedule in schedules)
                     {
                         tourPackage.BasePrice += schedule.PriceTicketAdult * tourPackage.NumberOfAdult + schedule.PriceTicketKid * tourPackage.NumberOfChildren;
                     }
+                    tourPackage.BasePrice = tourPackage.BasePrice * 110 / 100;
                     tourPackage.Discount = 0;
                     tourPackage.LastPrice = tourPackage.BasePrice * (100 - (int)tourPackage.Discount) / 100;
                     return tourPackage;
