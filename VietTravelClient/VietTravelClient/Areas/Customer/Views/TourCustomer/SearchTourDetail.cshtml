@@ -627,7 +627,12 @@
     function ChangeTourPackage() {
         var tourPackageId = $('#TourPackageId').val();
         var priceTourPackage = $(`#LastPriceTourPackage${tourPackageId}`).val();
-        $('#PriceTourPackage').text("GIÁ TOUR: " + priceTourPackage + " VND");
+        if (priceTourPackage === undefined) {
+            $('#PriceTourPackage').text("Chưa có tour được chọn");
+        }
+        else {
+            $('#PriceTourPackage').text("GIÁ TOUR: " + priceTourPackage + " VND");
+        }
     }
     function ShowTourPackageDetail() {
         var tourPackageId = $('#TourPackageId').val();
