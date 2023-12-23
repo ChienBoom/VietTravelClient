@@ -23,6 +23,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
         private readonly string keyWeather;
+        private string tokenCustomer;
 
         public CityCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
@@ -37,6 +38,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("cityDetail")]
         public async Task<IActionResult> CityDetail(string itemId, int page)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domainServer + "city/" + itemId;
@@ -51,11 +53,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
             EvaluateStar evaluateStar = new EvaluateStar();
             try
             {
-                ResponseData responseDataCity = await _callApi.GetApi(urlCity);
-                ResponseData responseDataTours = await _callApi.GetApi(urlTour);
-                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
-                ResponseData responseDataEvaStar = await _callApi.GetApi(urlEvaStar);
+                ResponseData responseDataCity = await _callApi.GetApi(urlCity, tokenCustomer);
+                ResponseData responseDataTours = await _callApi.GetApi(urlTour, tokenCustomer);
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva, tokenCustomer);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenCustomer);
+                ResponseData responseDataEvaStar = await _callApi.GetApi(urlEvaStar, tokenCustomer);
                 if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success && responseDataTotalPage.Success && responseDataEvaStar.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
@@ -63,7 +65,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     evaluateStar = JsonConvert.DeserializeObject<EvaluateStar>(responseDataEvaStar.Data);
                     string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + city.CoordLat + "&lon=" + city.CoordLon + "&appid=" + keyWeather;
-                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
+                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather, tokenCustomer);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
                     ViewData["Evaluates"] = evaluates;
@@ -88,6 +90,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("searchCityDetailPost")]
         public async Task<IActionResult> SearchCityDetailPost(string itemId, int page)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             return RedirectToAction("SearchCityDetail", new { area="Customer", controller = "CityCustomer", itemId = itemId, page = page });
         }
 
@@ -95,6 +98,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("searchCityDetail")]
         public async Task<IActionResult> SearchCityDetail(string itemId, int page)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domainServer + "city/" + itemId;
@@ -106,17 +110,17 @@ namespace VietTravelClient.Areas.Customer.Controllers
             List<Evaluate> evaluates = new List<Evaluate>();
             try
             {
-                ResponseData responseDataCity = await _callApi.GetApi(urlCity);
-                ResponseData responseDataTours = await _callApi.GetApi(urlTour);
-                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseDataCity = await _callApi.GetApi(urlCity, tokenCustomer);
+                ResponseData responseDataTours = await _callApi.GetApi(urlTour, tokenCustomer);
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva, tokenCustomer);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenCustomer);
                 if (responseDataCity.Success && responseDataTours.Success && responseDataEva.Success && responseDataTotalPage.Success)
                 {
                     city = JsonConvert.DeserializeObject<City>(responseDataCity.Data);
                     tours = JsonConvert.DeserializeObject<List<Tour>>(responseDataTours.Data);
                     evaluates = JsonConvert.DeserializeObject<List<Evaluate>>(responseDataEva.Data);
                     string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + city.CoordLat + "&lon=" + city.CoordLon + "&appid=" + keyWeather;
-                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
+                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather, tokenCustomer);
                     ViewData["City"] = city;
                     ViewData["Tours"] = tours;
                     ViewData["Evaluates"] = evaluates;
@@ -139,14 +143,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("cityManager")]
         public async Task<IActionResult> CityManager(int page)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "city/page/" + page.ToString();
             string urlTotalPage = domainServer + "city/totalPage";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenCustomer);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseData.Data);
@@ -169,6 +174,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("searchCityPost")]
         public async Task<IActionResult> SearchCityPost(string searchValue, int page)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             return RedirectToAction("SearchCity", new { area = "Customer", controller = "CityCustomer", searchValue = searchValue, page = page });
@@ -178,14 +184,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("searchCity")]
         public async Task<IActionResult> SearchCity(string searchValue, int page)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
             string urlTotalPage = domainServer + "city/search/totalPage/" + searchValue.Unidecode();
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenCustomer);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["cities"] = JsonConvert.DeserializeObject<List<City>>(responseData.Data);

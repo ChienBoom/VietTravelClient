@@ -18,12 +18,14 @@ namespace VietTravelClient.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private readonly string tokenAnonymous;
 
         public LoginController(CallApi callApi, IConfiguration configuration)
         {
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            tokenAnonymous = _configuration["tokenAnonymous"];
         }
 
         [HttpGet]
@@ -44,7 +46,7 @@ namespace VietTravelClient.Controllers
                 account.Username = EmailAccount;
                 account.Password = "ForgotPassword";
                 string stringAccount = JsonConvert.SerializeObject(account);
-                ResponseData responseData = await _callApi.PostApi(url, stringAccount);
+                ResponseData responseData = await _callApi.PostApi(url, stringAccount, tokenAnonymous);
                 if (responseData.Success)
                 {
                     return RedirectToAction("Login");
@@ -76,10 +78,11 @@ namespace VietTravelClient.Controllers
             {
                 string stringValue = JsonConvert.SerializeObject(value);
                 string UsernameAccount = value.Username;
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenAnonymous);
                 if (responseData.Success)
                 {
                     HttpContext.Session.SetString("UsernameAccount", value.Username );
+                    HttpContext.Session.SetString("token", responseData.Message);
                     var roleUser = string.Empty;
                     var controller = string.Empty;
                     switch (responseData.Data)

@@ -29,6 +29,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly string domainServer;
         private readonly string uploadPath;
+        private string tokenAdmin;
 
         public ReportAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile, IWebHostEnvironment hostingEnvironment)
         {
@@ -45,12 +46,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("revenueMonthReport")]
         public async Task<IActionResult> RevenueMonthReport()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticMonth";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -72,12 +74,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("revenueCityReport")]
         public async Task<IActionResult> RevenueCityReport()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticCity";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -99,12 +102,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("revenueTourReport")]
         public async Task<IActionResult> RevenueTourReport()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticTour";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -126,12 +130,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("visitorMonthReport")]
         public async Task<IActionResult> VisitorMonthReport()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticMonth";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -153,12 +158,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("visitorCityReport")]
         public async Task<IActionResult> VisitorCityReport()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticCity";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -180,12 +186,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("visitorTourReport")]
         public async Task<IActionResult> VisitorTourReport()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticTour";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -205,6 +212,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         public string UpdateDataReport(string excelNameTemp, Revenue revenue, int status, string name)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             var wwwrootPath = _hostingEnvironment.WebRootPath;
             var templateFilePath = Path.Combine(wwwrootPath, "ReportExcelTemp", excelNameTemp);
             if (!System.IO.File.Exists(templateFilePath))

@@ -17,6 +17,7 @@ namespace VietTravelClient.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private readonly string tokenAnonymous;
 
         public HotelController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
@@ -24,6 +25,7 @@ namespace VietTravelClient.Controllers
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            tokenAnonymous = _configuration["tokenAnonymous"];
         }
 
         [HttpGet]
@@ -34,8 +36,8 @@ namespace VietTravelClient.Controllers
             string urlTotalPage = domainServer + "hotel/totalPage";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAnonymous);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenAnonymous);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     List<Hotel> hotels = JsonConvert.DeserializeObject<List<Hotel>>(responseData.Data);
@@ -60,8 +62,8 @@ namespace VietTravelClient.Controllers
             string urlEva = domainServer + "evaluate/evaHotel/" + itemId;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAnonymous);
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva, tokenAnonymous);
                 if (responseData.Success && responseDataEva.Success)
                 {
                     ViewData["Hotel"] = JsonConvert.DeserializeObject<Hotel>(responseData.Data);
@@ -92,8 +94,8 @@ namespace VietTravelClient.Controllers
             string urlTotalPage = domainServer + "hotel/search/totalPage/" + searchValue.Unidecode();
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAnonymous);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenAnonymous);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseData.Data);

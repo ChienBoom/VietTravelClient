@@ -25,6 +25,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
         private readonly string uploadPath;
+        private string tokenAdmin;
 
         public TourAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -40,12 +41,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("addTour")]
         public async Task<IActionResult> AddTour()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "city";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseData.Data);
@@ -65,14 +67,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("tourManager")]
         public async Task<IActionResult> TourManager(int page, string status)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "tour/page/" + page.ToString();
             string urlTotalPage = domainServer + "tour/totalPage";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenAdmin);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseData.Data);
@@ -95,6 +98,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("searchTourPost")]
         public async Task<IActionResult> SearchTourPost(string searchValue, int page)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             return RedirectToAction("SearchTour", new { area = "Admin", controller = "TourAdmin", searchValue = searchValue, page = page });
@@ -104,6 +108,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("searchTour")]
         public async Task<IActionResult> SearchTour(string searchValue, int page)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (!searchValue.Trim().Equals("") || searchValue != null)
@@ -113,8 +118,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 List<Tour> tours = new List<Tour>();
                 try
                 {
-                    ResponseData responseData = await _callApi.GetApi(url);
-                    ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                    ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
+                    ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenAdmin);
                     if (responseDataTotalPage.Success && responseData.Success)
                     {
                         string result = responseData.Data;
@@ -140,6 +145,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveTour")]
         public async Task<IActionResult> CreateTour(Tour value, IFormFile file)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "tour";
             Tour Tour = new Tour();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
@@ -148,7 +154,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenAdmin);
                 if(responseData.Success)
                 {
                     Tour = JsonConvert.DeserializeObject<Tour>(responseData.Data);
@@ -166,6 +172,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("tourInfo")]
         public async Task<IActionResult> TourInfo(long tourId)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCities = domainServer + "city";
@@ -173,8 +180,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
             Tour tour = new Tour();
             try
             {
-                ResponseData responseDataCities = await _callApi.GetApi(urlCities);
-                ResponseData response = await _callApi.GetApi(urlTour);
+                ResponseData responseDataCities = await _callApi.GetApi(urlCities, tokenAdmin);
+                ResponseData response = await _callApi.GetApi(urlTour, tokenAdmin);
                 string result = response.Data;
                 tour = JsonConvert.DeserializeObject<Tour>(result);
                 ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCities.Data);
@@ -192,6 +199,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateTour")]
         public async Task<IActionResult> UpdateTour(Tour value, IFormFile file)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "tour/" + value.Id.ToString();
             Tour city = new Tour();
             if (!_uploadFile.SaveFile(file).Success)
@@ -203,7 +211,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue, tokenAdmin);
                 if (responseData.Success)
                 {
                     city = JsonConvert.DeserializeObject<Tour>(responseData.Data);
@@ -221,13 +229,14 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("TourById")]
         public async Task<IActionResult> GetTourById(long id)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "Tour/" + id.ToString();
             Tour Tour = new Tour();
             try
             {
-                ResponseData response = await _callApi.GetApi(url);
+                ResponseData response = await _callApi.GetApi(url, tokenAdmin);
                 string result = response.Data;
                 Tour = JsonConvert.DeserializeObject<Tour>(result);
                 ViewData["UsernameAccount"] = usernameAccount;
@@ -243,10 +252,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteTour")]
         public async Task<IActionResult> DeleteTour(string TourId)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "tour/" + TourId;
             try
             {
-                ResponseData responseData = await _callApi.DeleteApi(url);
+                ResponseData responseData = await _callApi.DeleteApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     return RedirectToAction("TourManager", new { area = "Admin", controller = "TourAdmin", page = 1, status = "DeleteSuccess" });

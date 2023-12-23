@@ -18,6 +18,7 @@ namespace VietTravelClient.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private readonly string tokenAnonymous;
         private readonly string keyWeather;
 
         public WeatherController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
@@ -26,6 +27,7 @@ namespace VietTravelClient.Controllers
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            tokenAnonymous = _configuration["tokenAnonymous"];
             keyWeather = _configuration["KeyWeatherApi"];
         }
 
@@ -36,7 +38,7 @@ namespace VietTravelClient.Controllers
             string url = "https://api.openweathermap.org/data/2.5/weather?lat=20.73&lon=107.05&appid=e1a5c2e30fb63c7574678a5c27b029a9";
             try
             {
-                ResponseData response = await _callApi.GetApi(url);
+                ResponseData response = await _callApi.GetApi(url, tokenAnonymous);
                 if (response.Success)
                 {
                     WeatherOpen weatherOpen = JsonConvert.DeserializeObject<WeatherOpen>(response.Data);

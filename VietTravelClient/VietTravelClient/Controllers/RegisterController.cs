@@ -15,12 +15,14 @@ namespace VietTravelClient.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private readonly string tokenAnonymous;
 
         public RegisterController(CallApi callApi, IConfiguration configuration)
         {
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            tokenAnonymous = _configuration["tokenAnonymous"];
         }
 
         public IActionResult Register(int status, string username, string password)
@@ -51,7 +53,7 @@ namespace VietTravelClient.Controllers
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenAnonymous);
                 if (responseData.Success == true) return RedirectToAction("Register", new { status = 1, username = value.Username, password = value.Password });
                 if (responseData.Message.Equals("NotFound"))
                 {
@@ -74,7 +76,7 @@ namespace VietTravelClient.Controllers
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenAnonymous);
                 if (responseData.Success)
                 {
                     if (responseData.Message.Equals("Success"))

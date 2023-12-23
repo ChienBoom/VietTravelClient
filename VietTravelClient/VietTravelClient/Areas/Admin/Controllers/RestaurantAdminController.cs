@@ -24,6 +24,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
         private readonly string uploadPath;
+        private string tokenAdmin;
 
         public RestaurantAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -39,12 +40,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("addRestaurant")]
         public async Task<IActionResult> AddRestaurant()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCities = domainServer + "city";
             try
             {
-                ResponseData responseDataCities = await _callApi.GetApi(urlCities);
+                ResponseData responseDataCities = await _callApi.GetApi(urlCities, tokenAdmin);
                 ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCities.Data);
                 ViewData["UsernameAccount"] = usernameAccount;
                 return View();
@@ -59,14 +61,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("RestaurantManager")]
         public async Task<IActionResult> RestaurantManager(int page, string status)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "restaurant/page/" + page.ToString();
             string urlTotalPage = domainServer + "restaurant/totalPage";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenAdmin);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Restaurants"] = JsonConvert.DeserializeObject<List<Restaurant>>(responseData.Data);
@@ -89,6 +92,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("searchRestaurantPost")]
         public async Task<IActionResult> SearchRestaurantPost(string searchValue, int page)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             return RedirectToAction("SearchRestaurant", new { area = "Admin", controller = "RestaurantAdmin", searchValue = searchValue, page = page });
@@ -98,6 +102,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("searchRestaurant")]
         public async Task<IActionResult> SearchRestaurant(string searchValue, int page)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "restaurant/search/" + searchValue.Unidecode() + "/" + page.ToString();
@@ -105,8 +110,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
             List<Restaurant> restaurants = new List<Restaurant>();
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenAdmin);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     string result = responseData.Data;
@@ -130,6 +135,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveRestaurant")]
         public async Task<IActionResult> CreateRestaurant(Restaurant value, IFormFile file)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "restaurant";
             Restaurant restaurant = new Restaurant();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
@@ -139,7 +145,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 value.Description = "";
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenAdmin);
                 if (responseData.Success)
                 {
                     restaurant = JsonConvert.DeserializeObject<Restaurant>(responseData.Data);
@@ -157,6 +163,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateRestaurant")]
         public async Task<IActionResult> UpdateRestaurant(Restaurant value, IFormFile file)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "restaurant/" + value.Id.ToString();
             Restaurant restaurant = new Restaurant();
             if (!_uploadFile.SaveFile(file).Success)
@@ -169,7 +176,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 value.Description = "";
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue, tokenAdmin);
                 if (responseData.Success)
                 {
                     restaurant = JsonConvert.DeserializeObject<Restaurant>(responseData.Data);
@@ -187,6 +194,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("restaurantInfo")]
         public async Task<IActionResult> RestaurantInfo(long restaurantId)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCities = domainServer + "city";
@@ -194,8 +202,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
             Restaurant restaurant = new Restaurant();
             try
             {
-                ResponseData responseDataCities = await _callApi.GetApi(urlCities);
-                ResponseData response = await _callApi.GetApi(urlRestaurant);
+                ResponseData responseDataCities = await _callApi.GetApi(urlCities, tokenAdmin);
+                ResponseData response = await _callApi.GetApi(urlRestaurant, tokenAdmin);
                 string result = response.Data;
                 restaurant = JsonConvert.DeserializeObject<Restaurant>(result);
                 ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCities.Data);
@@ -233,10 +241,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteRestaurant")]
         public async Task<IActionResult> DeleteRestaurant(string restaurantId)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "restaurant/" + restaurantId;
             try
             {
-                ResponseData responseData = await _callApi.DeleteApi(url);
+                ResponseData responseData = await _callApi.DeleteApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     return RedirectToAction("RestaurantManager", new { area = "Admin", controller = "RestaurantAdmin", page = 1, status = "DeleteSuccess" });

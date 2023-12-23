@@ -20,6 +20,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private string tokenCustomer;
 
         public TicketCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
@@ -33,12 +34,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("saveTicketPackage")]
         public async Task<IActionResult> SaveTicketPackage(string tourPackageId)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "user/searchUserByUsername/" + usernameAccount;
             try
             {
                 ResponseData responseData = new ResponseData();
-                responseData = await _callApi.GetApi(url);
+                responseData = await _callApi.GetApi(url, tokenCustomer);
                 if (responseData.Success)
                 {
                     User user = JsonConvert.DeserializeObject<User>(responseData.Data);
@@ -49,7 +51,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ticket.Status = 1;
                     string urlTicket = domainServer + "ticket";
                     string stringTicket = JsonConvert.SerializeObject(ticket);
-                    ResponseData responseDataTicket = await _callApi.PostApi(urlTicket, stringTicket);
+                    ResponseData responseDataTicket = await _callApi.PostApi(urlTicket, stringTicket, tokenCustomer);
                     if(responseDataTicket.Success)
                     {
                         return RedirectToAction("History", new {area = "Customer", controller= "HomeCustomer", status = "BookingTourSuccess", ticketStatus = 1});
@@ -68,6 +70,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("saveTicketSingle")]
         public async Task<IActionResult> SaveTicketSingle(TourPackage value, string ScheduleList)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string[] ArrayScheduleId = ScheduleList.Split(',');
             List<Schedule> schedules = new List<Schedule>();
             foreach(string item in ArrayScheduleId)
@@ -75,7 +78,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 string urlSchedule = domainServer + "schedule/" + item;
                 try
                 {
-                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
+                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule, tokenCustomer);
                     if (!responseDataSchedule.Success)
                     {
                         return RedirectToAction("History", new { area = "Customer", controller = "TourCustomer", status = "BookingTourFaild", ticketStatus = 1 });
@@ -97,8 +100,8 @@ namespace VietTravelClient.Areas.Customer.Controllers
             string url = domainServer + "user/searchUserByUsername/" + usernameAccount;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTourPackage = await _callApi.PostApi(urlTourPackage, JsonConvert.SerializeObject(value));
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
+                ResponseData responseDataTourPackage = await _callApi.PostApi(urlTourPackage, JsonConvert.SerializeObject(value), tokenCustomer);
                 if (responseData.Success && responseDataTourPackage.Success)
                 {
                     User user = JsonConvert.DeserializeObject<User>(responseData.Data);
@@ -110,7 +113,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     ticket.Status = 1;
                     string urlTicket = domainServer + "ticket";
                     string stringTicket = JsonConvert.SerializeObject(ticket);
-                    ResponseData responseDataTicket = await _callApi.PostApi(urlTicket, stringTicket);
+                    ResponseData responseDataTicket = await _callApi.PostApi(urlTicket, stringTicket, tokenCustomer);
                     if (responseDataTicket.Success)
                     {
                         return RedirectToAction("History", new { area = "Customer", controller = "HomeCustomer", status = "BookingTourSuccess", ticketStatus =1});
@@ -127,6 +130,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         public async Task<TourPackage> CreateTourPackageSingle(TourPackage tourPackage)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             tourPackage.Name = RandomName(10);
             tourPackage.CreateBy = "Customer";
             List<Schedule> schedules = new List<Schedule>();
@@ -136,9 +140,9 @@ namespace VietTravelClient.Areas.Customer.Controllers
             string urlTimePackage = domainServer + "timepackage/" + tourPackage.TimePackageId.ToString();
             try
             {
-                ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
-                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
+                ResponseData responseDataHotel = await _callApi.GetApi(urlHotel, tokenCustomer);
+                ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant, tokenCustomer);
+                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage, tokenCustomer);
                 if (responseDataHotel.Success && responseDataRestaurant.Success && responseDataTimePackage.Success)
                 {
                     Hotel hotel = JsonConvert.DeserializeObject<Hotel>(responseDataHotel.Data);
@@ -181,10 +185,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("deleteTicket")]
         public async Task<IActionResult> DeleteTicket(string Id)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string url = domainServer + "ticket/" + Id;
             try
             {
-                ResponseData response = await _callApi.DeleteApi(url);
+                ResponseData response = await _callApi.DeleteApi(url, tokenCustomer);
                 if (response.Success)
                 {
                     return RedirectToAction("History", new { area = "Customer", controller = "HomeCustomer", status = "DeleteTourSuccess", ticketStatus = 1 });

@@ -19,6 +19,7 @@ namespace VietTravelClient.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private readonly string tokenAnonymous;
         private readonly string keyWeather;
 
         public TourController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
@@ -27,6 +28,7 @@ namespace VietTravelClient.Controllers
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            tokenAnonymous = _configuration["tokenAnonymous"];
             keyWeather = _configuration["KeyWeatherApi"];
         }
 
@@ -47,12 +49,12 @@ namespace VietTravelClient.Controllers
             List<Event> events = new List<Event>();
             try
             {
-                ResponseData responseDataTour = await _callApi.GetApi(urlTour);
-                ResponseData responseDataRelateTour = await _callApi.GetApi(urlRelateTour);
-                ResponseData responseDataTourPackage = await _callApi.GetApi(urlTourPackage);
-                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
-                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
-                ResponseData responseDataEvent = await _callApi.GetApi(urlEvent);
+                ResponseData responseDataTour = await _callApi.GetApi(urlTour, tokenAnonymous);
+                ResponseData responseDataRelateTour = await _callApi.GetApi(urlRelateTour, tokenAnonymous);
+                ResponseData responseDataTourPackage = await _callApi.GetApi(urlTourPackage, tokenAnonymous);
+                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage, tokenAnonymous);
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva, tokenAnonymous);
+                ResponseData responseDataEvent = await _callApi.GetApi(urlEvent, tokenAnonymous);
                 if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success && responseDataEvent.Success && responseDataRelateTour.Success)
                 {
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
@@ -68,11 +70,11 @@ namespace VietTravelClient.Controllers
                     string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
                     string urlSchedule = domainServer + "schedule/getByTourId/" + itemId;
                     string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + tour.CoordLat + "&lon=" + tour.CoordLon + "&appid=" + keyWeather;
-                    ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
-                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                    ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
-                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
-                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
+                    ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide, tokenAnonymous);
+                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel, tokenAnonymous);
+                    ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant, tokenAnonymous);
+                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule, tokenAnonymous);
+                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather, tokenAnonymous);
                     if (responseDataTourGuide.Success && responseDataHotel.Success && responseDataRestaurant.Success && responseDataSchedule.Success)
                     {
                         ViewData["Tour"] = tour;
@@ -123,12 +125,12 @@ namespace VietTravelClient.Controllers
             List<Event> events = new List<Event>();
             try
             {
-                ResponseData responseDataTour = await _callApi.GetApi(urlTour);
-                ResponseData responseDataRelateTour = await _callApi.GetApi(urlRelateTour);
-                ResponseData responseDataTourPackage = await _callApi.GetApi(urlTourPackage);
-                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
-                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
-                ResponseData responseDataEvent = await _callApi.GetApi(urlEvent);
+                ResponseData responseDataTour = await _callApi.GetApi(urlTour, tokenAnonymous);
+                ResponseData responseDataRelateTour = await _callApi.GetApi(urlRelateTour, tokenAnonymous);
+                ResponseData responseDataTourPackage = await _callApi.GetApi(urlTourPackage, tokenAnonymous);
+                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage, tokenAnonymous);
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva, tokenAnonymous);
+                ResponseData responseDataEvent = await _callApi.GetApi(urlEvent, tokenAnonymous);
                 if (responseDataTour.Success && responseDataTourPackage.Success && responseDataTimePackage.Success && responseDataEva.Success)
                 {
                     tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
@@ -144,11 +146,11 @@ namespace VietTravelClient.Controllers
                     string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
                     string urlSchedule = domainServer + "schedule/getByTourId/" + itemId;
                     string urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + tour.CoordLat + "&lon=" + tour.CoordLon + "&appid=" + keyWeather;
-                    ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide);
-                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                    ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
-                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
-                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather);
+                    ResponseData responseDataTourGuide = await _callApi.GetApi(urlTourGuide, tokenAnonymous);
+                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel, tokenAnonymous);
+                    ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant, tokenAnonymous);
+                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule, tokenAnonymous);
+                    ResponseData responseDataWeather = await _callApi.GetApi(urlWeather, tokenAnonymous);
                     if (responseDataTourGuide.Success && responseDataHotel.Success && responseDataRestaurant.Success && responseDataSchedule.Success)
                     {
                         ViewData["Tour"] = tour;
@@ -210,8 +212,8 @@ namespace VietTravelClient.Controllers
             string urlTotalPage = domainServer + "tour/totalPage";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAnonymous);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenAnonymous);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Tours"] = JsonConvert.DeserializeObject<List<Tour>>(responseData.Data);
@@ -268,8 +270,8 @@ namespace VietTravelClient.Controllers
             List<Tour> tours = new List<Tour>();
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAnonymous);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenAnonymous);
                 if (responseDataTotalPage.Success && responseData.Success)
                 {
                     string result = responseData.Data;
@@ -300,8 +302,8 @@ namespace VietTravelClient.Controllers
                 string urlRes = domainServer + "restaurant/" + item.RestaurantId.ToString();
                 try
                 {
-                    ResponseData resHotel = await _callApi.GetApi(urlHotel);
-                    ResponseData resRes = await _callApi.GetApi(urlRes);
+                    ResponseData resHotel = await _callApi.GetApi(urlHotel, tokenAnonymous);
+                    ResponseData resRes = await _callApi.GetApi(urlRes, tokenAnonymous);
                     if (resHotel.Success && resRes.Success)
                     {
                         item.Hotel = JsonConvert.DeserializeObject<Hotel>(resHotel.Data);

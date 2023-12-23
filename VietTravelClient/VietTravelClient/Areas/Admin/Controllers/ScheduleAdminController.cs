@@ -24,6 +24,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
         private readonly string uploadPath;
+        private string tokenAdmin;
 
         public ScheduleAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -39,12 +40,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("scheduleManager")]
         public async Task<IActionResult> ScheduleManager(int TourId, string status)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "schedule/getByTourId/" + TourId.ToString();
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     List<Schedule> schedules = JsonConvert.DeserializeObject<List<Schedule>>(responseData.Data);
@@ -81,6 +83,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveSchedule")]
         public async Task<IActionResult> CreateSchedule(Schedule value, IFormFile file)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "schedule";
             Schedule schedule = new Schedule();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
@@ -88,7 +91,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenAdmin);
                 if (responseData.Success)
                 {
                     schedule = JsonConvert.DeserializeObject<Schedule>(responseData.Data);
@@ -106,6 +109,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateSchedule")]
         public async Task<IActionResult> UpdateSchedule(Schedule value, IFormFile file)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "schedule/" + value.Id.ToString();
             Schedule schedule = new Schedule();
             if (!_uploadFile.SaveFile(file).Success)
@@ -116,7 +120,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue, tokenAdmin);
                 if(responseData.Success)
                 {
                     schedule = JsonConvert.DeserializeObject<Schedule>(responseData.Data);
@@ -134,10 +138,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteSchedule")]
         public async Task<IActionResult> DeleteSchedule(Schedule value)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "schedule/" + value.Id.ToString();
             try
             {
-                ResponseData responseData = await _callApi.DeleteApi(url);
+                ResponseData responseData = await _callApi.DeleteApi(url, tokenAdmin);
                 if(responseData.Success)
                 {
                     return RedirectToAction("ScheduleManager", new { controller = "ScheduleAdmin", TourId = value.TourId, status = "DeleteSuccess" });

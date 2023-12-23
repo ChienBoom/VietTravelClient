@@ -18,6 +18,7 @@ namespace VietTravelClient.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private readonly string tokenAnonymous;
 
         public HomeController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
@@ -25,6 +26,7 @@ namespace VietTravelClient.Controllers
             _callApi = callApi;
             _configuration = configuration;
             domainServer = _configuration["DomainServer"];
+            tokenAnonymous = _configuration["tokenAnonymous"];
         }
 
         //[HttpGet]
@@ -37,10 +39,10 @@ namespace VietTravelClient.Controllers
             string urlHotTour = domainServer + "tour/hotTour";
             try
             {
-                ResponseData responseDataCity = await _callApi.GetApi(urlCity);
-                ResponseData responseDataTour = await _callApi.GetApi(urlTour);
-                ResponseData responseHotCity = await _callApi.GetApi(urlHotCity);
-                ResponseData responseHotTour = await _callApi.GetApi(urlHotTour);
+                ResponseData responseDataCity = await _callApi.GetApi(urlCity, tokenAnonymous);
+                ResponseData responseDataTour = await _callApi.GetApi(urlTour, tokenAnonymous);
+                ResponseData responseHotCity = await _callApi.GetApi(urlHotCity, tokenAnonymous);
+                ResponseData responseHotTour = await _callApi.GetApi(urlHotTour, tokenAnonymous);
                 if(responseDataCity.Success && responseDataTour.Success && responseHotCity.Success && responseHotTour.Success)
                 {
 

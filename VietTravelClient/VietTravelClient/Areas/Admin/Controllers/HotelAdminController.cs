@@ -24,6 +24,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
         private readonly string uploadPath;
+        private string tokenAdmin;
 
         public HotelAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -39,12 +40,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("addHotel")]
         public async Task<IActionResult> AddHotel()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCities = domainServer + "city";
             try
             {
-                ResponseData responseDataCities = await _callApi.GetApi(urlCities);
+                ResponseData responseDataCities = await _callApi.GetApi(urlCities, tokenAdmin);
                 ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCities.Data);
                 ViewData["UsernameAccount"] = usernameAccount;
                 return View();
@@ -59,14 +61,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("hotelManager")]
         public async Task<IActionResult> HotelManager(int page, string status)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "hotel/page/" + page.ToString();
             string urlTotalPage = domainServer + "hotel/totalPage";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenAdmin);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Hotels"] = JsonConvert.DeserializeObject<List<Hotel>>(responseData.Data);
@@ -89,6 +92,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("searchHotelPost")]
         public async Task<IActionResult> SearchHotelPost(string searchValue, int page)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             return RedirectToAction("SearchHotel", new { area = "Admin", controller = "HotelAdmin", searchValue = searchValue, page = page });
@@ -98,6 +102,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("searchHotel")]
         public async Task<IActionResult> SearchHotel(string searchValue, int page)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "hotel/search/" + searchValue.Unidecode() + "/" + page.ToString();
@@ -105,8 +110,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
             List<Hotel> hotels = new List<Hotel>();
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenAdmin);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     string result = responseData.Data;
@@ -130,6 +135,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveHotel")]
         public async Task<IActionResult> CreateHotel(Hotel value, IFormFile file)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "hotel";
             Hotel hotel = new Hotel();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
@@ -139,7 +145,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 value.Description = "";
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenAdmin);
                 hotel = JsonConvert.DeserializeObject<Hotel>(responseData.Data);
                 return RedirectToAction("HotelManager", new { area = "Admin", controller = "HotelAdmin", page = 1, status = "CreateSuccess" });
             }
@@ -153,6 +159,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateHotel")]
         public async Task<IActionResult> UpdateHotel(Hotel value, IFormFile file)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "hotel/" + value.Id.ToString();
             Hotel Hotel = new Hotel();
             if (!_uploadFile.SaveFile(file).Success)
@@ -165,7 +172,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             {
                 value.Description = "";
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue, tokenAdmin);
                 Hotel = JsonConvert.DeserializeObject<Hotel>(responseData.Data);
                 return RedirectToAction("HotelManager", new { area = "Admin", controller = "HotelAdmin", page = 1, status = "UpdateSuccess" });
             }
@@ -179,6 +186,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("hotelInfo")]
         public async Task<IActionResult> HotelInfo(long HotelId)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCities = domainServer + "city";
@@ -186,8 +194,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
             Hotel hotel = new Hotel();
             try
             {
-                ResponseData responseDataCities = await _callApi.GetApi(urlCities);
-                ResponseData response = await _callApi.GetApi(urlHotel);
+                ResponseData responseDataCities = await _callApi.GetApi(urlCities, tokenAdmin);
+                ResponseData response = await _callApi.GetApi(urlHotel, tokenAdmin);
                 string result = response.Data;
                 hotel = JsonConvert.DeserializeObject<Hotel>(result);
                 ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCities.Data);
@@ -225,10 +233,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteHotel")]
         public async Task<IActionResult> DeleteHotel(string HotelId)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "hotel/" + HotelId;
             try
             {
-                ResponseData responseData = await _callApi.DeleteApi(url);
+                ResponseData responseData = await _callApi.DeleteApi(url, tokenAdmin);
                 return RedirectToAction("HotelManager", new { area="Admin", controller="HotelAdmin", page=1, status = "DeleteSuccess"});
             }
             catch (HttpRequestException e)

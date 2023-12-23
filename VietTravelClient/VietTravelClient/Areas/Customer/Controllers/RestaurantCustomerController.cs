@@ -23,6 +23,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private string tokenCustomer;
 
         public RestaurantCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
@@ -36,14 +37,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("restaurantManager")]
         public async Task<IActionResult> RestaurantManager(int page)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "restaurant/page/" + page.ToString();
             string urlTotalPage = domainServer + "restaurant/totalPage";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenCustomer);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     List<Restaurant> restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(responseData.Data);
@@ -65,14 +67,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("restaurantDetail")]
         public async Task<IActionResult> RestaurantDetail(string itemId, int page)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "restaurant/" + itemId;
             string urlEva = domainServer + "evaluate/evaRestaurant/" + itemId;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataEva = await _callApi.GetApi(urlEva);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
+                ResponseData responseDataEva = await _callApi.GetApi(urlEva, tokenCustomer);
                 if (responseData.Success && responseDataEva.Success)
                 {
                     ViewData["Restaurant"] = JsonConvert.DeserializeObject<Restaurant>(responseData.Data);
@@ -93,6 +96,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("searchRestaurantPost")]
         public async Task<IActionResult> SearchRestaurantPost(string searchValue, int page)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             return RedirectToAction("SearchRestaurant", new { controller = "Restaurant", searchValue = searchValue, page = page });
@@ -102,14 +106,15 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("searchRestaurant")]
         public async Task<IActionResult> SearchRestaurant(string searchValue, int page)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "restaurant/search/" + searchValue + "/" + page.ToString();
             string urlTotalPage = domainServer + "restaurant/search/totalPage/" + searchValue.Unidecode();
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
+                ResponseData responseDataTotalPage = await _callApi.GetApi(urlTotalPage, tokenCustomer);
                 if (responseData.Success && responseDataTotalPage.Success)
                 {
                     ViewData["Restaurants"] = JsonConvert.DeserializeObject<List<Restaurant>>(responseData.Data);

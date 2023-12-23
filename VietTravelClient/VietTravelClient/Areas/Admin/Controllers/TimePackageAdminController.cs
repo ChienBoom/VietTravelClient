@@ -24,6 +24,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
         private readonly string uploadPath;
+        private string tokenAdmin;
 
         public TimePackageAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -39,12 +40,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("timePackageManager")]
         public async Task<IActionResult> TimePackageManager(string status)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "timepackage";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     ViewData["TimePackages"] = JsonConvert.DeserializeObject<List<TimePackage>>(responseData.Data);
@@ -65,12 +67,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveTimePackage")]
         public async Task<IActionResult> CreateTimePackage(TimePackage value)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "timepackage";
             TimePackage timePackage = new TimePackage();
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenAdmin);
                 if(responseData.Success)
                 {
                     timePackage = JsonConvert.DeserializeObject<TimePackage>(responseData.Data);
@@ -88,12 +91,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateTimePackage")]
         public async Task<IActionResult> UpdateTimePackage(TimePackage value)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "timepackage/" + value.Id.ToString();
             TimePackage timePackage = new TimePackage();
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue, tokenAdmin);
                 if(responseData.Success)
                 {
                     timePackage = JsonConvert.DeserializeObject<TimePackage>(responseData.Data);
@@ -111,10 +115,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteTimePackage")]
         public async Task<IActionResult> DeleteTimePackage(string TimePackageId)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "timepackage/" + TimePackageId;
             try
             {
-                ResponseData responseData = await _callApi.DeleteApi(url);
+                ResponseData responseData = await _callApi.DeleteApi(url, tokenAdmin);
                 if(responseData.Success)
                 {
                     return RedirectToAction("timePackageManager", new { area = "Admin", controller = "TimePackageAdmin", status = "DeleteSuccess" });

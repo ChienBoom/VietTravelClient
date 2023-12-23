@@ -20,6 +20,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private string tokenAdmin;
 
         public RevenueAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
@@ -33,12 +34,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("revenueStatisticsDetail")]
         public async Task<IActionResult> RevenueStatisticsDetail()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticMonth";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -58,12 +60,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("revenueStatisticMonth")]
         public async Task<IActionResult> RevenueStatisticMonth()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticMonth";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -83,12 +86,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("revenueStatisticCity")]
         public async Task<IActionResult> RevenueStatisticCity()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticCity";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -108,12 +112,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("revenueStatisticTour")]
         public async Task<IActionResult> RevenueStatisticTour()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticTour";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -133,12 +138,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("visitorStatisticMonth")]
         public async Task<IActionResult> VisitorStatisticMonth()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticMonth";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -158,12 +164,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("visitorStatisticCity")]
         public async Task<IActionResult> VisitorStatisticCity()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticCity";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
@@ -183,12 +190,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("visitorStatisticTour")]
         public async Task<IActionResult> VisitorStatisticTour()
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "revenueStatistics/revenueStatisticTour";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);

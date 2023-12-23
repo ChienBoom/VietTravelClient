@@ -22,6 +22,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
         private readonly string uploadPath;
+        private string tokenAdmin;
 
         public TourGuideAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -37,14 +38,15 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("tourGuideManager")]
         public async Task<IActionResult> TourGuideManager(string status)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "tourGuide";
             string urlCity = domainServer + "city";
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataCity = await _callApi.GetApi(urlCity);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
+                ResponseData responseDataCity = await _callApi.GetApi(urlCity, tokenAdmin);
                 if (responseData.Success && responseDataCity.Success)
                 {
                     ViewData["Cities"] = JsonConvert.DeserializeObject<List<City>>(responseDataCity.Data);
@@ -66,12 +68,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveTourGuide")]
         public async Task<IActionResult> CreateTourGuide(TourGuide value)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "tourGuide";
             TourGuide tourGuide = new TourGuide();
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenAdmin);
                 if (responseData.Success)
                 {
                     tourGuide = JsonConvert.DeserializeObject<TourGuide>(responseData.Data);
@@ -89,12 +92,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateTourGuide")]
         public async Task<IActionResult> UpdateTourGuide(TourGuide value)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "tourGuide/" + value.Id.ToString();
             TourGuide tourGuide = new TourGuide();
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue, tokenAdmin);
                 if(responseData.Success)
                 {
                     tourGuide = JsonConvert.DeserializeObject<TourGuide>(responseData.Data);
@@ -112,10 +116,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteTourGuide")]
         public async Task<IActionResult> DeleteTourGuide(string Id)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "tourGuide/" + Id;
             try
             {
-                ResponseData responseData = await _callApi.DeleteApi(url);
+                ResponseData responseData = await _callApi.DeleteApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     return RedirectToAction("TourGuideManager", new { area = "Admin", controller = "TourGuideAdmin", status = "DeleteSuccess" });

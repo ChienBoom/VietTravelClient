@@ -25,6 +25,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly UploadFile _uploadFile;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private string tokenAdmin;
 
         public EventAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -56,12 +57,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("EventTourManager")]
         public async Task<IActionResult> EventTourManager(string TourId, string status)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "event/searchEventByTourId/" + TourId;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     ViewData["Events"] = JsonConvert.DeserializeObject<List<Event>>(responseData.Data);
@@ -109,6 +111,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveEvent")]
         public async Task<IActionResult> CreateEvent(Event value, IFormFile file)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "event";
             Event Event = new Event();
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
@@ -116,7 +119,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenAdmin);
                 if(responseData.Success)
                 {
                     Event = JsonConvert.DeserializeObject<Event>(responseData.Data);
@@ -134,6 +137,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateEvent")]
         public async Task<IActionResult> UpdateEvent(Event value, IFormFile file)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "event/" + value.Id.ToString();
             Event Event = new Event();
             if (!_uploadFile.SaveFile(file).Success)
@@ -144,7 +148,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue, tokenAdmin);
                 if(responseData.Success)
                 {
                     Event = JsonConvert.DeserializeObject<Event>(responseData.Data);
@@ -183,10 +187,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteEvent")]
         public async Task<IActionResult> DeleteEvent(string Id)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "event/" + Id;
             try
             {
-                ResponseData responseData = await _callApi.DeleteApi(url);
+                ResponseData responseData = await _callApi.DeleteApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     return RedirectToAction("EventTourManager", new { area = "Admin", controller = "EventAdmin", TourId = Id, status = "DeleteSuccess" });

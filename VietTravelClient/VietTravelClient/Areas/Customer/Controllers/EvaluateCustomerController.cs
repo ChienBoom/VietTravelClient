@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -18,6 +19,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         private readonly CallApi _callApi;
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
+        private string tokenCustomer;
 
         public EvaluateCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration)
         {
@@ -31,18 +33,19 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("saveEvaluate")]
         public async Task<IActionResult> SaveEvaluate(Evaluate value, string usernameAccount, string controllerName, string actionName)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string url = domainServer + "evaluate";
             string urlUser = domainServer + "user/searchUserByUsername/" + usernameAccount;
             User user = new User();
             try
             {
-                ResponseData responseDataUser = await _callApi.GetApi(urlUser);
+                ResponseData responseDataUser = await _callApi.GetApi(urlUser, tokenCustomer);
                 if(!responseDataUser.Success) return RedirectToAction("Error", "Home");
                 user = JsonConvert.DeserializeObject<User>(responseDataUser.Data);
                 value.User = user;
                 value.UserId = user.Id;
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenCustomer);
                 if(!responseData.Success) return RedirectToAction("Error", "Home");
                 Evaluate evaluate = JsonConvert.DeserializeObject<Evaluate>(responseData.Data);
                 return RedirectToAction(actionName, new {area="Customer", controller= controllerName, itemId =value.EvaId, page =1});
@@ -57,18 +60,19 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("saveEvaluateStar")]
         public async Task<IActionResult> SaveEvaluateStar(EvaluateStar value, string usernameAccount, string controllerName, string actionName)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string url = domainServer + "evaluateStar";
             string urlUser = domainServer + "user/searchUserByUsername/" + usernameAccount;
             User user = new User();
             try
             {
-                ResponseData responseDataUser = await _callApi.GetApi(urlUser);
+                ResponseData responseDataUser = await _callApi.GetApi(urlUser, tokenCustomer);
                 if (!responseDataUser.Success) return RedirectToAction("Error", "Home");
                 user = JsonConvert.DeserializeObject<User>(responseDataUser.Data);
                 //value.User = user;
                 value.UserId = user.Id;
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PostApi(url, stringValue);
+                ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenCustomer);
                 if (!responseData.Success) return RedirectToAction("Error", "Home");
                 EvaluateStar evaluatestar = JsonConvert.DeserializeObject<EvaluateStar>(responseData.Data);
                 return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = value.EvaId, page = 1 });
@@ -83,11 +87,12 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("updateEvaluateStar")]
         public async Task<IActionResult> UpdateEvaluateStar(EvaluateStar value, string usernameAccount, string controllerName, string actionName)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string url = domainServer + "evaluateStar/" + value.Id.ToString();
             try
             {
                 string stringValue = JsonConvert.SerializeObject(value);
-                ResponseData responseData = await _callApi.PutApi(url, stringValue);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue, tokenCustomer);
                 if (!responseData.Success) return RedirectToAction("Error", "Home");
                 Evaluate evaluate = JsonConvert.DeserializeObject<Evaluate>(responseData.Data);
                 return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = value.EvaId, page = 1 });

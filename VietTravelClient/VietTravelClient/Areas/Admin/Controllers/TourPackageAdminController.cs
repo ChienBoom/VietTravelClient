@@ -24,6 +24,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         private readonly IConfiguration _configuration;
         private readonly string domainServer;
         private readonly string uploadPath;
+        private string tokenAdmin;
 
         public TourPackageAdminController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -70,6 +71,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("tourPackageManager")]
         public async Task<IActionResult> TourPackageManager(string TourId, string status)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "tourpackage/searchByTourId/" + TourId;
@@ -78,17 +80,17 @@ namespace VietTravelClient.Areas.Admin.Controllers
             string urlSchedule = domainServer + "schedule/getByTourId/" + TourId;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
-                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
-                ResponseData responseDataTour = await _callApi.GetApi(urlTour);
-                ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
+                ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
+                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage, tokenAdmin);
+                ResponseData responseDataTour = await _callApi.GetApi(urlTour, tokenAdmin);
+                ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule, tokenAdmin);
                 if (responseData.Success && responseDataTimePackage.Success && responseDataTour.Success && responseDataSchedule.Success)
                 {
                     Tour tour = JsonConvert.DeserializeObject<Tour>(responseDataTour.Data);
                     string urlHotel = domainServer + "hotel/searchByCityId/" + tour.CityId.ToString();
                     string urlRestaurant = domainServer + "restaurant/searchByCityId/" + tour.CityId.ToString();
-                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                    ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
+                    ResponseData responseDataHotel = await _callApi.GetApi(urlHotel, tokenAdmin);
+                    ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant, tokenAdmin);
                     if (responseDataHotel.Success && responseDataRestaurant.Success)
                     {
                         List<TourPackage> tourPackages = JsonConvert.DeserializeObject<List<TourPackage>>(responseData.Data);
@@ -125,6 +127,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("getTourPackageDetail")]
         public async Task<IActionResult> GetTourPackageDetail([FromBody] TourPackageDto value)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             TourPackage tourPackage = new TourPackage();
             tourPackage.Name = value.Name;
             tourPackage.StartTime = value.StartTime;
@@ -140,8 +143,8 @@ namespace VietTravelClient.Areas.Admin.Controllers
             string urlHotel = domainServer + "hotel/" + value.HotelId.ToString();
             try
             {
-                ResponseData responseTimePackage = await _callApi.GetApi(urlTimePackage);
-                ResponseData responseHotel = await _callApi.GetApi(urlHotel);
+                ResponseData responseTimePackage = await _callApi.GetApi(urlTimePackage, tokenAdmin);
+                ResponseData responseHotel = await _callApi.GetApi(urlHotel, tokenAdmin);
                 if(responseTimePackage.Success && responseHotel.Success)
                 {
                     TimePackage timePackage = JsonConvert.DeserializeObject<TimePackage>(responseTimePackage.Data);
@@ -165,6 +168,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("saveTourPackage")]
         public async Task<IActionResult> CreateTourPackage(TourPackage value, string ScheduleList)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string[] ArrayScheduleId = ScheduleList.Split(',');
             List<Schedule> schedules = new List<Schedule>();
             foreach (string item in ArrayScheduleId)
@@ -172,7 +176,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 string urlSchedule = domainServer + "schedule/" + item;
                 try
                 {
-                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
+                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule, tokenAdmin);
                     if (!responseDataSchedule.Success)
                     {
                         return RedirectToAction("Error", "Home");
@@ -191,7 +195,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             string urlSave = domainServer + "tourpackage";
             try
             {
-                ResponseData responseDataSave = await _callApi.PostApi(urlSave, JsonConvert.SerializeObject(value));
+                ResponseData responseDataSave = await _callApi.PostApi(urlSave, JsonConvert.SerializeObject(value), tokenAdmin);
                 if (responseDataSave.Success)
                 {
 
@@ -209,6 +213,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("updateTourPackage")]
         public async Task<IActionResult> UpdateTourPackage(TourPackage value, string ScheduleList)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string[] ArrayScheduleId = ScheduleList.Split(',');
             List<Schedule> schedules = new List<Schedule>();
             foreach (string item in ArrayScheduleId)
@@ -216,7 +221,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                 string urlSchedule = domainServer + "schedule/" + item;
                 try
                 {
-                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule);
+                    ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule, tokenAdmin);
                     if (!responseDataSchedule.Success)
                     {
                         return RedirectToAction("TourPackageManager", new { area = "Admin", controller = "TourPackageAdmin", TourId = value.TourId, status = "UpdateFaild" });
@@ -235,7 +240,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
             string urlUpdate = domainServer + "tourpackage/" + value.Id.ToString();
             try
             {
-                ResponseData responseDataSave = await _callApi.PutApi(urlUpdate, JsonConvert.SerializeObject(value));
+                ResponseData responseDataSave = await _callApi.PutApi(urlUpdate, JsonConvert.SerializeObject(value), tokenAdmin);
                 if (responseDataSave.Success)
                 {
 
@@ -253,10 +258,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
         [Route("deleteTourPackage")]
         public async Task<IActionResult> DeleteTourPackage(string Id, string tourId)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             string url = domainServer + "tourpackage/" + Id;
             try
             {
-                ResponseData responseData = await _callApi.DeleteApi(url);
+                ResponseData responseData = await _callApi.DeleteApi(url, tokenAdmin);
                 if (responseData.Success)
                 {
                     return RedirectToAction("TourPackageManager", new { area = "Admin", controller = "TourPackageAdmin",TourId = tourId, status = "DeleteSuccess" });
@@ -271,6 +277,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         public async Task<TourPackage> CompleteTourPackage(TourPackage tourPackage)
         {
+            tokenAdmin = HttpContext.Session.GetString("token");
             tourPackage.CreateBy = "Admin";
             List<Schedule> schedules = new List<Schedule>();
             schedules = JsonConvert.DeserializeObject<List<Schedule>>(tourPackage.ListScheduleTourPackage);
@@ -279,9 +286,9 @@ namespace VietTravelClient.Areas.Admin.Controllers
             string urlTimePackage = domainServer + "timepackage/" + tourPackage.TimePackageId.ToString();
             try
             {
-                ResponseData responseDataHotel = await _callApi.GetApi(urlHotel);
-                ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant);
-                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage);
+                ResponseData responseDataHotel = await _callApi.GetApi(urlHotel, tokenAdmin);
+                ResponseData responseDataRestaurant = await _callApi.GetApi(urlRestaurant, tokenAdmin);
+                ResponseData responseDataTimePackage = await _callApi.GetApi(urlTimePackage, tokenAdmin);
                 if (responseDataHotel.Success && responseDataRestaurant.Success && responseDataTimePackage.Success)
                 {
                     Hotel hotel = JsonConvert.DeserializeObject<Hotel>(responseDataHotel.Data);

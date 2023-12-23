@@ -22,6 +22,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         private readonly IConfiguration _configuration;
         private readonly UploadFile _uploadFile;
         private readonly string domainServer;
+        private string tokenCustomer;
 
         public HomeCustomerController(ILogger<HomeController> logger, CallApi callApi, IConfiguration configuration, UploadFile uploadFile)
         {
@@ -36,6 +37,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("home")]
         public async Task<IActionResult> Home()
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlCity = domainServer + "city";
@@ -44,10 +46,10 @@ namespace VietTravelClient.Areas.Customer.Controllers
             string urlHotTour = domainServer + "tour/hotTour";
             try
             {
-                ResponseData responseDataCity = await _callApi.GetApi(urlCity);
-                ResponseData responseDataTour = await _callApi.GetApi(urlTour);
-                ResponseData responseHotCity = await _callApi.GetApi(urlHotCity);
-                ResponseData responseHotTour = await _callApi.GetApi(urlHotTour);
+                ResponseData responseDataCity = await _callApi.GetApi(urlCity, tokenCustomer);
+                ResponseData responseDataTour = await _callApi.GetApi(urlTour, tokenCustomer);
+                ResponseData responseHotCity = await _callApi.GetApi(urlHotCity, tokenCustomer);
+                ResponseData responseHotTour = await _callApi.GetApi(urlHotTour, tokenCustomer);
                 if (responseDataCity.Success && responseDataTour.Success && responseHotCity.Success && responseHotTour.Success)
                 {
                     List<City> cities = JsonConvert.DeserializeObject<List<City>>(responseDataCity.Data);
@@ -74,6 +76,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("history")]
         public async Task<IActionResult> History(string status, int ticketStatus)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string urlUser = domainServer + "user/searchUserByUsername/" + usernameAccount;
@@ -81,13 +84,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
             try
             {
                 ResponseData responseData = new ResponseData();
-                responseData = await _callApi.GetApi(urlUser);
-                ResponseData responseDataTicketOOD = await _callApi.GetApi(urlTicketOutOfDate);
+                responseData = await _callApi.GetApi(urlUser, tokenCustomer);
+                ResponseData responseDataTicketOOD = await _callApi.GetApi(urlTicketOutOfDate, tokenCustomer);
                 if (responseData.Success && responseDataTicketOOD.Success)
                 {
                     User user = JsonConvert.DeserializeObject<User>(responseData.Data);
                     string url = domainServer + "ticket/getTicketByUserId/" + user.Id;
-                    ResponseData responseDataUser = await _callApi.GetApi(url);
+                    ResponseData responseDataUser = await _callApi.GetApi(url, tokenCustomer);
                     List<Ticket> tickets = JsonConvert.DeserializeObject<List<Ticket>>(responseDataUser.Data);
                     foreach(Ticket ticket in tickets)
                     {
@@ -122,12 +125,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("accountManager")]
         public async Task<IActionResult> AccountManager(string status)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "user/searchUserByUsername/" + usernameAccount;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
                 if (responseData.Success)
                 {
                     ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
@@ -148,12 +152,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("updatePassword")]
         public async Task<ActionResult> UpdatePassword(string oldPassword, string newPassword)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "user/updatePassword/" + usernameAccount + "/" + oldPassword + "/" + newPassword;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
                 if (responseData.Success)
                 {
                     ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
@@ -173,6 +178,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("updateInfo")]
         public async Task<ActionResult> UpdateInfo(User value)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             string url = domainServer + "user/" + value.Id.ToString();
@@ -182,7 +188,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 value.Password = "notnull";
                 value.Role = "Customer";
                 value.Picture = "File null";
-                ResponseData responseData = await _callApi.PutApi(url, JsonConvert.SerializeObject(value));
+                ResponseData responseData = await _callApi.PutApi(url, JsonConvert.SerializeObject(value), tokenCustomer);
                 if (responseData.Success)
                 {
                     ViewData["User"] = JsonConvert.DeserializeObject<User>(responseData.Data);
@@ -222,10 +228,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         public async Task<TourPackage> getTourPackage(string id)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string url = domainServer + "tourpackage/" + id;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
                 if (responseData.Success)
                 {
                     return JsonConvert.DeserializeObject<TourPackage>(responseData.Data);
@@ -240,10 +247,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         public async Task<Hotel> getHotel(string id)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string url = domainServer + "hotel/" + id;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
                 if (responseData.Success)
                 {
                     return JsonConvert.DeserializeObject<Hotel>(responseData.Data);
@@ -258,10 +266,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         public async Task<Restaurant> getRestaurant(string id)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string url = domainServer + "restaurant/" + id;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
                 if (responseData.Success)
                 {
                     return JsonConvert.DeserializeObject<Restaurant>(responseData.Data);
@@ -276,10 +285,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         public async Task<TimePackage> getTimePackage(string id)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string url = domainServer + "timepackage/" + id;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
                 if (responseData.Success)
                 {
                     return JsonConvert.DeserializeObject<TimePackage>(responseData.Data);
@@ -294,10 +304,11 @@ namespace VietTravelClient.Areas.Customer.Controllers
 
         public async Task<Tour> getTour(string id)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             string url = domainServer + "tour/" + id;
             try
             {
-                ResponseData responseData = await _callApi.GetApi(url);
+                ResponseData responseData = await _callApi.GetApi(url, tokenCustomer);
                 if (responseData.Success)
                 {
                     return JsonConvert.DeserializeObject<Tour>(responseData.Data);
@@ -314,6 +325,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
         [Route("updatePictureUser")]
         public async Task<IActionResult> UpdatePictureUser(IFormFile file, User value)
         {
+            tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (!_uploadFile.SaveFile(file).Success) return RedirectToAction("Error", "HomeAdmin");
@@ -324,7 +336,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                 value.Username = "notnull";
                 value.Password = "notnull";
                 value.Role = "Customer";
-                ResponseData response = await _callApi.PutApi(url, JsonConvert.SerializeObject(value));
+                ResponseData response = await _callApi.PutApi(url, JsonConvert.SerializeObject(value), tokenCustomer);
                 if (response.Success)
                 {
                     ViewData["User"] = JsonConvert.DeserializeObject<User>(response.Data);
