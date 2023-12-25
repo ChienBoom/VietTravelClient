@@ -10,6 +10,12 @@
     int currentPage = (int)ViewData["CurrentPage"];
     int totalPage = (int)ViewData["TotalPage"];
     WeatherOpen weatherOpen = (WeatherOpen)ViewData["Weather"];
+    weatherOpen.Main.Temp = weatherOpen.Main.Temp - (float)273.15;
+    weatherOpen.Main.Feels_like = weatherOpen.Main.Feels_like - (float)273.15;
+    weatherOpen.Main.Temp_max = weatherOpen.Main.Temp_max - (float)273.15;
+    weatherOpen.Main.Temp_min = weatherOpen.Main.Temp_min - (float)273.15;
+    DateTime sunrise = DateTimeOffset.FromUnixTimeSeconds(weatherOpen.Sys.Sunrise).UtcDateTime;
+    DateTime sunset = DateTimeOffset.FromUnixTimeSeconds(weatherOpen.Sys.Sunset).UtcDateTime;
 }
 <style>
     .d-flex-icon {
@@ -36,17 +42,15 @@
                     @city.ContentIntroduct
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 font-italic" style="padding-left: 50px; margin-top: 20px;">
-                    Nhiệt độ hiện tại: @weatherOpen.Main.Temp
-                    Nhiệt độ cảm nhận được: @weatherOpen.Main.Feels_like
-                    Độ ẩm: @weatherOpen.Main.Humidity
-                    Nhiệt độ tối đa: @weatherOpen.Main.Temp_max
-                    Nhiệt độ tối thiểu: @weatherOpen.Main.Temp_min
-                    Tầm nhìn: @weatherOpen.Visibility
-                    Tốc độ gió: @weatherOpen.Wind.Speed
+                    Nhiệt độ hiện tại: @weatherOpen.Main.Temp.ToString("N2") (độ C)
+                    Nhiệt độ cảm nhận được: @weatherOpen.Main.Feels_like.ToString("N2") (độ C)
+                    Độ ẩm: @weatherOpen.Main.Humidity (%)
+                    Nhiệt độ tối đa: @weatherOpen.Main.Temp_max.ToString("N2") (độ C)
+                    Nhiệt độ tối thiểu: @weatherOpen.Main.Temp_min.ToString("N2") (độ C)
+                    Tầm nhìn: @weatherOpen.Visibility (m)
+                    Tốc độ gió: @weatherOpen.Wind.Speed (m/s)
                     Hướng gió:@weatherOpen.Wind.Deg
-                    Gios mạnh nhất: @weatherOpen.Wind.Gust
-                    Măt trời mọc: @weatherOpen.Sys.Sunrise
-                    Mặt trời lặn: @weatherOpen.Sys.Sunset
+                    Gió mạnh nhất: @weatherOpen.Wind.Gust (m/s)
                 </div>
             </div>
         </div>
