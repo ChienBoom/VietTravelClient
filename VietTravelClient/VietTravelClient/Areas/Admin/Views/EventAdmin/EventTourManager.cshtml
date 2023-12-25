@@ -245,7 +245,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
+                    <h4 id="titleColor" class="modal-title">THÔNG BÁO</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -254,7 +254,7 @@
                     <p id="StatusMessage"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
+                    <button id="btnColor" type="button" class="btn" data-dismiss="modal">Đồng ý</button>
                 </div>
             </div>
         </div>
@@ -266,26 +266,38 @@
         switch (status) {
             case "CreateSuccess":
                 $('#StatusMessage').text("THÊM MỚI SỰ KIỆN THÀNH CÔNG")
+                $('#titleColor').addClass('text-success');
+                $('#btnColor').addClass('btn-success');
                 $('#StatusModal').modal('show');
                 break;
             case "CreateFaild":
                 $('#StatusMessage').text("THÊM MỚI SỰ KIỆN THẤT BẠI")
+                $('#titleColor').addClass('text-danger');
+                $('#btnColor').addClass('btn-danger');
                 $('#StatusModal').modal('show');
                 break;
             case "UpdateSuccess":
                 $('#StatusMessage').text("CẬP NHẬT SỰ KIỆN THÀNH CÔNG")
+                $('#titleColor').addClass('text-success');
+                $('#btnColor').addClass('btn-success');
                 $('#StatusModal').modal('show');
                 break;
             case "UpdateFaild":
                 $('#StatusMessage').text("CẬP NHẬT SỰ KIỆN THẤT BẠI")
+                $('#titleColor').addClass('text-danger');
+                $('#btnColor').addClass('btn-danger');
                 $('#StatusModal').modal('show');
                 break;
             case "DeleteSuccess":
                 $('#StatusMessage').text("XÓA SỰ KIỆN THÀNH CÔNG")
+                $('#titleColor').addClass('text-success');
+                $('#btnColor').addClass('btn-success');
                 $('#StatusModal').modal('show');
                 break;
             case "DeleteFaild":
                 $('#StatusMessage').text("XÓA SỰ KIỆN THẤT BẠI")
+                $('#titleColor').addClass('text-danger');
+                $('#btnColor').addClass('btn-danger');
                 $('#StatusModal').modal('show');
                 break;
         }
