@@ -80,13 +80,74 @@
                 {
                     <li class="media" style="margin-left: 40px; margin-bottom: 20px; width: 90%;">
                         <img class="mx-3 rounded order-0" src="~/UploadImage/@(item.User.Picture)" alt=""
-                             style="width: 100px; height: 100px;">
+                             style="width: 110px; height: 110px; ">
                         <div class="media-body">
                             <h5 class="mt-0 text-info">@item.User.Name</h5>
                             <!-- <h6 class="mt-0 text-info">(linhnh@gmail.com)</h6> -->
                             <p>
                                 @item.Content
                             </p>
+                            @{
+                                if (usernameAccount.Equals(item.User.Username))
+                                {
+                                    <a class="btn btn-secondary" style="width : 40px;" data-toggle="modal" data-target="#Update@(item.Id)"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-danger" style="width : 40px;" data-toggle="modal" data-target="#Delete@(item.Id)"><i class="fas fa-trash-alt"></i></a>
+                                }
+                            }
+
+                            <div id="Update@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <form asp-area="Customer" asp-controller="EvaluateCustomer" asp-action="UpdateEvaluate" method="post" enctype="multipart/form-data">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">CHỈNH SỬA BÌNH LUẬN</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="text" name="Id" id="Id" value="@item.Id" hidden />
+                                                <input type="text" name="Eva" id="Eva" value="3" hidden />
+                                                <input type="text" name="EvaId" id="EvaId" value="@hotel.Id" hidden />
+                                                <input type="text" name="controllerName" id="controllerName" value="HotelCustomer" hidden />
+                                                <input type="text" name="actionName" id="actionName" value="HotelDetail" hidden />
+                                                <input type="text" name="UsernameAccount" id="UsernameAccount" value="@usernameAccount" hidden />
+                                                <textarea class="form-control border-info" id="Content" name="Content" rows="3">@item.Content</textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                                <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="Delete@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title text-info">THÔNG BÁO</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-info">BẠN CHẮC CHẮN MUỐN XÓA BÌNH LUẬN NÀY?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                            <form asp-area="Customer" asp-controller="EvaluateCustomer" asp-action="DeleteEvaluate" method="post">
+                                                <input type="text" name="itemId" id="itemId" value="@item.Id" hidden />
+                                                <input type="text" name="controllerName" id="controllerName" value="HotelCustomer" hidden />
+                                                <input type="text" name="actionName" id="actionName" value="HotelDetail" hidden />
+                                                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </li>
                 }

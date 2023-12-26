@@ -52,7 +52,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = value.EvaId , page = 1});
+                return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
             }
         }
 
@@ -79,7 +79,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = value.EvaId, page = 1 });
+                return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
             }
         }
 
@@ -99,7 +99,46 @@ namespace VietTravelClient.Areas.Customer.Controllers
             }
             catch (Exception ex)
             {
+                return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
+            }
+        }
+
+        [HttpPost]
+        [Route("updateEvaluate")]
+        public async Task<IActionResult> UpdateEvaluate(Evaluate value, string usernameAccount, string controllerName, string actionName)
+        {
+            tokenCustomer = HttpContext.Session.GetString("token");
+            string url = domainServer + "evaluate/" + value.Id.ToString();
+            try
+            {
+                string stringValue = JsonConvert.SerializeObject(value);
+                ResponseData responseData = await _callApi.PutApi(url, stringValue, tokenCustomer);
+                if (!responseData.Success) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
+                Evaluate evaluate = JsonConvert.DeserializeObject<Evaluate>(responseData.Data);
                 return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = value.EvaId, page = 1 });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
+            }
+        }
+
+        [HttpPost]
+        [Route("deleteEvaluate")]
+        public async Task<IActionResult> DeleteEvaluate(string itemId, string controllerName, string actionName)
+        {
+            tokenCustomer = HttpContext.Session.GetString("token");
+            string url = domainServer + "evaluate/" + itemId;
+            try
+            {
+                ResponseData responseData = await _callApi.DeleteApi(url, tokenCustomer);
+                if (!responseData.Success) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
+                Evaluate evaluate = JsonConvert.DeserializeObject<Evaluate>(responseData.Data);
+                return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = itemId, page = 1 });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
             }
         }
 
