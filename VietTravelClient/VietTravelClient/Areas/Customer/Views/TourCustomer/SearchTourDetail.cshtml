@@ -550,7 +550,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
+                    <h4 id="titleColor" class="modal-title">THÔNG BÁO</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -559,7 +559,7 @@
                     <p id="StatusMessage"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
+                    <button id="btnColor" type="button" class="btn" data-dismiss="modal">Đồng ý</button>
                 </div>
             </div>
         </div>
@@ -570,7 +570,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title text-info">THÔNG BÁO</h4>
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -579,7 +579,7 @@
                     <p id="WarningMessage"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đồng ý</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
                 </div>
             </div>
         </div>
@@ -608,9 +608,13 @@
         var status = $("#Status").val();
         if (status == 1) {
             $('#StatusMessage').text("ĐẶT TOUR THÀNH CÔNG")
+            $('#titleColor').addClass('text-success');
+            $('#btnColor').addClass('btn-success');
             $('#Status').modal('show');
         } else if (messageValue == 2) {
             $('#StatusMessage').text("ĐẶT TOUR THẤT BẠI")
+            $('#titleColor').addClass('text-danger');
+            $('#btnColor').addClass('btn-danger');
             $('#Status').modal('show');
         }
     });

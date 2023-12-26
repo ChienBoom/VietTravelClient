@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-6">
                                 <label for="" class="font-italic text-info col-12 col-sm-12 col-md-12">Thêm ảnh<span style="color: red;">*</span></label>
-                                <input type="file" class="btn btn-info col-12 col-sm-12 col-md-12 border-dark rounded" id="Pictures" name="file" style="height:60px;">
+                                <input type="file" class="btn btn-info col-12 col-sm-12 col-md-12 border-dark rounded" id="Pictures" name="file" style="height:40px;">
                             </div>
                         </div>
                         <div class="row">
@@ -79,7 +79,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title text-info">THÔNG BÁO</h4>
+                    <h4 class="modal-title text-warning">THÔNG BÁO</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -88,7 +88,7 @@
                     <p id="WarningMessage"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Đồng ý</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Đồng ý</button>
                 </div>
             </div>
         </div>
@@ -125,4 +125,11 @@
         $('#WarningMessage').text(value)
         $('#Warning').modal('show');
     }
+    $(document).ready(function () {
+        $('#CityId').selectpicker({
+            liveSearch: true,
+            size: 5,
+            actionsBox: true,
+        });
+    });
 </script>
