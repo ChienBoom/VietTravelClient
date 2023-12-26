@@ -113,13 +113,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
                         ViewData["UsernameAccount"] = usernameAccount;
                         return View();
                     }
-                    return RedirectToAction("Error", "Home");
+                    return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
                 }
-                return RedirectToAction("Error","Home");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch(Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -156,11 +156,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     tourPackage.BasePrice = PriceHotel + PriceSchedule;
                     return Ok(tourPackage);
                 }
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch(Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -179,13 +179,13 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ResponseData responseDataSchedule = await _callApi.GetApi(urlSchedule, tokenAdmin);
                     if (!responseDataSchedule.Success)
                     {
-                        return RedirectToAction("Error", "Home");
+                        return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
                     }
                     schedules.Add(JsonConvert.DeserializeObject<Schedule>(responseDataSchedule.Data));
                 }
                 catch (Exception e)
                 {
-                    return RedirectToAction("Error", "Home");
+                    return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
                 }
             }
             value.ListScheduleTourPackage = JsonConvert.SerializeObject(schedules);

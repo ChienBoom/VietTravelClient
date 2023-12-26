@@ -48,11 +48,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -74,11 +74,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -100,11 +100,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -126,11 +126,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -152,11 +152,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -178,11 +178,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -204,11 +204,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 

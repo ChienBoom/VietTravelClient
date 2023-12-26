@@ -62,11 +62,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -90,11 +90,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -118,11 +118,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -146,11 +146,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -174,11 +174,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 
@@ -202,11 +202,11 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     byte[] fileBytes = System.IO.File.ReadAllBytes(excelFilePath);
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
                 }
-                else return RedirectToAction("Error", "HomeAdmin");
+                else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "HomeAdmin");
+                return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
             }
         }
 

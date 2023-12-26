@@ -40,13 +40,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
             try
             {
                 ResponseData responseDataUser = await _callApi.GetApi(urlUser, tokenCustomer);
-                if(!responseDataUser.Success) return RedirectToAction("Error", "Home");
+                if(!responseDataUser.Success) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
                 user = JsonConvert.DeserializeObject<User>(responseDataUser.Data);
                 value.User = user;
                 value.UserId = user.Id;
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenCustomer);
-                if(!responseData.Success) return RedirectToAction("Error", "Home");
+                if(!responseData.Success) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
                 Evaluate evaluate = JsonConvert.DeserializeObject<Evaluate>(responseData.Data);
                 return RedirectToAction(actionName, new {area="Customer", controller= controllerName, itemId =value.EvaId, page =1});
             }
@@ -67,13 +67,13 @@ namespace VietTravelClient.Areas.Customer.Controllers
             try
             {
                 ResponseData responseDataUser = await _callApi.GetApi(urlUser, tokenCustomer);
-                if (!responseDataUser.Success) return RedirectToAction("Error", "Home");
+                if (!responseDataUser.Success) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
                 user = JsonConvert.DeserializeObject<User>(responseDataUser.Data);
                 //value.User = user;
                 value.UserId = user.Id;
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PostApi(url, stringValue, tokenCustomer);
-                if (!responseData.Success) return RedirectToAction("Error", "Home");
+                if (!responseData.Success) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
                 EvaluateStar evaluatestar = JsonConvert.DeserializeObject<EvaluateStar>(responseData.Data);
                 return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = value.EvaId, page = 1 });
             }
@@ -93,7 +93,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
             {
                 string stringValue = JsonConvert.SerializeObject(value);
                 ResponseData responseData = await _callApi.PutApi(url, stringValue, tokenCustomer);
-                if (!responseData.Success) return RedirectToAction("Error", "Home");
+                if (!responseData.Success) return RedirectToAction("Error", new { area = "Customer", controller = "HomeCustomer" });
                 Evaluate evaluate = JsonConvert.DeserializeObject<Evaluate>(responseData.Data);
                 return RedirectToAction(actionName, new { area = "Customer", controller = controllerName, itemId = value.EvaId, page = 1 });
             }
