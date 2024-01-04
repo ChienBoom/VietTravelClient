@@ -248,7 +248,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
             if (searchValue.Trim().Equals("") || searchValue == null) return RedirectToAction("TourManager");
-            string url = domainServer + "tour/search/" + searchValue + "/" + page.ToString();
+            string url = domainServer + "tour/search/" + searchValue.Unidecode() + "/" + page.ToString();
             string urlTotalPage = domainServer + "tour/search/totalPage/" + searchValue.Unidecode();
             List<Tour> tours = new List<Tour>();
             try

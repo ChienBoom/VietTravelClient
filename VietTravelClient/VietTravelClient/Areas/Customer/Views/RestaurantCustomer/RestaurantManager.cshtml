@@ -22,7 +22,7 @@
                 <img src="~/Icon/logo.jpg" alt="" style="width:100px; height:100px">
                 LALOLI TRAVEL
             </div>
-            <form asp-controller="Restaurant" asp-action="SearchRestaurantPost" method="post" onsubmit="return Validation()">
+            <form asp-area="Customer" asp-controller="RestaurantCustomer" asp-action="SearchRestaurantPost" method="post" onsubmit="return Validation()">
                 <div class="col-12 col-sm-12 col-md-12 text-info" style="padding-top: 30px; padding-left: 50px;">Tìm kiếm Nhà hàng<span style="color: red;">*</span></div>
                 <div class="col-10 col-sm-10 col-md-10" style="padding-left: 50px; padding-top: 20px;">
                     <input type="text" class="col-12 col-sm-12 col-md-12 rounded border-info" style="height:60px;" id="searchValue" name="searchValue" placeholder="NHẬP TÊN NHÀ HÀNG" value="">

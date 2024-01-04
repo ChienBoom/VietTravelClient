@@ -99,7 +99,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
             tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            return RedirectToAction("SearchHotel", new { controller = "Hotel", searchValue = searchValue, page = page });
+            return RedirectToAction("SearchHotel", new { area = "Customer", controller = "HotelCustomer", searchValue = searchValue, page = page });
         }
 
         [HttpGet]
@@ -109,7 +109,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
             tokenCustomer = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domainServer + "hotel/search/" + searchValue + "/" + page.ToString();
+            string url = domainServer + "hotel/search/" + searchValue.Unidecode() + "/" + page.ToString();
             string urlTotalPage = domainServer + "hotel/search/totalPage/" + searchValue.Unidecode();
             try
             {

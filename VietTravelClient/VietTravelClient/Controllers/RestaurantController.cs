@@ -90,7 +90,7 @@ namespace VietTravelClient.Controllers
         [Route("searchRestaurant")]
         public async Task<IActionResult> SearchRestaurant(string searchValue, int page)
         {
-            string url = domainServer + "restaurant/search/" + searchValue + "/" + page.ToString();
+            string url = domainServer + "restaurant/search/" + searchValue.Unidecode() + "/" + page.ToString();
             string urlTotalPage = domainServer + "restaurant/search/totalPage/" + searchValue.Unidecode();
             try
             {

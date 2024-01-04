@@ -159,7 +159,7 @@ namespace VietTravelClient.Controllers
         [Route("searchCity")]
         public async Task<IActionResult> SearchCity(string searchValue, int page)
         {
-            string url = domainServer + "city/search/" + searchValue + "/" + page.ToString();
+            string url = domainServer + "city/search/" + searchValue.Unidecode() + "/" + page.ToString();
             string urlTotalPage = domainServer + "city/search/totalPage/" + searchValue.Unidecode();
             List<City> cities = new List<City>();
             try
