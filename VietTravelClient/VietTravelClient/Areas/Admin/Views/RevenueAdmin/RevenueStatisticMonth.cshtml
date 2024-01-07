@@ -4,10 +4,14 @@
 @{
     ViewData["Title"] = "Thống kê";
     Revenue revenue = (Revenue)ViewData["Revenue"];
+    string yearValue = (string)ViewData["YearValue"];
     List<string> labels = revenue.Labels;
     List<List<Ticket>> data = revenue.Data;
     int Count = labels.Count;
     List<decimal> decimals = new List<decimal>();
+    List<string> lstYear = new List<string>();
+    lstYear.Add("2023");
+    lstYear.Add("2024");
     foreach (List<Ticket> tickets in data)
     {
         decimal sumdecimal = 0;
@@ -58,39 +62,61 @@
         </div>
         <div class="col-3 col-sm-3 col-md-3 row" style="margin-top: 100px;">
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticMonth" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Tháng</a>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticMonth" asp-route-yearValue="@yearValue" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Tháng</a>
                 @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
                     <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticCity" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Thành phố</a>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticCity" asp-route-yearValue="@yearValue" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Thành phố</a>
                 @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
                     <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticTour" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Tour</a>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="RevenueStatisticTour" asp-route-yearValue="@yearValue" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê doanh thu theo Tour</a>
                 @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
                     <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticMonth" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Tháng</a>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticMonth" asp-route-yearValue="@yearValue" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Tháng</a>
                 @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
                     <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticCity" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Thành phố</a>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticCity" asp-route-yearValue="@yearValue" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Thành phố</a>
                 @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
                     <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
             <div class="col-12 col-md-12 col-sm-12 row" style="margin-left: 50px;">
-                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticTour" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Tour</a>
+                <a asp-area="Admin" asp-controller="RevenueAdmin" asp-action="VisitorStatisticTour" asp-route-yearValue="@yearValue" class="col-12 col-md-12 col-sm-12 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Thống kê lượt khách theo Tour</a>
                 @*<div class="col-1 col-md-1 col-sm-1" style="height: 40px;"></div>
                     <button class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px;">Xem chi tiết</button>*@
             </div>
         </div>
         <div class="col-9 col-sm-9 col-md-9 row">
             <div class="col-12 col-sm-12 col-md-12 row">
-                <div class="col-10 col-sm-10 col-md-10"></div>
+                <div class="col-4 col-sm-4 col-md-4"></div>
+                <div class="col-6 col-sm-6 col-md-6 row">
+                    <form class="col-12 col-sm-12 col-md-12 row" asp-area="Admin" asp-controller="RevenueAdmin" asp-action="SelectedYearStatistic" method="post">
+                        <div class="col-5 col-sm-5 col-md-5" style="font-size: 1.2rem;">Lựa chọn năm thống kê:</div>
+                        <select id="yearValue" name="yearValue" class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">
+                            @{
+                                foreach (string year in lstYear)
+                                {
+                                    if (yearValue.Equals(year))
+                                    {
+                                        <option value=@year style="text-align: center;" selected>@year</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@year style="text-align: center;">@year</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <div class="col-1 col-sm-1 col-md-1"></div>
+                        <button type="submit" class="col-3 col-sm-3 col-md-3 btn btn-info rounded border-info" style="height: 60px; display: flex; align-items: center; justify-content: center;">Xác nhận</button>
+                    </form>
+                </div>
                 <div class="col-2 col-sm-2 col-md-2 row">
                     <div class="col-2 col-sm-2 col-md-2"></div>
                     <a class="col-10 col-sm-10 col-md-10 btn btn-info rounded border-info" data-toggle="modal" data-target="#ReportDetail" style="height: 60px; display: flex; align-items: center; justify-content: center;">Xem chi tiết</a>

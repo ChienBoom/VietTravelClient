@@ -30,14 +30,22 @@ namespace VietTravelClient.Areas.Admin.Controllers
             domainServer = _configuration["DomainServer"];
         }
 
+        [HttpPost]
+        [Route("selectedYearStatistic")]
+        public async Task<IActionResult> SelectedYearStatistic(string yearValue)
+        {
+            tokenAdmin = HttpContext.Session.GetString("token");
+            return RedirectToAction("RevenueStatisticsDetail", new { area = "Admin", controller = "RevenueAdmin", yearValue = yearValue });
+        }
+
         [HttpGet]
         [Route("revenueStatisticsDetail")]
-        public async Task<IActionResult> RevenueStatisticsDetail()
+        public async Task<IActionResult> RevenueStatisticsDetail(string yearValue)
         {
             tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domainServer + "revenueStatistics/revenueStatisticMonth";
+            string url = domainServer + "revenueStatistics/revenueStatisticMonth/" + yearValue;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
@@ -46,6 +54,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     ViewData["Revenue"] = revenue;
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["YearValue"] = yearValue;
                     return View();
                 }
                 else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
@@ -58,12 +67,12 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("revenueStatisticMonth")]
-        public async Task<IActionResult> RevenueStatisticMonth()
+        public async Task<IActionResult> RevenueStatisticMonth(string yearValue)
         {
             tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domainServer + "revenueStatistics/revenueStatisticMonth";
+            string url = domainServer + "revenueStatistics/revenueStatisticMonth/" + yearValue;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
@@ -72,6 +81,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     ViewData["Revenue"] = revenue;
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["YearValue"] = yearValue;
                     return View();
                 }
                 else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
@@ -84,12 +94,12 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("revenueStatisticCity")]
-        public async Task<IActionResult> RevenueStatisticCity()
+        public async Task<IActionResult> RevenueStatisticCity(string yearValue)
         {
             tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domainServer + "revenueStatistics/revenueStatisticCity";
+            string url = domainServer + "revenueStatistics/revenueStatisticCity/" + yearValue;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
@@ -98,6 +108,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     ViewData["Revenue"] = revenue;
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["YearValue"] = yearValue;
                     return View();
                 }
                 else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
@@ -110,12 +121,12 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("revenueStatisticTour")]
-        public async Task<IActionResult> RevenueStatisticTour()
+        public async Task<IActionResult> RevenueStatisticTour(string yearValue)
         {
             tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domainServer + "revenueStatistics/revenueStatisticTour";
+            string url = domainServer + "revenueStatistics/revenueStatisticTour/" + yearValue;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
@@ -124,6 +135,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     ViewData["Revenue"] = revenue;
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["YearValue"] = yearValue;
                     return View();
                 }
                 else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
@@ -136,12 +148,12 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("visitorStatisticMonth")]
-        public async Task<IActionResult> VisitorStatisticMonth()
+        public async Task<IActionResult> VisitorStatisticMonth(string yearValue)
         {
             tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domainServer + "revenueStatistics/revenueStatisticMonth";
+            string url = domainServer + "revenueStatistics/revenueStatisticMonth/" + yearValue;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
@@ -150,6 +162,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     ViewData["Revenue"] = revenue;
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["YearValue"] = yearValue;
                     return View();
                 }
                 else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
@@ -162,12 +175,12 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("visitorStatisticCity")]
-        public async Task<IActionResult> VisitorStatisticCity()
+        public async Task<IActionResult> VisitorStatisticCity(string yearValue)
         {
             tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domainServer + "revenueStatistics/revenueStatisticCity";
+            string url = domainServer + "revenueStatistics/revenueStatisticCity/" + yearValue;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
@@ -176,6 +189,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     ViewData["Revenue"] = revenue;
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["YearValue"] = yearValue;
                     return View();
                 }
                 else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
@@ -188,12 +202,12 @@ namespace VietTravelClient.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("visitorStatisticTour")]
-        public async Task<IActionResult> VisitorStatisticTour()
+        public async Task<IActionResult> VisitorStatisticTour(string yearValue)
         {
             tokenAdmin = HttpContext.Session.GetString("token");
             if (HttpContext.Session.GetString("UsernameAccount") == null) return RedirectToAction("Login", "Login");
             string usernameAccount = HttpContext.Session.GetString("UsernameAccount");
-            string url = domainServer + "revenueStatistics/revenueStatisticTour";
+            string url = domainServer + "revenueStatistics/revenueStatisticTour/" + yearValue;
             try
             {
                 ResponseData responseData = await _callApi.GetApi(url, tokenAdmin);
@@ -202,6 +216,7 @@ namespace VietTravelClient.Areas.Admin.Controllers
                     Revenue revenue = JsonConvert.DeserializeObject<Revenue>(responseData.Data);
                     ViewData["Revenue"] = revenue;
                     ViewData["UsernameAccount"] = usernameAccount;
+                    ViewData["YearValue"] = yearValue;
                     return View();
                 }
                 else return RedirectToAction("Error", new { area = "Admin", controller = "HomeAdmin" });
