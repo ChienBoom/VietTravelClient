@@ -53,28 +53,31 @@
                 for (int i = 0; i < tickets.Count; i++)
                 {
                     Ticket item = tickets[i];
-                    <tr>
-                        <td class="text-center border">@(i + 1)</td>
-                        <td class="text-center border">@item.User.Name</td>
-                        <td class="text-center border">@item.User.Email</td>
-                        <td class="text-center border">@item.BookingDate</td>
-                        <td class="text-center border">@item.TourPackage.LastPrice.ToString("N2")</td>
-                        @{
-                            switch (item.Status)
-                            {
-                                case 1:
-                                    <td class="text-center border">Chưa thanh toán</td>
-                                    break;
-                                case 2:
-                                    <td class="text-center border">Đã thanh toán - chưa hoàn thành Tour</td>
-                                    break;
-                                case 3:
-                                    <td class="text-center border">Đã thanh toán - Hoàn thành Tour</td>
-                                    break;
+                        <tr>
+                            <td class="text-center border">@(i + 1)</td>
+                            <td class="text-center border">@item.UserTicket.Name</td>
+                            <td class="text-center border">@item.UserTicket.Email</td>
+                            <td class="text-center border">@item.BookingDate</td>
+                            <td class="text-center border">@item.TourPackage.LastPrice.ToString("N2")</td>
+                            @{
+                                switch (item.Status)
+                                {
+                                    case 1:
+                                        <td class="text-center border">Chưa thanh toán</td>
+                                        break;
+                                    case 2:
+                                        <td class="text-center border">Đã thanh toán - chưa hoàn thành Tour</td>
+                                        break;
+                                    case 3:
+                                        <td class="text-center border">Đã thanh toán - Hoàn thành Tour</td>
+                                        break;
+                                    case 4:
+                                        <td class="text-center border">Chưa thanh toán - Đã quá hạn</td>
+                                        break;
+                                }
                             }
-                        }
-                        <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#TicketDetail@(item.Id)">Xem</button><button class="btn btn-info" style="margin-left: 5px;" data-toggle="modal" data-target="#ChangeStatus@(item.Id)">Chuyển trạng thái</button></td>
-                    </tr>
+                            <td class="text-center border"><button class="btn btn-info" data-toggle="modal" data-target="#TicketDetail@(item.Id)">Xem</button><button class="btn btn-info" style="margin-left: 5px;" data-toggle="modal" data-target="#ChangeStatus@(item.Id)">Chuyển trạng thái</button></td>
+                        </tr>
 
                     <div id="TicketDetail@(item.Id)" class="modal fade" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
@@ -107,7 +110,7 @@
                                                 <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="EndTime" name="EndTime" value="@item.TourPackage.EndTime" disabled>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-12 row">
+                                        @*<div class="col-12 col-sm-12 col-md-12 row">
                                             <div class="col-6 col-sm-6 col-md-6 row" style="padding-right: 20px;">
                                                 <label for="Hotel" class="text-info font-italic">Khách sạn</label>
                                                 <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Hotel" name="Hotel" value="@item.TourPackage.Hotel.Name" disabled>
@@ -116,7 +119,7 @@
                                                 <label for="Restaurant" class="text-info font-italic">Nhà hàng</label>
                                                 <input type="text" class="col-12 rounded border-info" style="height: 60px; margin-bottom: 20px;" id="Restaurant" name="Restaurant" value="@item.TourPackage.Restaurant.Name" disabled>
                                             </div>
-                                        </div>
+                                        </div>*@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-info" data-dismiss="modal">Thoát</button>
