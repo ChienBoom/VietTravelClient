@@ -108,6 +108,7 @@ namespace VietTravelClient.Areas.Customer.Controllers
                     }
                     ViewData["Tickets"] = tickets.Where(o => o.Status == ticketStatus).ToList();
                     ViewData["Status"] = status;
+                    ViewData["TicketStatus"] = ticketStatus;
                     ViewData["UsernameAccount"] = usernameAccount;
                     return View();
                 }
