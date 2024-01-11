@@ -73,6 +73,9 @@ namespace VietTravelClient.Areas.Customer.Controllers
             tokenCustomer = HttpContext.Session.GetString("token");
             string[] ArrayScheduleId = ScheduleList.Split(',');
             List<Schedule> schedules = new List<Schedule>();
+            //
+            value.StartTime = value.StartTime.AddHours(12);
+            //
             foreach(string item in ArrayScheduleId)
             {
                 string urlSchedule = domainServer + "schedule/" + item;

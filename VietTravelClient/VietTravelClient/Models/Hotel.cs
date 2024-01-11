@@ -22,5 +22,13 @@ namespace VietTravelClient.Models
 		public int NumberOfEvaluate { get; set; }
 		public int NumberOfEvaluateStar { get; set; }
 		public float MediumStar { get; set; }
+		//
+		//public int TotalRoom { get; set; }
+		//public int VipRoom { get; set; }
+		//public int NormalRoom { get; set; }
+		//public int RemainingVipRoom { get; set; }
+		//public int RemainingNormalRoom { get; set; }
+		//public decimal PriceVipRoom { get; set; }
+		//public decimal PriceNormalRoom { get; set; }
 	}
 }

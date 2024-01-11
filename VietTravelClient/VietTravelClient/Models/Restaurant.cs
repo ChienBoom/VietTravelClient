@@ -17,5 +17,19 @@
         public int NumberOfEvaluate { get; set; }
         public int NumberOfEvaluateStar { get; set; }
         public float MediumStar { get; set; }
+        //
+        //public int TotalTable { get; set; }
+        //public int TotalVipTable { get; set; }
+        //public int TotalNormalTabel { get; set; }
+        //public int VipTableSix { get; set; }
+        //public int VipTableTen { get; set; }
+        //public int NormalTabelSix { get; set; }
+        //public int NormalTabelTen { get; set; }
+        //public int RemainingVipTable { get; set; }
+        //public int RemainingNormalTable { get; set; }
+        //public decimal PriceVipTableSix { get; set; }
+        //public decimal PriceVipTableTen { get; set; }
+        //public decimal PriceNormalTableSix { get; set; }
+        //public decimal PriceNormalTableTen { get; set; }
     }
 }
